@@ -3,3 +3,5 @@
 # desirable. One name per line, no whitespace.
 #
 bzip2-dev
+harfbuzz-dev
+bzip2
