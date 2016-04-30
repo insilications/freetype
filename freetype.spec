@@ -4,7 +4,7 @@
 #
 Name     : freetype
 Version  : 2.6.3
-Release  : 23
+Release  : 24
 URL      : http://savannah.spinellicreations.com/freetype/freetype-2.6.3.tar.gz
 Source0  : http://savannah.spinellicreations.com/freetype/freetype-2.6.3.tar.gz
 Summary  : No detailed summary available
