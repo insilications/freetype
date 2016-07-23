@@ -4,7 +4,7 @@
 #
 Name     : freetype
 Version  : 2.6.5
-Release  : 27
+Release  : 28
 URL      : http://savannah.spinellicreations.com/freetype/freetype-2.6.5.tar.gz
 Source0  : http://savannah.spinellicreations.com/freetype/freetype-2.6.5.tar.gz
 Summary  : No detailed summary available
