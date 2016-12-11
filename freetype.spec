@@ -4,7 +4,7 @@
 #
 Name     : freetype
 Version  : 2.7
-Release  : 30
+Release  : 31
 URL      : http://savannah.spinellicreations.com/freetype/freetype-2.7.tar.gz
 Source0  : http://savannah.spinellicreations.com/freetype/freetype-2.7.tar.gz
 Summary  : No detailed summary available
@@ -16,9 +16,15 @@ Requires: freetype-doc
 BuildRequires : bzip2
 BuildRequires : bzip2-dev
 BuildRequires : cmake
+BuildRequires : gcc-dev32
+BuildRequires : gcc-libgcc32
+BuildRequires : gcc-libstdc++32
+BuildRequires : glibc-dev32
+BuildRequires : glibc-libc32
 BuildRequires : harfbuzz-dev
-BuildRequires : pkgconfig(libpng)
-BuildRequires : zlib-dev
+BuildRequires : libpng-dev
+BuildRequires : libpng-dev32
+BuildRequires : zlib-dev32
 
 %description
 FreeType 2.7
@@ -45,6 +51,16 @@ Provides: freetype-devel
 dev components for the freetype package.
 
 
+%package dev32
+Summary: dev32 components for the freetype package.
+Group: Default
+Requires: freetype-lib32
+Requires: freetype-bin
+
+%description dev32
+dev32 components for the freetype package.
+
+
 %package doc
 Summary: doc components for the freetype package.
 Group: Documentation
@@ -61,23 +77,47 @@ Group: Libraries
 lib components for the freetype package.
 
 
+%package lib32
+Summary: lib32 components for the freetype package.
+Group: Default
+
+%description lib32
+lib32 components for the freetype package.
+
+
 %prep
 %setup -q -n freetype-2.7
+pushd ..
+cp -a freetype-2.7 build32
+popd
 
 %build
 export LANG=C
-export AR=gcc-ar
-export RANLIB=gcc-ranlib
-export NM=gcc-nm
-export CFLAGS="$CFLAGS -O3 -fno-semantic-interposition -falign-functions=32 "
-export FCFLAGS="$CFLAGS -O3 -fno-semantic-interposition -falign-functions=32 "
-export FFLAGS="$CFLAGS -O3 -fno-semantic-interposition -falign-functions=32 "
-export CXXFLAGS="$CXXFLAGS -O3 -fno-semantic-interposition -falign-functions=32 "
+export CFLAGS="$CFLAGS -O3 -falign-functions=32 -fno-semantic-interposition "
+export FCFLAGS="$CFLAGS -O3 -falign-functions=32 -fno-semantic-interposition "
+export FFLAGS="$CFLAGS -O3 -falign-functions=32 -fno-semantic-interposition "
+export CXXFLAGS="$CXXFLAGS -O3 -falign-functions=32 -fno-semantic-interposition "
 %configure --disable-static
 make V=1  %{?_smp_mflags}
 
+pushd ../build32/
+export CFLAGS="$CFLAGS -m32"
+export CXXFLAGS="$CXXFLAGS -m32"
+export LDFLAGS="$LDFLAGS -m32"
+%configure --disable-static  --with-harfbuzz=no --libdir=/usr/lib32 --build=i686-generic-linux-gnu --host=i686-generic-linux-gnu --target=i686-clr-linux-gnu
+make V=1  %{?_smp_mflags}
+popd
 %install
 rm -rf %{buildroot}
+pushd ../build32/
+%make_install32
+if [ -d  %{buildroot}/usr/lib32/pkgconfig ]
+then
+pushd %{buildroot}/usr/lib32/pkgconfig
+for i in *.pc ; do mv $i 32$i ; done
+popd
+fi
+popd
 %make_install
 
 %files
@@ -140,9 +180,14 @@ rm -rf %{buildroot}
 /usr/include/freetype2/freetype/tttags.h
 /usr/include/freetype2/freetype/ttunpat.h
 /usr/include/freetype2/ft2build.h
-/usr/lib64/*.so
-/usr/lib64/pkgconfig/*.pc
+/usr/lib64/libfreetype.so
+/usr/lib64/pkgconfig/freetype2.pc
 /usr/share/aclocal/*.m4
+
+%files dev32
+%defattr(-,root,root,-)
+/usr/lib32/libfreetype.so
+/usr/lib32/pkgconfig/32freetype2.pc
 
 %files doc
 %defattr(-,root,root,-)
@@ -150,4 +195,10 @@ rm -rf %{buildroot}
 
 %files lib
 %defattr(-,root,root,-)
-/usr/lib64/*.so.*
+/usr/lib64/libfreetype.so.6
+/usr/lib64/libfreetype.so.6.12.6
+
+%files lib32
+%defattr(-,root,root,-)
+/usr/lib32/libfreetype.so.6
+/usr/lib32/libfreetype.so.6.12.6
