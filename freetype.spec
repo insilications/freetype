@@ -6,7 +6,7 @@
 #
 Name     : freetype
 Version  : 2.7.1
-Release  : 34
+Release  : 35
 URL      : http://savannah.spinellicreations.com/freetype/freetype-2.7.1.tar.gz
 Source0  : http://savannah.spinellicreations.com/freetype/freetype-2.7.1.tar.gz
 Source99 : http://savannah.spinellicreations.com/freetype/freetype-2.7.1.tar.gz.asc
