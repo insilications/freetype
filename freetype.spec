@@ -5,11 +5,11 @@
 # Source0 file verified with key 0xC1A60EACE707FDA5 (wl@gnu.org)
 #
 Name     : freetype
-Version  : 2.7.1
-Release  : 35
-URL      : http://savannah.spinellicreations.com/freetype/freetype-2.7.1.tar.gz
-Source0  : http://savannah.spinellicreations.com/freetype/freetype-2.7.1.tar.gz
-Source99 : http://savannah.spinellicreations.com/freetype/freetype-2.7.1.tar.gz.asc
+Version  : 2.8
+Release  : 36
+URL      : http://savannah.spinellicreations.com/freetype/freetype-2.8.tar.gz
+Source0  : http://savannah.spinellicreations.com/freetype/freetype-2.8.tar.gz
+Source99 : http://savannah.spinellicreations.com/freetype/freetype-2.8.tar.gz.sig
 Summary  : No detailed summary available
 Group    : Development/Tools
 License  : FTL GPL-2.0 GPL-2.0+ MIT Zlib
@@ -28,11 +28,10 @@ BuildRequires : harfbuzz-dev
 BuildRequires : libpng-dev
 BuildRequires : libpng-dev32
 BuildRequires : zlib-dev32
-Patch1: cve-2017-8105.patch
 
 %description
-FreeType 2.7.1
-==============
+FreeType 2.8
+============
 Homepage: http://www.freetype.org
 FreeType is a freely available software library to render fonts.
 
@@ -91,10 +90,9 @@ lib32 components for the freetype package.
 
 
 %prep
-%setup -q -n freetype-2.7.1
-%patch1 -p1
+%setup -q -n freetype-2.8
 pushd ..
-cp -a freetype-2.7.1 build32
+cp -a freetype-2.8 build32
 popd
 
 %build
@@ -102,7 +100,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1493435395
+export SOURCE_DATE_EPOCH=1494770015
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
 export NM=gcc-nm
@@ -122,7 +120,7 @@ export LDFLAGS="$LDFLAGS -m32"
 make V=1  %{?_smp_mflags}
 popd
 %install
-export SOURCE_DATE_EPOCH=1493435395
+export SOURCE_DATE_EPOCH=1494770015
 rm -rf %{buildroot}
 pushd ../build32/
 %make_install32
@@ -178,6 +176,7 @@ popd
 /usr/include/freetype2/freetype/ftmoderr.h
 /usr/include/freetype2/freetype/ftotval.h
 /usr/include/freetype2/freetype/ftoutln.h
+/usr/include/freetype2/freetype/ftpcfdrv.h
 /usr/include/freetype2/freetype/ftpfr.h
 /usr/include/freetype2/freetype/ftrender.h
 /usr/include/freetype2/freetype/ftsizes.h
@@ -212,9 +211,9 @@ popd
 %files lib
 %defattr(-,root,root,-)
 /usr/lib64/libfreetype.so.6
-/usr/lib64/libfreetype.so.6.13.0
+/usr/lib64/libfreetype.so.6.14.0
 
 %files lib32
 %defattr(-,root,root,-)
 /usr/lib32/libfreetype.so.6
-/usr/lib32/libfreetype.so.6.13.0
+/usr/lib32/libfreetype.so.6.14.0
