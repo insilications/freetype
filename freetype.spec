@@ -5,11 +5,11 @@
 # Source0 file verified with key 0xC1A60EACE707FDA5 (wl@gnu.org)
 #
 Name     : freetype
-Version  : 2.8
-Release  : 36
-URL      : http://savannah.spinellicreations.com/freetype/freetype-2.8.tar.gz
-Source0  : http://savannah.spinellicreations.com/freetype/freetype-2.8.tar.gz
-Source99 : http://savannah.spinellicreations.com/freetype/freetype-2.8.tar.gz.sig
+Version  : 2.8.1
+Release  : 37
+URL      : http://savannah.spinellicreations.com/freetype/freetype-2.8.1.tar.gz
+Source0  : http://savannah.spinellicreations.com/freetype/freetype-2.8.1.tar.gz
+Source99 : http://savannah.spinellicreations.com/freetype/freetype-2.8.1.tar.gz.sig
 Summary  : No detailed summary available
 Group    : Development/Tools
 License  : FTL GPL-2.0 GPL-2.0+ MIT Zlib
@@ -30,8 +30,8 @@ BuildRequires : libpng-dev32
 BuildRequires : zlib-dev32
 
 %description
-FreeType 2.8
-============
+FreeType 2.8.1
+==============
 Homepage: http://www.freetype.org
 FreeType is a freely available software library to render fonts.
 
@@ -90,9 +90,9 @@ lib32 components for the freetype package.
 
 
 %prep
-%setup -q -n freetype-2.8
+%setup -q -n freetype-2.8.1
 pushd ..
-cp -a freetype-2.8 build32
+cp -a freetype-2.8.1 build32
 popd
 
 %build
@@ -100,14 +100,14 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1494770015
+export SOURCE_DATE_EPOCH=1505646210
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
 export NM=gcc-nm
-export CFLAGS="$CFLAGS -O3 -falign-functions=32 -ffat-lto-objects -flto -fno-semantic-interposition -fstack-protector-strong "
-export FCFLAGS="$CFLAGS -O3 -falign-functions=32 -ffat-lto-objects -flto -fno-semantic-interposition -fstack-protector-strong "
-export FFLAGS="$CFLAGS -O3 -falign-functions=32 -ffat-lto-objects -flto -fno-semantic-interposition -fstack-protector-strong "
-export CXXFLAGS="$CXXFLAGS -O3 -falign-functions=32 -ffat-lto-objects -flto -fno-semantic-interposition -fstack-protector-strong "
+export CFLAGS="$CFLAGS -O3 -falign-functions=32 -ffat-lto-objects -flto=4 -fno-common -fno-math-errno -fno-semantic-interposition -fno-trapping-math -fstack-protector-strong "
+export FCFLAGS="$CFLAGS -O3 -falign-functions=32 -ffat-lto-objects -flto=4 -fno-common -fno-math-errno -fno-semantic-interposition -fno-trapping-math -fstack-protector-strong "
+export FFLAGS="$CFLAGS -O3 -falign-functions=32 -ffat-lto-objects -flto=4 -fno-common -fno-math-errno -fno-semantic-interposition -fno-trapping-math -fstack-protector-strong "
+export CXXFLAGS="$CXXFLAGS -O3 -falign-functions=32 -ffat-lto-objects -flto=4 -fno-common -fno-math-errno -fno-semantic-interposition -fno-trapping-math -fstack-protector-strong "
 %configure --disable-static
 make V=1  %{?_smp_mflags}
 
@@ -120,7 +120,7 @@ export LDFLAGS="$LDFLAGS -m32"
 make V=1  %{?_smp_mflags}
 popd
 %install
-export SOURCE_DATE_EPOCH=1494770015
+export SOURCE_DATE_EPOCH=1505646210
 rm -rf %{buildroot}
 pushd ../build32/
 %make_install32
@@ -211,9 +211,9 @@ popd
 %files lib
 %defattr(-,root,root,-)
 /usr/lib64/libfreetype.so.6
-/usr/lib64/libfreetype.so.6.14.0
+/usr/lib64/libfreetype.so.6.15.0
 
 %files lib32
 %defattr(-,root,root,-)
 /usr/lib32/libfreetype.so.6
-/usr/lib32/libfreetype.so.6.14.0
+/usr/lib32/libfreetype.so.6.15.0
