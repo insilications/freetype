@@ -84,7 +84,6 @@ libfreetype.so.6:FT_Get_Sfnt_Table
 libfreetype.so.6:FT_Get_SubGlyph_Info
 libfreetype.so.6:FT_Get_Track_Kerning
 libfreetype.so.6:FT_Get_TrueType_Engine_Type
-libfreetype.so.6:FT_Get_Var_Axis_Flags
 libfreetype.so.6:FT_Get_Var_Blend_Coordinates
 libfreetype.so.6:FT_Get_Var_Design_Coordinates
 libfreetype.so.6:FT_Get_WinFNT_Header
