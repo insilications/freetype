@@ -6,7 +6,7 @@
 #
 Name     : freetype
 Version  : 2.8.1
-Release  : 39
+Release  : 40
 URL      : http://savannah.spinellicreations.com/freetype/freetype-2.8.1.tar.gz
 Source0  : http://savannah.spinellicreations.com/freetype/freetype-2.8.1.tar.gz
 Source99 : http://savannah.spinellicreations.com/freetype/freetype-2.8.1.tar.gz.sig
@@ -28,6 +28,7 @@ BuildRequires : harfbuzz-dev
 BuildRequires : libpng-dev
 BuildRequires : libpng-dev32
 BuildRequires : zlib-dev32
+Patch1: debuginfo.patch
 
 %description
 FreeType 2.8.1
@@ -91,6 +92,7 @@ lib32 components for the freetype package.
 
 %prep
 %setup -q -n freetype-2.8.1
+%patch1 -p1
 pushd ..
 cp -a freetype-2.8.1 build32
 popd
@@ -100,14 +102,14 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1506014530
+export SOURCE_DATE_EPOCH=1509408374
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
 export NM=gcc-nm
-export CFLAGS="$CFLAGS -O3 -falign-functions=32 -ffat-lto-objects -flto=4 -fno-common -fno-math-errno -fno-semantic-interposition -fno-trapping-math -fstack-protector-strong "
-export FCFLAGS="$CFLAGS -O3 -falign-functions=32 -ffat-lto-objects -flto=4 -fno-common -fno-math-errno -fno-semantic-interposition -fno-trapping-math -fstack-protector-strong "
-export FFLAGS="$CFLAGS -O3 -falign-functions=32 -ffat-lto-objects -flto=4 -fno-common -fno-math-errno -fno-semantic-interposition -fno-trapping-math -fstack-protector-strong "
-export CXXFLAGS="$CXXFLAGS -O3 -falign-functions=32 -ffat-lto-objects -flto=4 -fno-common -fno-math-errno -fno-semantic-interposition -fno-trapping-math -fstack-protector-strong "
+export CFLAGS="$CFLAGS -O3 -falign-functions=32 -ffat-lto-objects -flto=4 -fno-math-errno -fno-semantic-interposition -fno-trapping-math -fstack-protector-strong "
+export FCFLAGS="$CFLAGS -O3 -falign-functions=32 -ffat-lto-objects -flto=4 -fno-math-errno -fno-semantic-interposition -fno-trapping-math -fstack-protector-strong "
+export FFLAGS="$CFLAGS -O3 -falign-functions=32 -ffat-lto-objects -flto=4 -fno-math-errno -fno-semantic-interposition -fno-trapping-math -fstack-protector-strong "
+export CXXFLAGS="$CXXFLAGS -O3 -falign-functions=32 -ffat-lto-objects -flto=4 -fno-math-errno -fno-semantic-interposition -fno-trapping-math -fstack-protector-strong "
 %configure --disable-static
 make V=1  %{?_smp_mflags}
 
@@ -120,7 +122,7 @@ export LDFLAGS="$LDFLAGS -m32"
 make V=1  %{?_smp_mflags}
 popd
 %install
-export SOURCE_DATE_EPOCH=1506014530
+export SOURCE_DATE_EPOCH=1509408374
 rm -rf %{buildroot}
 pushd ../build32/
 %make_install32

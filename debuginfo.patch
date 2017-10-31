@@ -1,0 +1,14 @@
+Ensure that the -g option is specified when linking to preserve debuginfo.
+
+diff -ru freetype-2.8.1/builds/unix/unix-cc.in freetype-2.8.1~/builds/unix/unix-cc.in
+--- freetype-2.8.1/builds/unix/unix-cc.in	2017-07-09 03:28:15.000000000 -0700
++++ freetype-2.8.1~/builds/unix/unix-cc.in	2017-10-30 17:02:07.747581837 -0700
+@@ -106,7 +106,7 @@
+ 
+ # Library linking
+ #
+-LINK_LIBRARY = $(LIBTOOL) --mode=link $(CCraw) -o $@ $(OBJECTS_LIST) \
++LINK_LIBRARY = $(LIBTOOL) --mode=link $(CCraw) -g -o $@ $(OBJECTS_LIST) \
+                           -rpath $(libdir) -version-info $(version_info) \
+                           $(LDFLAGS) -no-undefined \
+                           -export-symbols $(EXPORTS_LIST)
