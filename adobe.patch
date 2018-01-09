@@ -1,0 +1,27 @@
+From e28550af185eb75f8f9681dc9dda8d66c6274876 Mon Sep 17 00:00:00 2001
+From: Ewald Hew <ewaldhew@gmail.com>
+Date: Mon, 25 Sep 2017 08:05:19 +0200
+Subject: Switch to Adobe engine.
+
+* src/type1/t1objs.c (T1_Driver_Init): Set default to Adobe engine.
+---
+ ChangeLog          | 6 ++++++
+ src/type1/t1objs.c | 2 +-
+ 2 files changed, 7 insertions(+), 1 deletion(-)
+
+diff --git a/src/type1/t1objs.c b/src/type1/t1objs.c
+index dab556f..8cdbb93 100644
+--- a/src/type1/t1objs.c
++++ b/src/type1/t1objs.c
+@@ -587,7 +587,7 @@
+ 
+ 
+     /* set default property values, cf. `ftt1drv.h' */
+-    driver->hinting_engine = FT_T1_HINTING_FREETYPE;
++    driver->hinting_engine = FT_T1_HINTING_ADOBE;
+ 
+     driver->no_stem_darkening = TRUE;
+ 
+-- 
+cgit v1.0-41-gc330
+

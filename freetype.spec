@@ -5,11 +5,11 @@
 # Source0 file verified with key 0xC1A60EACE707FDA5 (wl@gnu.org)
 #
 Name     : freetype
-Version  : 2.8.1
-Release  : 40
-URL      : http://savannah.spinellicreations.com/freetype/freetype-2.8.1.tar.gz
-Source0  : http://savannah.spinellicreations.com/freetype/freetype-2.8.1.tar.gz
-Source99 : http://savannah.spinellicreations.com/freetype/freetype-2.8.1.tar.gz.sig
+Version  : 2.9
+Release  : 41
+URL      : http://savannah.spinellicreations.com/freetype/freetype-2.9.tar.gz
+Source0  : http://savannah.spinellicreations.com/freetype/freetype-2.9.tar.gz
+Source99 : http://savannah.spinellicreations.com/freetype/freetype-2.9.tar.gz.sig
 Summary  : No detailed summary available
 Group    : Development/Tools
 License  : FTL GPL-2.0 GPL-2.0+ MIT Zlib
@@ -31,9 +31,9 @@ BuildRequires : zlib-dev32
 Patch1: debuginfo.patch
 
 %description
-FreeType 2.8.1
-==============
-Homepage: http://www.freetype.org
+FreeType 2.9
+============
+Homepage: https://www.freetype.org
 FreeType is a freely available software library to render fonts.
 
 %package bin
@@ -91,10 +91,10 @@ lib32 components for the freetype package.
 
 
 %prep
-%setup -q -n freetype-2.8.1
+%setup -q -n freetype-2.9
 %patch1 -p1
 pushd ..
-cp -a freetype-2.8.1 build32
+cp -a freetype-2.9 build32
 popd
 
 %build
@@ -102,7 +102,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1509408374
+export SOURCE_DATE_EPOCH=1515506917
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
 export NM=gcc-nm
@@ -111,7 +111,7 @@ export FCFLAGS="$CFLAGS -O3 -falign-functions=32 -ffat-lto-objects -flto=4 -fno-
 export FFLAGS="$CFLAGS -O3 -falign-functions=32 -ffat-lto-objects -flto=4 -fno-math-errno -fno-semantic-interposition -fno-trapping-math -fstack-protector-strong "
 export CXXFLAGS="$CXXFLAGS -O3 -falign-functions=32 -ffat-lto-objects -flto=4 -fno-math-errno -fno-semantic-interposition -fno-trapping-math -fstack-protector-strong "
 %configure --disable-static
-make V=1  %{?_smp_mflags}
+make  %{?_smp_mflags}
 
 pushd ../build32/
 export PKG_CONFIG_PATH="/usr/lib32/pkgconfig"
@@ -119,10 +119,10 @@ export CFLAGS="$CFLAGS -m32"
 export CXXFLAGS="$CXXFLAGS -m32"
 export LDFLAGS="$LDFLAGS -m32"
 %configure --disable-static  --with-harfbuzz=no  --libdir=/usr/lib32 --build=i686-generic-linux-gnu --host=i686-generic-linux-gnu --target=i686-clr-linux-gnu
-make V=1  %{?_smp_mflags}
+make  %{?_smp_mflags}
 popd
 %install
-export SOURCE_DATE_EPOCH=1509408374
+export SOURCE_DATE_EPOCH=1515506917
 rm -rf %{buildroot}
 pushd ../build32/
 %make_install32
@@ -151,15 +151,14 @@ popd
 /usr/include/freetype2/freetype/config/ftstdlib.h
 /usr/include/freetype2/freetype/freetype.h
 /usr/include/freetype2/freetype/ftadvanc.h
-/usr/include/freetype2/freetype/ftautoh.h
 /usr/include/freetype2/freetype/ftbbox.h
 /usr/include/freetype2/freetype/ftbdf.h
 /usr/include/freetype2/freetype/ftbitmap.h
 /usr/include/freetype2/freetype/ftbzip2.h
 /usr/include/freetype2/freetype/ftcache.h
-/usr/include/freetype2/freetype/ftcffdrv.h
 /usr/include/freetype2/freetype/ftchapters.h
 /usr/include/freetype2/freetype/ftcid.h
+/usr/include/freetype2/freetype/ftdriver.h
 /usr/include/freetype2/freetype/fterrdef.h
 /usr/include/freetype2/freetype/fterrors.h
 /usr/include/freetype2/freetype/ftfntfmt.h
@@ -178,7 +177,7 @@ popd
 /usr/include/freetype2/freetype/ftmoderr.h
 /usr/include/freetype2/freetype/ftotval.h
 /usr/include/freetype2/freetype/ftoutln.h
-/usr/include/freetype2/freetype/ftpcfdrv.h
+/usr/include/freetype2/freetype/ftparams.h
 /usr/include/freetype2/freetype/ftpfr.h
 /usr/include/freetype2/freetype/ftrender.h
 /usr/include/freetype2/freetype/ftsizes.h
@@ -187,14 +186,12 @@ popd
 /usr/include/freetype2/freetype/ftsynth.h
 /usr/include/freetype2/freetype/ftsystem.h
 /usr/include/freetype2/freetype/fttrigon.h
-/usr/include/freetype2/freetype/ftttdrv.h
 /usr/include/freetype2/freetype/fttypes.h
 /usr/include/freetype2/freetype/ftwinfnt.h
 /usr/include/freetype2/freetype/t1tables.h
 /usr/include/freetype2/freetype/ttnameid.h
 /usr/include/freetype2/freetype/tttables.h
 /usr/include/freetype2/freetype/tttags.h
-/usr/include/freetype2/freetype/ttunpat.h
 /usr/include/freetype2/ft2build.h
 /usr/lib64/libfreetype.so
 /usr/lib64/pkgconfig/freetype2.pc
@@ -213,9 +210,9 @@ popd
 %files lib
 %defattr(-,root,root,-)
 /usr/lib64/libfreetype.so.6
-/usr/lib64/libfreetype.so.6.15.0
+/usr/lib64/libfreetype.so.6.16.0
 
 %files lib32
 %defattr(-,root,root,-)
 /usr/lib32/libfreetype.so.6
-/usr/lib32/libfreetype.so.6.15.0
+/usr/lib32/libfreetype.so.6.16.0
