@@ -6,7 +6,7 @@
 #
 Name     : freetype
 Version  : 2.9
-Release  : 43
+Release  : 44
 URL      : http://savannah.spinellicreations.com/freetype/freetype-2.9.tar.gz
 Source0  : http://savannah.spinellicreations.com/freetype/freetype-2.9.tar.gz
 Source99 : http://savannah.spinellicreations.com/freetype/freetype-2.9.tar.gz.sig
