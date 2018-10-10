@@ -129,6 +129,7 @@ libfreetype.so.6:FT_Matrix_Invert
 libfreetype.so.6:FT_Matrix_Multiply
 libfreetype.so.6:FT_Matrix_Multiply_Scaled
 libfreetype.so.6:FT_MulDiv
+libfreetype.so.6:FT_MulDiv_No_Round
 libfreetype.so.6:FT_MulFix
 libfreetype.so.6:FT_New_Face
 libfreetype.so.6:FT_New_GlyphSlot
@@ -164,7 +165,6 @@ libfreetype.so.6:FT_Reference_Face
 libfreetype.so.6:FT_Reference_Library
 libfreetype.so.6:FT_Remove_Module
 libfreetype.so.6:FT_Render_Glyph
-libfreetype.so.6:FT_Render_Glyph_Internal
 libfreetype.so.6:FT_Request_Size
 libfreetype.so.6:FT_RoundFix
 libfreetype.so.6:FT_Select_Charmap

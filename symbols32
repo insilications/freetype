@@ -164,7 +164,6 @@ libfreetype.so.6:FT_Reference_Face
 libfreetype.so.6:FT_Reference_Library
 libfreetype.so.6:FT_Remove_Module
 libfreetype.so.6:FT_Render_Glyph
-libfreetype.so.6:FT_Render_Glyph_Internal
 libfreetype.so.6:FT_Request_Size
 libfreetype.so.6:FT_RoundFix
 libfreetype.so.6:FT_Select_Charmap
@@ -238,6 +237,7 @@ libfreetype.so.6:ft_hash_str_lookup
 libfreetype.so.6:ft_lcd_padding
 libfreetype.so.6:ft_mem_qalloc
 libfreetype.so.6:ft_mem_strcpyn
+libfreetype.so.6:ft_outline_glyph_class
 libfreetype.so.6:ft_property_string_set
 libfreetype.so.6:ft_raster1_renderer_class
 libfreetype.so.6:ft_service_list_lookup
