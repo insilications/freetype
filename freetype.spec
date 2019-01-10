@@ -6,16 +6,19 @@
 #
 Name     : freetype
 Version  : 2.9.1
-Release  : 47
+Release  : 48
 URL      : https://download-mirror.savannah.gnu.org/releases/freetype/freetype-2.9.1.tar.gz
 Source0  : https://download-mirror.savannah.gnu.org/releases/freetype/freetype-2.9.1.tar.gz
 Source99 : https://download-mirror.savannah.gnu.org/releases/freetype/freetype-2.9.1.tar.gz.sig
 Summary  : No detailed summary available
 Group    : Development/Tools
 License  : FTL GPL-2.0 GPL-2.0+ MIT Zlib
+Requires: freetype-bin = %{version}-%{release}
 Requires: freetype-lib = %{version}-%{release}
 Requires: freetype-license = %{version}-%{release}
+Requires: freetype-man = %{version}-%{release}
 BuildRequires : buildreq-cmake
+BuildRequires : buildreq-configure
 BuildRequires : bzip2
 BuildRequires : bzip2-dev
 BuildRequires : gcc-dev32
@@ -24,11 +27,10 @@ BuildRequires : gcc-libstdc++32
 BuildRequires : glibc-dev32
 BuildRequires : glibc-libc32
 BuildRequires : harfbuzz-dev
+BuildRequires : harfbuzz-dev32
 BuildRequires : libpng-dev
 BuildRequires : libpng-dev32
-BuildRequires : pkgconfig(32harfbuzz)
-BuildRequires : pkgconfig(harfbuzz)
-BuildRequires : zlib-dev
+BuildRequires : pkg-config
 BuildRequires : zlib-dev32
 Patch1: debuginfo.patch
 
@@ -38,10 +40,21 @@ FreeType 2.9.1
 Homepage: https://www.freetype.org
 FreeType is a freely available software library to render fonts.
 
+%package bin
+Summary: bin components for the freetype package.
+Group: Binaries
+Requires: freetype-license = %{version}-%{release}
+Requires: freetype-man = %{version}-%{release}
+
+%description bin
+bin components for the freetype package.
+
+
 %package dev
 Summary: dev components for the freetype package.
 Group: Development
 Requires: freetype-lib = %{version}-%{release}
+Requires: freetype-bin = %{version}-%{release}
 Provides: freetype-devel = %{version}-%{release}
 
 %description dev
@@ -52,6 +65,7 @@ dev components for the freetype package.
 Summary: dev32 components for the freetype package.
 Group: Default
 Requires: freetype-lib32 = %{version}-%{release}
+Requires: freetype-bin = %{version}-%{release}
 Requires: freetype-dev = %{version}-%{release}
 
 %description dev32
@@ -84,6 +98,14 @@ Group: Default
 license components for the freetype package.
 
 
+%package man
+Summary: man components for the freetype package.
+Group: Default
+
+%description man
+man components for the freetype package.
+
+
 %prep
 %setup -q -n freetype-2.9.1
 %patch1 -p1
@@ -96,9 +118,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1547103189
-mkdir -p clr-build
-pushd clr-build
+export SOURCE_DATE_EPOCH=1547129927
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
 export NM=gcc-nm
@@ -106,36 +126,26 @@ export CFLAGS="$CFLAGS -O3 -falign-functions=32 -ffat-lto-objects -flto=4 -fno-m
 export FCFLAGS="$CFLAGS -O3 -falign-functions=32 -ffat-lto-objects -flto=4 -fno-math-errno -fno-semantic-interposition -fno-trapping-math -fstack-protector-strong -mzero-caller-saved-regs=used "
 export FFLAGS="$CFLAGS -O3 -falign-functions=32 -ffat-lto-objects -flto=4 -fno-math-errno -fno-semantic-interposition -fno-trapping-math -fstack-protector-strong -mzero-caller-saved-regs=used "
 export CXXFLAGS="$CXXFLAGS -O3 -falign-functions=32 -ffat-lto-objects -flto=4 -fno-math-errno -fno-semantic-interposition -fno-trapping-math -fstack-protector-strong -mzero-caller-saved-regs=used "
-%cmake ..
-make  %{?_smp_mflags} VERBOSE=1
-popd
-mkdir -p clr-build32
-pushd clr-build32
-export AR=gcc-ar
-export RANLIB=gcc-ranlib
-export NM=gcc-nm
-export CFLAGS="$CFLAGS -O3 -falign-functions=32 -ffat-lto-objects -flto=4 -fno-math-errno -fno-semantic-interposition -fno-trapping-math -fstack-protector-strong -mzero-caller-saved-regs=used "
-export FCFLAGS="$CFLAGS -O3 -falign-functions=32 -ffat-lto-objects -flto=4 -fno-math-errno -fno-semantic-interposition -fno-trapping-math -fstack-protector-strong -mzero-caller-saved-regs=used "
-export FFLAGS="$CFLAGS -O3 -falign-functions=32 -ffat-lto-objects -flto=4 -fno-math-errno -fno-semantic-interposition -fno-trapping-math -fstack-protector-strong -mzero-caller-saved-regs=used "
-export CXXFLAGS="$CXXFLAGS -O3 -falign-functions=32 -ffat-lto-objects -flto=4 -fno-math-errno -fno-semantic-interposition -fno-trapping-math -fstack-protector-strong -mzero-caller-saved-regs=used "
+%configure --disable-static --enable-freetype-config
+make  %{?_smp_mflags} RC=
+
+pushd ../build32/
 export PKG_CONFIG_PATH="/usr/lib32/pkgconfig"
 export ASFLAGS="${ASFLAGS}${ASFLAGS:+ }--32"
 export CFLAGS="${CFLAGS}${CFLAGS:+ }-m32"
 export CXXFLAGS="${CXXFLAGS}${CXXFLAGS:+ }-m32"
 export LDFLAGS="${LDFLAGS}${LDFLAGS:+ }-m32"
-%cmake -DLIB_INSTALL_DIR:PATH=/usr/lib32 -DCMAKE_INSTALL_LIBDIR=/usr/lib32 -DLIB_SUFFIX=32 ..
-make  %{?_smp_mflags} VERBOSE=1
-unset PKG_CONFIG_PATH
+%configure --disable-static --enable-freetype-config   --libdir=/usr/lib32 --build=i686-generic-linux-gnu --host=i686-generic-linux-gnu --target=i686-clr-linux-gnu
+make  %{?_smp_mflags} RC=
 popd
-
 %install
-export SOURCE_DATE_EPOCH=1547103189
+export SOURCE_DATE_EPOCH=1547129927
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/freetype
 cp docs/GPLv2.TXT %{buildroot}/usr/share/package-licenses/freetype/docs_GPLv2.TXT
 cp docs/LICENSE.TXT %{buildroot}/usr/share/package-licenses/freetype/docs_LICENSE.TXT
-pushd clr-build32
-%make_install32
+pushd ../build32/
+%make_install32 RC=
 if [ -d  %{buildroot}/usr/lib32/pkgconfig ]
 then
 pushd %{buildroot}/usr/lib32/pkgconfig
@@ -143,12 +153,14 @@ for i in *.pc ; do ln -s $i 32$i ; done
 popd
 fi
 popd
-pushd clr-build
-%make_install
-popd
+%make_install RC=
 
 %files
 %defattr(-,root,root,-)
+
+%files bin
+%defattr(-,root,root,-)
+/usr/bin/freetype-config
 
 %files dev
 %defattr(-,root,root,-)
@@ -201,15 +213,12 @@ popd
 /usr/include/freetype2/freetype/tttables.h
 /usr/include/freetype2/freetype/tttags.h
 /usr/include/freetype2/ft2build.h
-/usr/lib64/cmake/freetype/freetype-config-relwithdebinfo.cmake
-/usr/lib64/cmake/freetype/freetype-config.cmake
 /usr/lib64/libfreetype.so
 /usr/lib64/pkgconfig/freetype2.pc
+/usr/share/aclocal/*.m4
 
 %files dev32
 %defattr(-,root,root,-)
-/usr/lib32/cmake/freetype/freetype-config-relwithdebinfo.cmake
-/usr/lib32/cmake/freetype/freetype-config.cmake
 /usr/lib32/libfreetype.so
 /usr/lib32/pkgconfig/32freetype2.pc
 /usr/lib32/pkgconfig/freetype2.pc
@@ -217,14 +226,18 @@ popd
 %files lib
 %defattr(-,root,root,-)
 /usr/lib64/libfreetype.so.6
-/usr/lib64/libfreetype.so.6.16.0
+/usr/lib64/libfreetype.so.6.16.1
 
 %files lib32
 %defattr(-,root,root,-)
 /usr/lib32/libfreetype.so.6
-/usr/lib32/libfreetype.so.6.16.0
+/usr/lib32/libfreetype.so.6.16.1
 
 %files license
 %defattr(0644,root,root,0755)
 /usr/share/package-licenses/freetype/docs_GPLv2.TXT
 /usr/share/package-licenses/freetype/docs_LICENSE.TXT
+
+%files man
+%defattr(0644,root,root,0755)
+/usr/share/man/man1/freetype-config.1
