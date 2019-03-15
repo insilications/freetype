@@ -5,11 +5,11 @@
 # Source0 file verified with key 0xC1A60EACE707FDA5 (wl@gnu.org)
 #
 Name     : freetype
-Version  : 2.9.1
-Release  : 48
-URL      : https://download-mirror.savannah.gnu.org/releases/freetype/freetype-2.9.1.tar.gz
-Source0  : https://download-mirror.savannah.gnu.org/releases/freetype/freetype-2.9.1.tar.gz
-Source99 : https://download-mirror.savannah.gnu.org/releases/freetype/freetype-2.9.1.tar.gz.sig
+Version  : 2.10.0
+Release  : 49
+URL      : https://download-mirror.savannah.gnu.org/releases/freetype/freetype-2.10.0.tar.gz
+Source0  : https://download-mirror.savannah.gnu.org/releases/freetype/freetype-2.10.0.tar.gz
+Source99 : https://download-mirror.savannah.gnu.org/releases/freetype/freetype-2.10.0.tar.gz.sig
 Summary  : No detailed summary available
 Group    : Development/Tools
 License  : FTL GPL-2.0 GPL-2.0+ MIT Zlib
@@ -30,21 +30,23 @@ BuildRequires : harfbuzz-dev
 BuildRequires : harfbuzz-dev32
 BuildRequires : libpng-dev
 BuildRequires : libpng-dev32
+BuildRequires : pip
 BuildRequires : pkg-config
 BuildRequires : zlib-dev32
 Patch1: debuginfo.patch
 
 %description
-FreeType 2.9.1
-==============
-Homepage: https://www.freetype.org
-FreeType is a freely available software library to render fonts.
+Werner Lemberg and Detlef Würkner.
+This file is part of the FreeType project, and may only be used, modified,
+and distributed under the terms of the FreeType project license,
+LICENSE.TXT.  By continuing to use, modify, or distribute this file you
+indicate that you have read the license and understand and accept it
+fully.
 
 %package bin
 Summary: bin components for the freetype package.
 Group: Binaries
 Requires: freetype-license = %{version}-%{release}
-Requires: freetype-man = %{version}-%{release}
 
 %description bin
 bin components for the freetype package.
@@ -56,6 +58,7 @@ Group: Development
 Requires: freetype-lib = %{version}-%{release}
 Requires: freetype-bin = %{version}-%{release}
 Provides: freetype-devel = %{version}-%{release}
+Requires: freetype = %{version}-%{release}
 
 %description dev
 dev components for the freetype package.
@@ -107,10 +110,10 @@ man components for the freetype package.
 
 
 %prep
-%setup -q -n freetype-2.9.1
+%setup -q -n freetype-2.10.0
 %patch1 -p1
 pushd ..
-cp -a freetype-2.9.1 build32
+cp -a freetype-2.10.0 build32
 popd
 
 %build
@@ -118,7 +121,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1547129927
+export SOURCE_DATE_EPOCH=1552660954
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
 export NM=gcc-nm
@@ -139,7 +142,7 @@ export LDFLAGS="${LDFLAGS}${LDFLAGS:+ }-m32"
 make  %{?_smp_mflags} RC=
 popd
 %install
-export SOURCE_DATE_EPOCH=1547129927
+export SOURCE_DATE_EPOCH=1552660954
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/freetype
 cp docs/GPLv2.TXT %{buildroot}/usr/share/package-licenses/freetype/docs_GPLv2.TXT
@@ -178,6 +181,7 @@ popd
 /usr/include/freetype2/freetype/ftcache.h
 /usr/include/freetype2/freetype/ftchapters.h
 /usr/include/freetype2/freetype/ftcid.h
+/usr/include/freetype2/freetype/ftcolor.h
 /usr/include/freetype2/freetype/ftdriver.h
 /usr/include/freetype2/freetype/fterrdef.h
 /usr/include/freetype2/freetype/fterrors.h
@@ -226,12 +230,12 @@ popd
 %files lib
 %defattr(-,root,root,-)
 /usr/lib64/libfreetype.so.6
-/usr/lib64/libfreetype.so.6.16.1
+/usr/lib64/libfreetype.so.6.17.0
 
 %files lib32
 %defattr(-,root,root,-)
 /usr/lib32/libfreetype.so.6
-/usr/lib32/libfreetype.so.6.16.1
+/usr/lib32/libfreetype.so.6.17.0
 
 %files license
 %defattr(0644,root,root,0755)
