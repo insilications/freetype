@@ -5,11 +5,11 @@
 # Source0 file verified with key 0xC1A60EACE707FDA5 (wl@gnu.org)
 #
 Name     : freetype
-Version  : 2.10.0
-Release  : 49
-URL      : https://download-mirror.savannah.gnu.org/releases/freetype/freetype-2.10.0.tar.gz
-Source0  : https://download-mirror.savannah.gnu.org/releases/freetype/freetype-2.10.0.tar.gz
-Source99 : https://download-mirror.savannah.gnu.org/releases/freetype/freetype-2.10.0.tar.gz.sig
+Version  : 2.10.1
+Release  : 50
+URL      : https://download-mirror.savannah.gnu.org/releases/freetype/freetype-2.10.1.tar.gz
+Source0  : https://download-mirror.savannah.gnu.org/releases/freetype/freetype-2.10.1.tar.gz
+Source99 : https://download-mirror.savannah.gnu.org/releases/freetype/freetype-2.10.1.tar.gz.sig
 Summary  : No detailed summary available
 Group    : Development/Tools
 License  : FTL GPL-2.0 GPL-2.0+ MIT Zlib
@@ -36,7 +36,7 @@ BuildRequires : zlib-dev32
 Patch1: debuginfo.patch
 
 %description
-Werner Lemberg and Detlef WÃ¼rkner.
+Werner Lemberg and Detlef Würkner.
 This file is part of the FreeType project, and may only be used, modified,
 and distributed under the terms of the FreeType project license,
 LICENSE.TXT.  By continuing to use, modify, or distribute this file you
@@ -58,6 +58,7 @@ Group: Development
 Requires: freetype-lib = %{version}-%{release}
 Requires: freetype-bin = %{version}-%{release}
 Provides: freetype-devel = %{version}-%{release}
+Requires: freetype = %{version}-%{release}
 Requires: freetype = %{version}-%{release}
 
 %description dev
@@ -110,10 +111,10 @@ man components for the freetype package.
 
 
 %prep
-%setup -q -n freetype-2.10.0
+%setup -q -n freetype-2.10.1
 %patch1 -p1
 pushd ..
-cp -a freetype-2.10.0 build32
+cp -a freetype-2.10.1 build32
 popd
 
 %build
@@ -121,14 +122,15 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1552660954
+export SOURCE_DATE_EPOCH=1562047064
+export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
 export NM=gcc-nm
-export CFLAGS="$CFLAGS -O3 -falign-functions=32 -ffat-lto-objects -flto=4 -fno-math-errno -fno-semantic-interposition -fno-trapping-math -fstack-protector-strong -mzero-caller-saved-regs=used "
-export FCFLAGS="$CFLAGS -O3 -falign-functions=32 -ffat-lto-objects -flto=4 -fno-math-errno -fno-semantic-interposition -fno-trapping-math -fstack-protector-strong -mzero-caller-saved-regs=used "
-export FFLAGS="$CFLAGS -O3 -falign-functions=32 -ffat-lto-objects -flto=4 -fno-math-errno -fno-semantic-interposition -fno-trapping-math -fstack-protector-strong -mzero-caller-saved-regs=used "
-export CXXFLAGS="$CXXFLAGS -O3 -falign-functions=32 -ffat-lto-objects -flto=4 -fno-math-errno -fno-semantic-interposition -fno-trapping-math -fstack-protector-strong -mzero-caller-saved-regs=used "
+export CFLAGS="$CFLAGS -O3 -falign-functions=32 -fcf-protection=full -ffat-lto-objects -flto=4 -fno-math-errno -fno-semantic-interposition -fno-trapping-math -fstack-protector-strong "
+export FCFLAGS="$CFLAGS -O3 -falign-functions=32 -fcf-protection=full -ffat-lto-objects -flto=4 -fno-math-errno -fno-semantic-interposition -fno-trapping-math -fstack-protector-strong "
+export FFLAGS="$CFLAGS -O3 -falign-functions=32 -fcf-protection=full -ffat-lto-objects -flto=4 -fno-math-errno -fno-semantic-interposition -fno-trapping-math -fstack-protector-strong "
+export CXXFLAGS="$CXXFLAGS -O3 -falign-functions=32 -fcf-protection=full -ffat-lto-objects -flto=4 -fno-math-errno -fno-semantic-interposition -fno-trapping-math -fstack-protector-strong "
 %configure --disable-static --enable-freetype-config
 make  %{?_smp_mflags} RC=
 
@@ -142,7 +144,7 @@ export LDFLAGS="${LDFLAGS}${LDFLAGS:+ }-m32"
 make  %{?_smp_mflags} RC=
 popd
 %install
-export SOURCE_DATE_EPOCH=1552660954
+export SOURCE_DATE_EPOCH=1562047064
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/freetype
 cp docs/GPLv2.TXT %{buildroot}/usr/share/package-licenses/freetype/docs_GPLv2.TXT
@@ -230,12 +232,12 @@ popd
 %files lib
 %defattr(-,root,root,-)
 /usr/lib64/libfreetype.so.6
-/usr/lib64/libfreetype.so.6.17.0
+/usr/lib64/libfreetype.so.6.17.1
 
 %files lib32
 %defattr(-,root,root,-)
 /usr/lib32/libfreetype.so.6
-/usr/lib32/libfreetype.so.6.17.0
+/usr/lib32/libfreetype.so.6.17.1
 
 %files license
 %defattr(0644,root,root,0755)
