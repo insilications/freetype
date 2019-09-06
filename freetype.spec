@@ -6,10 +6,10 @@
 #
 Name     : freetype
 Version  : 2.10.1
-Release  : 51
+Release  : 52
 URL      : https://download-mirror.savannah.gnu.org/releases/freetype/freetype-2.10.1.tar.gz
 Source0  : https://download-mirror.savannah.gnu.org/releases/freetype/freetype-2.10.1.tar.gz
-Source99 : https://download-mirror.savannah.gnu.org/releases/freetype/freetype-2.10.1.tar.gz.sig
+Source1 : https://download-mirror.savannah.gnu.org/releases/freetype/freetype-2.10.1.tar.gz.sig
 Summary  : No detailed summary available
 Group    : Development/Tools
 License  : FTL GPL-2.0 GPL-2.0+ MIT Zlib
@@ -21,6 +21,7 @@ BuildRequires : buildreq-cmake
 BuildRequires : buildreq-configure
 BuildRequires : bzip2
 BuildRequires : bzip2-dev
+BuildRequires : bzip2-dev32
 BuildRequires : gcc-dev32
 BuildRequires : gcc-libgcc32
 BuildRequires : gcc-libstdc++32
@@ -36,12 +37,10 @@ BuildRequires : zlib-dev32
 Patch1: debuginfo.patch
 
 %description
-Werner Lemberg and Detlef Würkner.
-This file is part of the FreeType project, and may only be used, modified,
-and distributed under the terms of the FreeType project license,
-LICENSE.TXT.  By continuing to use, modify, or distribute this file you
-indicate that you have read the license and understand and accept it
-fully.
+FreeType 2.10.1
+===============
+Homepage: https://www.freetype.org
+FreeType is a freely available software library to render fonts.
 
 %package bin
 Summary: bin components for the freetype package.
@@ -58,7 +57,6 @@ Group: Development
 Requires: freetype-lib = %{version}-%{release}
 Requires: freetype-bin = %{version}-%{release}
 Provides: freetype-devel = %{version}-%{release}
-Requires: freetype = %{version}-%{release}
 Requires: freetype = %{version}-%{release}
 
 %description dev
@@ -121,30 +119,30 @@ popd
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
-export LANG=C
-export SOURCE_DATE_EPOCH=1562047064
+export LANG=C.UTF-8
+export SOURCE_DATE_EPOCH=1567785759
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
 export NM=gcc-nm
-export CFLAGS="$CFLAGS -O3 -falign-functions=32 -fcf-protection=full -ffat-lto-objects -flto=4 -fno-math-errno -fno-semantic-interposition -fno-trapping-math -fstack-protector-strong "
-export FCFLAGS="$CFLAGS -O3 -falign-functions=32 -fcf-protection=full -ffat-lto-objects -flto=4 -fno-math-errno -fno-semantic-interposition -fno-trapping-math -fstack-protector-strong "
-export FFLAGS="$CFLAGS -O3 -falign-functions=32 -fcf-protection=full -ffat-lto-objects -flto=4 -fno-math-errno -fno-semantic-interposition -fno-trapping-math -fstack-protector-strong "
-export CXXFLAGS="$CXXFLAGS -O3 -falign-functions=32 -fcf-protection=full -ffat-lto-objects -flto=4 -fno-math-errno -fno-semantic-interposition -fno-trapping-math -fstack-protector-strong "
+export CFLAGS="$CFLAGS -O3 -falign-functions=32 -ffat-lto-objects -flto=4 -fno-math-errno -fno-semantic-interposition -fno-trapping-math -fstack-protector-strong -mzero-caller-saved-regs=used "
+export FCFLAGS="$CFLAGS -O3 -falign-functions=32 -ffat-lto-objects -flto=4 -fno-math-errno -fno-semantic-interposition -fno-trapping-math -fstack-protector-strong -mzero-caller-saved-regs=used "
+export FFLAGS="$CFLAGS -O3 -falign-functions=32 -ffat-lto-objects -flto=4 -fno-math-errno -fno-semantic-interposition -fno-trapping-math -fstack-protector-strong -mzero-caller-saved-regs=used "
+export CXXFLAGS="$CXXFLAGS -O3 -falign-functions=32 -ffat-lto-objects -flto=4 -fno-math-errno -fno-semantic-interposition -fno-trapping-math -fstack-protector-strong -mzero-caller-saved-regs=used "
 %configure --disable-static --enable-freetype-config
 make  %{?_smp_mflags} RC=
 
 pushd ../build32/
 export PKG_CONFIG_PATH="/usr/lib32/pkgconfig"
 export ASFLAGS="${ASFLAGS}${ASFLAGS:+ }--32"
-export CFLAGS="${CFLAGS}${CFLAGS:+ }-m32"
-export CXXFLAGS="${CXXFLAGS}${CXXFLAGS:+ }-m32"
-export LDFLAGS="${LDFLAGS}${LDFLAGS:+ }-m32"
+export CFLAGS="${CFLAGS}${CFLAGS:+ }-m32 -mstackrealign"
+export CXXFLAGS="${CXXFLAGS}${CXXFLAGS:+ }-m32 -mstackrealign"
+export LDFLAGS="${LDFLAGS}${LDFLAGS:+ }-m32 -mstackrealign"
 %configure --disable-static --enable-freetype-config   --libdir=/usr/lib32 --build=i686-generic-linux-gnu --host=i686-generic-linux-gnu --target=i686-clr-linux-gnu
 make  %{?_smp_mflags} RC=
 popd
 %install
-export SOURCE_DATE_EPOCH=1562047064
+export SOURCE_DATE_EPOCH=1567785759
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/freetype
 cp docs/GPLv2.TXT %{buildroot}/usr/share/package-licenses/freetype/docs_GPLv2.TXT
