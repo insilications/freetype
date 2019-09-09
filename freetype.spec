@@ -6,7 +6,7 @@
 #
 Name     : freetype
 Version  : 2.10.1
-Release  : 52
+Release  : 53
 URL      : https://download-mirror.savannah.gnu.org/releases/freetype/freetype-2.10.1.tar.gz
 Source0  : https://download-mirror.savannah.gnu.org/releases/freetype/freetype-2.10.1.tar.gz
 Source1 : https://download-mirror.savannah.gnu.org/releases/freetype/freetype-2.10.1.tar.gz.sig
@@ -19,7 +19,6 @@ Requires: freetype-license = %{version}-%{release}
 Requires: freetype-man = %{version}-%{release}
 BuildRequires : buildreq-cmake
 BuildRequires : buildreq-configure
-BuildRequires : bzip2
 BuildRequires : bzip2-dev
 BuildRequires : bzip2-dev32
 BuildRequires : gcc-dev32
@@ -27,8 +26,6 @@ BuildRequires : gcc-libgcc32
 BuildRequires : gcc-libstdc++32
 BuildRequires : glibc-dev32
 BuildRequires : glibc-libc32
-BuildRequires : harfbuzz-dev
-BuildRequires : harfbuzz-dev32
 BuildRequires : libpng-dev
 BuildRequires : libpng-dev32
 BuildRequires : pip
@@ -120,7 +117,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1567785759
+export SOURCE_DATE_EPOCH=1568056893
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
@@ -142,7 +139,7 @@ export LDFLAGS="${LDFLAGS}${LDFLAGS:+ }-m32 -mstackrealign"
 make  %{?_smp_mflags} RC=
 popd
 %install
-export SOURCE_DATE_EPOCH=1567785759
+export SOURCE_DATE_EPOCH=1568056893
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/freetype
 cp docs/GPLv2.TXT %{buildroot}/usr/share/package-licenses/freetype/docs_GPLv2.TXT

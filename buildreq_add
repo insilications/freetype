@@ -4,9 +4,6 @@
 #
 bzip2-dev
 bzip2-dev32
-harfbuzz-dev
-harfbuzz-dev32
-bzip2
 libpng-dev
 libpng-dev32
 zlib-dev32
