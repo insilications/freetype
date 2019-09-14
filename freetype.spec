@@ -6,7 +6,7 @@
 #
 Name     : freetype
 Version  : 2.10.1
-Release  : 54
+Release  : 55
 URL      : https://download-mirror.savannah.gnu.org/releases/freetype/freetype-2.10.1.tar.gz
 Source0  : https://download-mirror.savannah.gnu.org/releases/freetype/freetype-2.10.1.tar.gz
 Source1 : https://download-mirror.savannah.gnu.org/releases/freetype/freetype-2.10.1.tar.gz.sig
