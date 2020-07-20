@@ -4,34 +4,31 @@
 #
 # Source0 file verified with key 0xC1A60EACE707FDA5 (wl@gnu.org)
 #
+%define keepstatic 1
 Name     : freetype
 Version  : 2.10.2
-Release  : 58
+Release  : 59
 URL      : https://download-mirror.savannah.gnu.org/releases/freetype/freetype-2.10.2.tar.gz
 Source0  : https://download-mirror.savannah.gnu.org/releases/freetype/freetype-2.10.2.tar.gz
 Source1  : https://download-mirror.savannah.gnu.org/releases/freetype/freetype-2.10.2.tar.gz.sig
 Summary  : No detailed summary available
 Group    : Development/Tools
-License  : FTL GPL-2.0 GPL-2.0+ MIT Zlib
+License  : FTL GPL-2.0+ MIT Zlib
 Requires: freetype-bin = %{version}-%{release}
 Requires: freetype-lib = %{version}-%{release}
-Requires: freetype-license = %{version}-%{release}
 Requires: freetype-man = %{version}-%{release}
 BuildRequires : buildreq-cmake
 BuildRequires : buildreq-configure
 BuildRequires : bzip2-dev
-BuildRequires : bzip2-dev32
-BuildRequires : gcc-dev32
-BuildRequires : gcc-libgcc32
-BuildRequires : gcc-libstdc++32
-BuildRequires : glibc-dev32
-BuildRequires : glibc-libc32
 BuildRequires : harfbuzz-dev
-BuildRequires : harfbuzz-dev32
 BuildRequires : libpng-dev
-BuildRequires : libpng-dev32
 BuildRequires : pkg-config
-BuildRequires : zlib-dev32
+BuildRequires : pkgconfig(libpng)
+BuildRequires : pkgconfig(zlib)
+BuildRequires : zlib-dev
+# Suppress stripping binaries
+%define __strip /bin/true
+%define debug_package %{nil}
 Patch1: debuginfo.patch
 
 %description
@@ -43,7 +40,6 @@ FreeType is a freely available software library to render fonts.
 %package bin
 Summary: bin components for the freetype package.
 Group: Binaries
-Requires: freetype-license = %{version}-%{release}
 
 %description bin
 bin components for the freetype package.
@@ -61,41 +57,12 @@ Requires: freetype = %{version}-%{release}
 dev components for the freetype package.
 
 
-%package dev32
-Summary: dev32 components for the freetype package.
-Group: Default
-Requires: freetype-lib32 = %{version}-%{release}
-Requires: freetype-bin = %{version}-%{release}
-Requires: freetype-dev = %{version}-%{release}
-
-%description dev32
-dev32 components for the freetype package.
-
-
 %package lib
 Summary: lib components for the freetype package.
 Group: Libraries
-Requires: freetype-license = %{version}-%{release}
 
 %description lib
 lib components for the freetype package.
-
-
-%package lib32
-Summary: lib32 components for the freetype package.
-Group: Default
-Requires: freetype-license = %{version}-%{release}
-
-%description lib32
-lib32 components for the freetype package.
-
-
-%package license
-Summary: license components for the freetype package.
-Group: Default
-
-%description license
-license components for the freetype package.
 
 
 %package man
@@ -106,56 +73,65 @@ Group: Default
 man components for the freetype package.
 
 
+%package staticdev
+Summary: staticdev components for the freetype package.
+Group: Default
+Requires: freetype-dev = %{version}-%{release}
+
+%description staticdev
+staticdev components for the freetype package.
+
+
 %prep
 %setup -q -n freetype-2.10.2
 cd %{_builddir}/freetype-2.10.2
 %patch1 -p1
-pushd ..
-cp -a freetype-2.10.2 build32
-popd
 
 %build
-export http_proxy=http://127.0.0.1:9/
-export https_proxy=http://127.0.0.1:9/
-export no_proxy=localhost,127.0.0.1,0.0.0.0
+## build_prepend content
+#find . -type f -name 'configure' -exec sed -i 's/\-fPIC/\-fpic/g' {} \;
+#find . -type f -name 'configure.ac' -exec sed -i 's/\-fPIC/\-fpic/g' {} \;
+#
+#echo "AM_MAINTAINER_MODE([disable])" >> configure.ac
+## build_prepend end
+unset http_proxy
+unset https_proxy
+unset no_proxy
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1589313730
+export SOURCE_DATE_EPOCH=1595279498
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
 export NM=gcc-nm
-export CFLAGS="$CFLAGS -O3 -falign-functions=32 -ffat-lto-objects -flto=4 -fno-math-errno -fno-semantic-interposition -fno-trapping-math -fstack-protector-strong -mzero-caller-saved-regs=used "
-export FCFLAGS="$FFLAGS -O3 -falign-functions=32 -ffat-lto-objects -flto=4 -fno-math-errno -fno-semantic-interposition -fno-trapping-math -fstack-protector-strong -mzero-caller-saved-regs=used "
-export FFLAGS="$FFLAGS -O3 -falign-functions=32 -ffat-lto-objects -flto=4 -fno-math-errno -fno-semantic-interposition -fno-trapping-math -fstack-protector-strong -mzero-caller-saved-regs=used "
-export CXXFLAGS="$CXXFLAGS -O3 -falign-functions=32 -ffat-lto-objects -flto=4 -fno-math-errno -fno-semantic-interposition -fno-trapping-math -fstack-protector-strong -mzero-caller-saved-regs=used "
-%configure --disable-static --enable-freetype-config
-make  %{?_smp_mflags}  RC=
+## altflags1 content
+export CFLAGS="-g -O3 -march=native -mtune=native -fgraphite-identity -Wall -Wl,--as-needed -Wl,--build-id=sha1 -Wl,--enable-new-dtags -Wl,--hash-style=gnu -Wl,-O2 -Wl,-z,now -Wl,-z,relro -falign-functions=32 -fasynchronous-unwind-tables -fdevirtualize-at-ltrans -floop-nest-optimize -fno-math-errno -fno-semantic-interposition -fno-stack-protector -fno-trapping-math -ftree-loop-distribute-patterns -ftree-loop-vectorize -ftree-vectorize -funroll-loops -fuse-ld=bfd -fuse-linker-plugin -malign-data=cacheline -fno-common -feliminate-unused-debug-types -fipa-pta -flto=16 -fno-plt -mtls-dialect=gnu2 -Wl,-sort-common -Wno-error -Wp,-D_REENTRANT -pipe -ffat-lto-objects"
+# -ffat-lto-objects -fno-PIE -fno-PIE -m64 -no-pie -fpic -fvisibility=hidden
+# gcc: -feliminate-unused-debug-types -fipa-pta -flto=16 -fno-common -Wno-error -Wp,-D_REENTRANT
+export CXXFLAGS="-g -O3 -march=native -mtune=native -fgraphite-identity -Wall -Wl,--as-needed -Wl,--build-id=sha1 -Wl,--enable-new-dtags -Wl,--hash-style=gnu -Wl,-O2 -Wl,-z,now -Wl,-z,relro -falign-functions=32 -fasynchronous-unwind-tables -fdevirtualize-at-ltrans -floop-nest-optimize -fno-math-errno -fno-semantic-interposition -fno-stack-protector -fno-trapping-math -ftree-loop-distribute-patterns -ftree-loop-vectorize -ftree-vectorize -funroll-loops -fuse-ld=bfd -fuse-linker-plugin -malign-data=cacheline -fno-common -feliminate-unused-debug-types -fipa-pta -flto=16 -fno-plt -mtls-dialect=gnu2 -Wl,-sort-common -Wno-error -Wp,-D_REENTRANT -fvisibility-inlines-hidden -pipe -ffat-lto-objects"
+#
+export FCFLAGS="-g -O3 -march=native -mtune=native -fgraphite-identity -Wall -Wl,--as-needed -Wl,--build-id=sha1 -Wl,--enable-new-dtags -Wl,--hash-style=gnu -Wl,-O2 -Wl,-z,now -Wl,-z,relro -falign-functions=32 -fasynchronous-unwind-tables -fdevirtualize-at-ltrans -floop-nest-optimize -fno-math-errno -fno-semantic-interposition -fno-stack-protector -fno-trapping-math -ftree-loop-distribute-patterns -ftree-loop-vectorize -ftree-vectorize -funroll-loops -fuse-ld=bfd -fuse-linker-plugin -malign-data=cacheline -fno-common -feliminate-unused-debug-types -fipa-pta -flto=16 -fno-plt -mtls-dialect=gnu2 -Wl,-sort-common -Wno-error -Wp,-D_REENTRANT -pipe -ffat-lto-objects"
+export FFLAGS="-g -O3 -march=native -mtune=native -fgraphite-identity -Wall -Wl,--as-needed -Wl,--build-id=sha1 -Wl,--enable-new-dtags -Wl,--hash-style=gnu -Wl,-O2 -Wl,-z,now -Wl,-z,relro -falign-functions=32 -fasynchronous-unwind-tables -fdevirtualize-at-ltrans -floop-nest-optimize -fno-math-errno -fno-semantic-interposition -fno-stack-protector -fno-trapping-math -ftree-loop-distribute-patterns -ftree-loop-vectorize -ftree-vectorize -funroll-loops -fuse-ld=bfd -fuse-linker-plugin -malign-data=cacheline -fno-common -feliminate-unused-debug-types -fipa-pta -flto=16 -fno-plt -mtls-dialect=gnu2 -Wl,-sort-common -Wno-error -Wp,-D_REENTRANT -pipe -ffat-lto-objects"
+export CFFLAGS="-g -O3 -march=native -mtune=native -fgraphite-identity -Wall -Wl,--as-needed -Wl,--build-id=sha1 -Wl,--enable-new-dtags -Wl,--hash-style=gnu -Wl,-O2 -Wl,-z,now -Wl,-z,relro -falign-functions=32 -fasynchronous-unwind-tables -fdevirtualize-at-ltrans -floop-nest-optimize -fno-math-errno -fno-semantic-interposition -fno-stack-protector -fno-trapping-math -ftree-loop-distribute-patterns -ftree-loop-vectorize -ftree-vectorize -funroll-loops -fuse-ld=bfd -fuse-linker-plugin -malign-data=cacheline -fno-common -feliminate-unused-debug-types -fipa-pta -flto=16 -fno-plt -mtls-dialect=gnu2 -Wl,-sort-common -Wno-error -Wp,-D_REENTRANT -pipe -ffat-lto-objects"
+#
+export LDFLAGS="-g -O3 -march=native -mtune=native -fgraphite-identity -Wall -Wl,--as-needed -Wl,--build-id=sha1 -Wl,--enable-new-dtags -Wl,--hash-style=gnu -Wl,-O2 -Wl,-z,now -Wl,-z,relro -falign-functions=32 -fasynchronous-unwind-tables -fdevirtualize-at-ltrans -floop-nest-optimize -fno-math-errno -fno-semantic-interposition -fno-stack-protector -fno-trapping-math -ftree-loop-distribute-patterns -ftree-loop-vectorize -ftree-vectorize -funroll-loops -fuse-ld=bfd -fuse-linker-plugin -malign-data=cacheline -fno-common -feliminate-unused-debug-types -fipa-pta -flto=16 -fno-plt -mtls-dialect=gnu2 -Wl,-sort-common -Wno-error -Wp,-D_REENTRANT -pipe -ffat-lto-objects"
+#
+export AR=gcc-ar
+export RANLIB=gcc-ranlib
+export NM=gcc-nm
+#export CCACHE_DISABLE=1
+## altflags1 end
+%configure  --enable-shared --enable-static --with-harfbuzz --with-png --with-bzip2 --enable-freetype-config
+## make_prepend content
+#find . -type f -name 'Makefile' -exec sed -i 's/\-fPIC/\-fpic/g' {} \;
+#
+#find . -type f -name 'libtool' -exec sed -i 's/\-fPIC/\-fpic/g' {} \;
+## make_prepend end
+make  %{?_smp_mflags}  V=1 VERBOSE=1 RC=
 
-pushd ../build32/
-export PKG_CONFIG_PATH="/usr/lib32/pkgconfig"
-export ASFLAGS="${ASFLAGS}${ASFLAGS:+ }--32"
-export CFLAGS="${CFLAGS}${CFLAGS:+ }-m32 -mstackrealign"
-export CXXFLAGS="${CXXFLAGS}${CXXFLAGS:+ }-m32 -mstackrealign"
-export LDFLAGS="${LDFLAGS}${LDFLAGS:+ }-m32 -mstackrealign"
-%configure --disable-static --enable-freetype-config   --libdir=/usr/lib32 --build=i686-generic-linux-gnu --host=i686-generic-linux-gnu --target=i686-clr-linux-gnu
-make  %{?_smp_mflags}  RC=
-popd
 %install
-export SOURCE_DATE_EPOCH=1589313730
+export SOURCE_DATE_EPOCH=1595279498
 rm -rf %{buildroot}
-mkdir -p %{buildroot}/usr/share/package-licenses/freetype
-cp %{_builddir}/freetype-2.10.2/docs/GPLv2.TXT %{buildroot}/usr/share/package-licenses/freetype/dac7127c82749e3107b53530289e1cd548860868
-cp %{_builddir}/freetype-2.10.2/docs/LICENSE.TXT %{buildroot}/usr/share/package-licenses/freetype/64b7f213ddd72695d94866a1a9532ee5b3a472a8
-pushd ../build32/
-%make_install32 RC=
-if [ -d  %{buildroot}/usr/lib32/pkgconfig ]
-then
-pushd %{buildroot}/usr/lib32/pkgconfig
-for i in *.pc ; do ln -s $i 32$i ; done
-popd
-fi
-popd
-%make_install RC=
+%make_install V=1 VERBOSE=1 RC=
 
 %files
 %defattr(-,root,root,-)
@@ -220,27 +196,15 @@ popd
 /usr/lib64/pkgconfig/freetype2.pc
 /usr/share/aclocal/*.m4
 
-%files dev32
-%defattr(-,root,root,-)
-/usr/lib32/libfreetype.so
-/usr/lib32/pkgconfig/32freetype2.pc
-/usr/lib32/pkgconfig/freetype2.pc
-
 %files lib
 %defattr(-,root,root,-)
 /usr/lib64/libfreetype.so.6
 /usr/lib64/libfreetype.so.6.17.2
 
-%files lib32
-%defattr(-,root,root,-)
-/usr/lib32/libfreetype.so.6
-/usr/lib32/libfreetype.so.6.17.2
-
-%files license
-%defattr(0644,root,root,0755)
-/usr/share/package-licenses/freetype/64b7f213ddd72695d94866a1a9532ee5b3a472a8
-/usr/share/package-licenses/freetype/dac7127c82749e3107b53530289e1cd548860868
-
 %files man
 %defattr(0644,root,root,0755)
 /usr/share/man/man1/freetype-config.1
+
+%files staticdev
+%defattr(-,root,root,-)
+/usr/lib64/libfreetype.a

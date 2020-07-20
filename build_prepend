@@ -1,0 +1,4 @@
+#find . -type f -name 'configure' -exec sed -i 's/\-fPIC/\-fpic/g' {} \;
+#find . -type f -name 'configure.ac' -exec sed -i 's/\-fPIC/\-fpic/g' {} \;
+#
+#echo "AM_MAINTAINER_MODE([disable])" >> configure.ac
