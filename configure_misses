@@ -1,3 +1,2 @@
-Configure miss: BROTLI
 Configure miss: whether CFLAGS and LDFLAGS share -march=native
 Configure miss: `docwriter' Python module

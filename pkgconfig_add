@@ -4,3 +4,6 @@
 #
 zlib
 libpng
+libbrotlicommon
+libbrotlidec
+libbrotlienc

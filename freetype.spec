@@ -7,7 +7,7 @@
 %define keepstatic 1
 Name     : freetype
 Version  : 2.10.2
-Release  : 59
+Release  : 60
 URL      : https://download-mirror.savannah.gnu.org/releases/freetype/freetype-2.10.2.tar.gz
 Source0  : https://download-mirror.savannah.gnu.org/releases/freetype/freetype-2.10.2.tar.gz
 Source1  : https://download-mirror.savannah.gnu.org/releases/freetype/freetype-2.10.2.tar.gz.sig
@@ -17,15 +17,24 @@ License  : FTL GPL-2.0+ MIT Zlib
 Requires: freetype-bin = %{version}-%{release}
 Requires: freetype-lib = %{version}-%{release}
 Requires: freetype-man = %{version}-%{release}
+BuildRequires : brotli-dev
+BuildRequires : brotli-staticdev
 BuildRequires : buildreq-cmake
 BuildRequires : buildreq-configure
 BuildRequires : bzip2-dev
+BuildRequires : bzip2-staticdev
 BuildRequires : harfbuzz-dev
+BuildRequires : harfbuzz-staticdev
 BuildRequires : libpng-dev
+BuildRequires : libpng-staticdev
 BuildRequires : pkg-config
+BuildRequires : pkgconfig(libbrotlicommon)
+BuildRequires : pkgconfig(libbrotlidec)
+BuildRequires : pkgconfig(libbrotlienc)
 BuildRequires : pkgconfig(libpng)
 BuildRequires : pkgconfig(zlib)
 BuildRequires : zlib-dev
+BuildRequires : zlib-staticdev
 # Suppress stripping binaries
 %define __strip /bin/true
 %define debug_package %{nil}
@@ -98,7 +107,7 @@ unset http_proxy
 unset https_proxy
 unset no_proxy
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1595279498
+export SOURCE_DATE_EPOCH=1595287407
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
@@ -120,7 +129,7 @@ export RANLIB=gcc-ranlib
 export NM=gcc-nm
 #export CCACHE_DISABLE=1
 ## altflags1 end
-%configure  --enable-shared --enable-static --with-harfbuzz --with-png --with-bzip2 --enable-freetype-config
+%configure  --enable-shared --enable-static --with-harfbuzz --with-png --with-bzip2 --enable-freetype-config --with-brotli --with-zlib
 ## make_prepend content
 #find . -type f -name 'Makefile' -exec sed -i 's/\-fPIC/\-fpic/g' {} \;
 #
@@ -129,7 +138,7 @@ export NM=gcc-nm
 make  %{?_smp_mflags}  V=1 VERBOSE=1 RC=
 
 %install
-export SOURCE_DATE_EPOCH=1595279498
+export SOURCE_DATE_EPOCH=1595287407
 rm -rf %{buildroot}
 %make_install V=1 VERBOSE=1 RC=
 

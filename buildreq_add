@@ -6,3 +6,9 @@ harfbuzz-dev
 bzip2-dev
 libpng-dev
 zlib-dev
+brotli-dev
+harfbuzz-staticdev
+bzip2-staticdev
+libpng-staticdev
+zlib-staticdev
+brotli-staticdev

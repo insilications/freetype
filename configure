@@ -1,1 +1,1 @@
---enable-shared --enable-static --with-harfbuzz --with-png --with-bzip2 --enable-freetype-config
+--enable-shared --enable-static --with-harfbuzz --with-png --with-bzip2 --enable-freetype-config --with-brotli --with-zlib
