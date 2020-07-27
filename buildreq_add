@@ -12,3 +12,4 @@ bzip2-staticdev
 libpng-staticdev
 zlib-staticdev
 brotli-staticdev
+findutils

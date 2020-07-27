@@ -7,7 +7,7 @@
 %define keepstatic 1
 Name     : freetype
 Version  : 2.10.2
-Release  : 62
+Release  : 63
 URL      : https://download-mirror.savannah.gnu.org/releases/freetype/freetype-2.10.2.tar.gz
 Source0  : https://download-mirror.savannah.gnu.org/releases/freetype/freetype-2.10.2.tar.gz
 Source1  : https://download-mirror.savannah.gnu.org/releases/freetype/freetype-2.10.2.tar.gz.sig
@@ -23,6 +23,7 @@ BuildRequires : buildreq-cmake
 BuildRequires : buildreq-configure
 BuildRequires : bzip2-dev
 BuildRequires : bzip2-staticdev
+BuildRequires : findutils
 BuildRequires : harfbuzz-dev
 BuildRequires : harfbuzz-staticdev
 BuildRequires : libpng-dev
@@ -107,7 +108,7 @@ unset http_proxy
 unset https_proxy
 unset no_proxy
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1595601674
+export SOURCE_DATE_EPOCH=1595851336
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
@@ -138,7 +139,7 @@ export NM=gcc-nm
 make  %{?_smp_mflags}  V=1 VERBOSE=1 RC=
 
 %install
-export SOURCE_DATE_EPOCH=1595601674
+export SOURCE_DATE_EPOCH=1595851336
 rm -rf %{buildroot}
 %make_install V=1 VERBOSE=1 RC=
 
