@@ -1,2 +1,8 @@
 Configure miss: whether CFLAGS and LDFLAGS share -march=native
 Configure miss: `docwriter' Python module
+Configure miss: whether CFLAGS and LDFLAGS share -march=native
+Configure miss: `docwriter' Python module
+Configure miss: whether cpp computation of bit length in ftconfig.in works
+Configure miss: whether CFLAGS and LDFLAGS share -march=native
+Configure miss: whether CFLAGS and LDFLAGS share -m32
+Configure miss: `docwriter' Python module

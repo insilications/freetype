@@ -2,14 +2,21 @@
 # This file contains extra pkgconfig build requirements that don't get picked up but are 
 # desirable. One name per line, no whitespace.
 #
-harfbuzz-dev
-bzip2-dev
-libpng-dev
-zlib-dev
 brotli-dev
-harfbuzz-staticdev
-bzip2-staticdev
-libpng-staticdev
-zlib-staticdev
 brotli-staticdev
+brotli-dev32
+brotli-staticdev32
+bzip2-dev
+bzip2-dev32
+bzip2-staticdev
+findutils
+harfbuzz-dev
+harfbuzz-dev32
+harfbuzz-staticdev
+libpng-dev
+libpng-dev32
+libpng-staticdev
+zlib-dev
+zlib-dev32
+zlib-staticdev
 findutils
