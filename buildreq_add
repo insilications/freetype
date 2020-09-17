@@ -5,3 +5,6 @@
 harfbuzz-dev
 bzip2-dev
 libpng-dev
+zlib-dev32
+libpng-dev32
+bzip2-dev32
