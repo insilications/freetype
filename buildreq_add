@@ -3,9 +3,5 @@
 # desirable. One name per line, no whitespace.
 #
 harfbuzz-dev
-harfbuzz-dev32
 bzip2-dev
-bzip2-dev32
 libpng-dev
-libpng-dev32
-zlib-dev32
