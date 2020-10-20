@@ -5,11 +5,11 @@
 # Source0 file verified with key 0xC1A60EACE707FDA5 (wl@gnu.org)
 #
 Name     : freetype
-Version  : 2.10.2
-Release  : 60
-URL      : https://download-mirror.savannah.gnu.org/releases/freetype/freetype-2.10.2.tar.gz
-Source0  : https://download-mirror.savannah.gnu.org/releases/freetype/freetype-2.10.2.tar.gz
-Source1  : https://download-mirror.savannah.gnu.org/releases/freetype/freetype-2.10.2.tar.gz.sig
+Version  : 2.10.4
+Release  : 61
+URL      : https://download-mirror.savannah.gnu.org/releases/freetype/freetype-2.10.4.tar.gz
+Source0  : https://download-mirror.savannah.gnu.org/releases/freetype/freetype-2.10.4.tar.gz
+Source1  : https://download-mirror.savannah.gnu.org/releases/freetype/freetype-2.10.4.tar.gz.sig
 Summary  : No detailed summary available
 Group    : Development/Tools
 License  : FTL GPL-2.0 GPL-2.0+ MIT Zlib
@@ -19,6 +19,7 @@ Requires: freetype-license = %{version}-%{release}
 Requires: freetype-man = %{version}-%{release}
 BuildRequires : buildreq-cmake
 BuildRequires : buildreq-configure
+BuildRequires : buildreq-meson
 BuildRequires : bzip2-dev
 BuildRequires : bzip2-dev32
 BuildRequires : gcc-dev32
@@ -34,7 +35,7 @@ BuildRequires : zlib-dev32
 Patch1: debuginfo.patch
 
 %description
-FreeType 2.10.2
+FreeType 2.10.4
 ===============
 Homepage: https://www.freetype.org
 FreeType is a freely available software library to render fonts.
@@ -106,11 +107,11 @@ man components for the freetype package.
 
 
 %prep
-%setup -q -n freetype-2.10.2
-cd %{_builddir}/freetype-2.10.2
+%setup -q -n freetype-2.10.4
+cd %{_builddir}/freetype-2.10.4
 %patch1 -p1
 pushd ..
-cp -a freetype-2.10.2 build32
+cp -a freetype-2.10.4 build32
 popd
 
 %build
@@ -118,7 +119,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1600364850
+export SOURCE_DATE_EPOCH=1603203748
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
@@ -140,11 +141,11 @@ export LDFLAGS="${LDFLAGS}${LDFLAGS:+ }-m32 -mstackrealign"
 make  %{?_smp_mflags}  RC=
 popd
 %install
-export SOURCE_DATE_EPOCH=1600364850
+export SOURCE_DATE_EPOCH=1603203748
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/freetype
-cp %{_builddir}/freetype-2.10.2/docs/GPLv2.TXT %{buildroot}/usr/share/package-licenses/freetype/dac7127c82749e3107b53530289e1cd548860868
-cp %{_builddir}/freetype-2.10.2/docs/LICENSE.TXT %{buildroot}/usr/share/package-licenses/freetype/64b7f213ddd72695d94866a1a9532ee5b3a472a8
+cp %{_builddir}/freetype-2.10.4/docs/GPLv2.TXT %{buildroot}/usr/share/package-licenses/freetype/dac7127c82749e3107b53530289e1cd548860868
+cp %{_builddir}/freetype-2.10.4/docs/LICENSE.TXT %{buildroot}/usr/share/package-licenses/freetype/64b7f213ddd72695d94866a1a9532ee5b3a472a8
 pushd ../build32/
 %make_install32 RC=
 if [ -d  %{buildroot}/usr/lib32/pkgconfig ]
@@ -170,6 +171,9 @@ popd
 /usr/include/freetype2/freetype/config/ftmodule.h
 /usr/include/freetype2/freetype/config/ftoption.h
 /usr/include/freetype2/freetype/config/ftstdlib.h
+/usr/include/freetype2/freetype/config/integer-types.h
+/usr/include/freetype2/freetype/config/mac-support.h
+/usr/include/freetype2/freetype/config/public-macros.h
 /usr/include/freetype2/freetype/freetype.h
 /usr/include/freetype2/freetype/ftadvanc.h
 /usr/include/freetype2/freetype/ftbbox.h
@@ -228,12 +232,12 @@ popd
 %files lib
 %defattr(-,root,root,-)
 /usr/lib64/libfreetype.so.6
-/usr/lib64/libfreetype.so.6.17.2
+/usr/lib64/libfreetype.so.6.17.4
 
 %files lib32
 %defattr(-,root,root,-)
 /usr/lib32/libfreetype.so.6
-/usr/lib32/libfreetype.so.6.17.2
+/usr/lib32/libfreetype.so.6.17.4
 
 %files license
 %defattr(0644,root,root,0755)
