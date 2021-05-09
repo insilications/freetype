@@ -62,6 +62,7 @@ Patch4: freetype-2.8-multilib.patch
 Patch5: freetype-2.10.0-internal-outline.patch
 Patch6: freetype-2.10.1-debughook.patch
 Patch7: freetype-2.10.4-png-memory-leak.patch
+Patch8: 0004-Enable-long-PCF-family-names.patch
 
 %description
 FreeType 2.10.4
@@ -152,6 +153,7 @@ cd %{_builddir}/freetype-2.10.4
 %patch5 -p1
 %patch6 -p1
 %patch7 -p1
+%patch8 -p1
 pushd ..
 cp -a freetype-2.10.4 build32
 popd
@@ -168,7 +170,7 @@ unset https_proxy
 unset no_proxy
 export SSL_CERT_FILE=/var/cache/ca-certs/anchors/ca-certificates.crt
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1620567942
+export SOURCE_DATE_EPOCH=1620573138
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
@@ -267,7 +269,7 @@ make  %{?_smp_mflags}  V=1 VERBOSE=1
 popd
 
 %install
-export SOURCE_DATE_EPOCH=1620567942
+export SOURCE_DATE_EPOCH=1620573138
 rm -rf %{buildroot}
 pushd ../build32/
 %make_install32 V=1 VERBOSE=1 RC=
