@@ -55,7 +55,13 @@ BuildRequires : zlib-staticdev
 # Suppress stripping binaries
 %define __strip /bin/true
 %define debug_package %{nil}
-Patch1: debuginfo.patch
+Patch1: freetype-2.3.0-enable-spr.patch
+Patch2: freetype-2.2.1-enable-valid.patch
+Patch3: freetype-2.6.5-libtool.patch
+Patch4: freetype-2.8-multilib.patch
+Patch5: freetype-2.10.0-internal-outline.patch
+Patch6: freetype-2.10.1-debughook.patch
+Patch7: freetype-2.10.4-png-memory-leak.patch
 
 %description
 FreeType 2.10.4
@@ -140,6 +146,12 @@ staticdev32 components for the freetype package.
 %setup -q -n freetype-2.10.4
 cd %{_builddir}/freetype-2.10.4
 %patch1 -p1
+%patch2 -p1
+%patch3 -p1
+%patch4 -p1
+%patch5 -p1
+%patch6 -p1
+%patch7 -p1
 pushd ..
 cp -a freetype-2.10.4 build32
 popd
@@ -156,7 +168,7 @@ unset https_proxy
 unset no_proxy
 export SSL_CERT_FILE=/var/cache/ca-certs/anchors/ca-certificates.crt
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1620563991
+export SOURCE_DATE_EPOCH=1620567942
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
@@ -255,7 +267,7 @@ make  %{?_smp_mflags}  V=1 VERBOSE=1
 popd
 
 %install
-export SOURCE_DATE_EPOCH=1620563991
+export SOURCE_DATE_EPOCH=1620567942
 rm -rf %{buildroot}
 pushd ../build32/
 %make_install32 V=1 VERBOSE=1 RC=
