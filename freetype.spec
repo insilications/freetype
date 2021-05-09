@@ -5,7 +5,7 @@
 %define keepstatic 1
 Name     : freetype
 Version  : 2.10.4
-Release  : 301
+Release  : 501
 URL      : https://download-mirror.savannah.gnu.org/releases/freetype/freetype-2.10.4.tar.gz
 Source0  : https://download-mirror.savannah.gnu.org/releases/freetype/freetype-2.10.4.tar.gz
 Summary  : No detailed summary available
@@ -156,7 +156,7 @@ unset https_proxy
 unset no_proxy
 export SSL_CERT_FILE=/var/cache/ca-certs/anchors/ca-certificates.crt
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1620563413
+export SOURCE_DATE_EPOCH=1620563991
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
@@ -255,7 +255,7 @@ make  %{?_smp_mflags}  V=1 VERBOSE=1
 popd
 
 %install
-export SOURCE_DATE_EPOCH=1620563413
+export SOURCE_DATE_EPOCH=1620563991
 rm -rf %{buildroot}
 pushd ../build32/
 %make_install32 V=1 VERBOSE=1 RC=
