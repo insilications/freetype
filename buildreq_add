@@ -11,7 +11,6 @@ bzip2-dev32
 bzip2-staticdev
 findutils
 harfbuzz-dev
-harfbuzz-dev32
 harfbuzz-staticdev
 libpng-dev
 libpng-dev32

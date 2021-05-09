@@ -1,0 +1,1 @@
+--enable-freetype-config --enable-shared --enable-static --with-harfbuzz=no --with-png=yes --with-bzip2=yes --with-brotli=no --with-zlib=yes
