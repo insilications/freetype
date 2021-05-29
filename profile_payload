@@ -43,40 +43,40 @@ export $(dbus-launch)
 ./fttimer "/usr/share/fonts/InconsolataGo Nerd Font Complete Mono.ttf" || :
 ./fttimer "/usr/share/fonts/InconsolataGo Nerd Font Complete.ttf" || :
 #
-# ./ftbench -c 3 -I 40 -l 1 -p "/usr/share/fonts/Inconsolata LGC Nerd Font Complete.ttf" || :
-# ./ftbench -c 3 -I 40 -l 1 -p "/usr/share/fonts/Inconsolata Bold Nerd Font Complete Mono.ttf" || :
-# ./ftbench -c 3 -I 40 -l 1 -p "/usr/share/fonts/Inconsolata Bold Nerd Font Complete.ttf" || :
-# ./ftbench -c 3 -I 40 -l 1 -p "/usr/share/fonts/Inconsolata LGC Bold Italic Nerd Font Complete Mono.ttf" || :
-# ./ftbench -c 3 -I 40 -l 1 -p "/usr/share/fonts/Inconsolata LGC Bold Italic Nerd Font Complete.ttf" || :
-# ./ftbench -c 3 -I 40 -l 1 -p "/usr/share/fonts/Inconsolata LGC Bold Nerd Font Complete Mono.ttf" || :
-# ./ftbench -c 3 -I 40 -l 1 -p "/usr/share/fonts/Inconsolata LGC Bold Nerd Font Complete.ttf" || :
-# ./ftbench -c 3 -I 40 -l 1 -p "/usr/share/fonts/Inconsolata LGC Italic Nerd Font Complete Mono.ttf" || :
-# ./ftbench -c 3 -I 40 -l 1 -p "/usr/share/fonts/Inconsolata LGC Italic Nerd Font Complete.ttf" || :
-# ./ftbench -c 3 -I 40 -l 1 -p "/usr/share/fonts/Inconsolata LGC Nerd Font Complete Mono.ttf" || :
-# ./ftbench -c 3 -I 40 -l 1 -p "/usr/share/fonts/Inconsolata LGC Nerd Font Complete.ttf" || :
-# ./ftbench -c 3 -I 40 -l 1 -p "/usr/share/fonts/Inconsolata Regular Nerd Font Complete Mono.ttf" || :
-# ./ftbench -c 3 -I 40 -l 1 -p "/usr/share/fonts/Inconsolata Regular Nerd Font Complete.ttf" || :
-# ./ftbench -c 3 -I 40 -l 1 -p "/usr/share/fonts/InconsolataGo Bold Nerd Font Complete Mono.ttf" || :
-# ./ftbench -c 3 -I 40 -l 1 -p "/usr/share/fonts/InconsolataGo Bold Nerd Font Complete.ttf" || :
-# ./ftbench -c 3 -I 40 -l 1 -p "/usr/share/fonts/InconsolataGo Nerd Font Complete Mono.ttf" || :
-# ./ftbench -c 3 -I 40 -l 1 -p "/usr/share/fonts/InconsolataGo Nerd Font Complete.ttf" || :
+./ftbench -c 3 -I 40 -l 1 -p "/usr/share/fonts/Inconsolata LGC Nerd Font Complete.ttf" || :
+./ftbench -c 3 -I 40 -l 1 -p "/usr/share/fonts/Inconsolata Bold Nerd Font Complete Mono.ttf" || :
+./ftbench -c 3 -I 40 -l 1 -p "/usr/share/fonts/Inconsolata Bold Nerd Font Complete.ttf" || :
+./ftbench -c 3 -I 40 -l 1 -p "/usr/share/fonts/Inconsolata LGC Bold Italic Nerd Font Complete Mono.ttf" || :
+./ftbench -c 3 -I 40 -l 1 -p "/usr/share/fonts/Inconsolata LGC Bold Italic Nerd Font Complete.ttf" || :
+./ftbench -c 3 -I 40 -l 1 -p "/usr/share/fonts/Inconsolata LGC Bold Nerd Font Complete Mono.ttf" || :
+./ftbench -c 3 -I 40 -l 1 -p "/usr/share/fonts/Inconsolata LGC Bold Nerd Font Complete.ttf" || :
+./ftbench -c 3 -I 40 -l 1 -p "/usr/share/fonts/Inconsolata LGC Italic Nerd Font Complete Mono.ttf" || :
+./ftbench -c 3 -I 40 -l 1 -p "/usr/share/fonts/Inconsolata LGC Italic Nerd Font Complete.ttf" || :
+./ftbench -c 3 -I 40 -l 1 -p "/usr/share/fonts/Inconsolata LGC Nerd Font Complete Mono.ttf" || :
+./ftbench -c 3 -I 40 -l 1 -p "/usr/share/fonts/Inconsolata LGC Nerd Font Complete.ttf" || :
+./ftbench -c 3 -I 40 -l 1 -p "/usr/share/fonts/Inconsolata Regular Nerd Font Complete Mono.ttf" || :
+./ftbench -c 3 -I 40 -l 1 -p "/usr/share/fonts/Inconsolata Regular Nerd Font Complete.ttf" || :
+./ftbench -c 3 -I 40 -l 1 -p "/usr/share/fonts/InconsolataGo Bold Nerd Font Complete Mono.ttf" || :
+./ftbench -c 3 -I 40 -l 1 -p "/usr/share/fonts/InconsolataGo Bold Nerd Font Complete.ttf" || :
+./ftbench -c 3 -I 40 -l 1 -p "/usr/share/fonts/InconsolataGo Nerd Font Complete Mono.ttf" || :
+./ftbench -c 3 -I 40 -l 1 -p "/usr/share/fonts/InconsolataGo Nerd Font Complete.ttf" || :
 #
-# ./ftlint 14 "/usr/share/fonts/Inconsolata LGC Nerd Font Complete.ttf" || :
-# ./ftlint 14 "/usr/share/fonts/Inconsolata Bold Nerd Font Complete Mono.ttf" || :
-# ./ftlint 14 "/usr/share/fonts/Inconsolata Bold Nerd Font Complete.ttf" || :
-# ./ftlint 14 "/usr/share/fonts/Inconsolata LGC Bold Italic Nerd Font Complete Mono.ttf" || :
-# ./ftlint 14 "/usr/share/fonts/Inconsolata LGC Bold Italic Nerd Font Complete.ttf" || :
-# ./ftlint 14 "/usr/share/fonts/Inconsolata LGC Bold Nerd Font Complete Mono.ttf" || :
-# ./ftlint 14 "/usr/share/fonts/Inconsolata LGC Bold Nerd Font Complete.ttf" || :
-# ./ftlint 14 "/usr/share/fonts/Inconsolata LGC Italic Nerd Font Complete Mono.ttf" || :
-# ./ftlint 14 "/usr/share/fonts/Inconsolata LGC Italic Nerd Font Complete.ttf" || :
-# ./ftlint 14 "/usr/share/fonts/Inconsolata LGC Nerd Font Complete Mono.ttf" || :
-# ./ftlint 14 "/usr/share/fonts/Inconsolata LGC Nerd Font Complete.ttf" || :
-# ./ftlint 14 "/usr/share/fonts/Inconsolata Regular Nerd Font Complete Mono.ttf" || :
-# ./ftlint 14 "/usr/share/fonts/Inconsolata Regular Nerd Font Complete.ttf" || :
-# ./ftlint 14 "/usr/share/fonts/InconsolataGo Bold Nerd Font Complete Mono.ttf" || :
-# ./ftlint 14 "/usr/share/fonts/InconsolataGo Bold Nerd Font Complete.ttf" || :
-# ./ftlint 14 "/usr/share/fonts/InconsolataGo Nerd Font Complete Mono.ttf" || :
-# ./ftlint 14 "/usr/share/fonts/InconsolataGo Nerd Font Complete.ttf" || :
+./ftlint 14 "/usr/share/fonts/Inconsolata LGC Nerd Font Complete.ttf" || :
+./ftlint 14 "/usr/share/fonts/Inconsolata Bold Nerd Font Complete Mono.ttf" || :
+./ftlint 14 "/usr/share/fonts/Inconsolata Bold Nerd Font Complete.ttf" || :
+./ftlint 14 "/usr/share/fonts/Inconsolata LGC Bold Italic Nerd Font Complete Mono.ttf" || :
+./ftlint 14 "/usr/share/fonts/Inconsolata LGC Bold Italic Nerd Font Complete.ttf" || :
+./ftlint 14 "/usr/share/fonts/Inconsolata LGC Bold Nerd Font Complete Mono.ttf" || :
+./ftlint 14 "/usr/share/fonts/Inconsolata LGC Bold Nerd Font Complete.ttf" || :
+./ftlint 14 "/usr/share/fonts/Inconsolata LGC Italic Nerd Font Complete Mono.ttf" || :
+./ftlint 14 "/usr/share/fonts/Inconsolata LGC Italic Nerd Font Complete.ttf" || :
+./ftlint 14 "/usr/share/fonts/Inconsolata LGC Nerd Font Complete Mono.ttf" || :
+./ftlint 14 "/usr/share/fonts/Inconsolata LGC Nerd Font Complete.ttf" || :
+./ftlint 14 "/usr/share/fonts/Inconsolata Regular Nerd Font Complete Mono.ttf" || :
+./ftlint 14 "/usr/share/fonts/Inconsolata Regular Nerd Font Complete.ttf" || :
+./ftlint 14 "/usr/share/fonts/InconsolataGo Bold Nerd Font Complete Mono.ttf" || :
+./ftlint 14 "/usr/share/fonts/InconsolataGo Bold Nerd Font Complete.ttf" || :
+./ftlint 14 "/usr/share/fonts/InconsolataGo Nerd Font Complete Mono.ttf" || :
+./ftlint 14 "/usr/share/fonts/InconsolataGo Nerd Font Complete.ttf" || :
 find . -type f,l -not -name '*.gcno' -not -name 'statuspgo*' -delete -print || :
 cd ../../

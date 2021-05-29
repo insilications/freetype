@@ -1,2 +1,2 @@
 ninja --verbose %{?_smp_mflags} -v -C builddir
-cd ../../
+cd /builddir/build/BUILD/freetype

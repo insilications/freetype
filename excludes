@@ -1,2 +1,14 @@
 # This file contains the output files that need %exclude. Full path
 # names, one per line.
+/usr/bin/ftbench
+/usr/bin/ftdiff
+/usr/bin/ftdump
+/usr/bin/ftgamma
+/usr/bin/ftgrid
+/usr/bin/ftinspect
+/usr/bin/ftlint
+/usr/bin/ftmulti
+/usr/bin/ftsdf
+/usr/bin/ftstring
+/usr/bin/ftvalid
+/usr/bin/ftview

@@ -524,7 +524,7 @@ unset https_proxy
 unset no_proxy
 export SSL_CERT_FILE=/var/cache/ca-certs/anchors/ca-certificates.crt
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1622264082
+export SOURCE_DATE_EPOCH=1622264860
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
@@ -595,7 +595,7 @@ meson --libdir=lib64 --prefix=/usr --buildtype=release -Ddefault_library=both  -
 ## make_prepend end
 ## make_macro start
 ninja --verbose %{?_smp_mflags} -v -C builddir
-cd ../../
+cd /builddir/build/BUILD/freetype
 ## make_macro end
 cd /builddir/build/BUILD/freetype/freetype-demos/builddir
 export DISPLAY=:0
@@ -642,41 +642,41 @@ export $(dbus-launch)
 ./fttimer "/usr/share/fonts/InconsolataGo Nerd Font Complete Mono.ttf" || :
 ./fttimer "/usr/share/fonts/InconsolataGo Nerd Font Complete.ttf" || :
 #
-# ./ftbench -c 3 -I 40 -l 1 -p "/usr/share/fonts/Inconsolata LGC Nerd Font Complete.ttf" || :
-# ./ftbench -c 3 -I 40 -l 1 -p "/usr/share/fonts/Inconsolata Bold Nerd Font Complete Mono.ttf" || :
-# ./ftbench -c 3 -I 40 -l 1 -p "/usr/share/fonts/Inconsolata Bold Nerd Font Complete.ttf" || :
-# ./ftbench -c 3 -I 40 -l 1 -p "/usr/share/fonts/Inconsolata LGC Bold Italic Nerd Font Complete Mono.ttf" || :
-# ./ftbench -c 3 -I 40 -l 1 -p "/usr/share/fonts/Inconsolata LGC Bold Italic Nerd Font Complete.ttf" || :
-# ./ftbench -c 3 -I 40 -l 1 -p "/usr/share/fonts/Inconsolata LGC Bold Nerd Font Complete Mono.ttf" || :
-# ./ftbench -c 3 -I 40 -l 1 -p "/usr/share/fonts/Inconsolata LGC Bold Nerd Font Complete.ttf" || :
-# ./ftbench -c 3 -I 40 -l 1 -p "/usr/share/fonts/Inconsolata LGC Italic Nerd Font Complete Mono.ttf" || :
-# ./ftbench -c 3 -I 40 -l 1 -p "/usr/share/fonts/Inconsolata LGC Italic Nerd Font Complete.ttf" || :
-# ./ftbench -c 3 -I 40 -l 1 -p "/usr/share/fonts/Inconsolata LGC Nerd Font Complete Mono.ttf" || :
-# ./ftbench -c 3 -I 40 -l 1 -p "/usr/share/fonts/Inconsolata LGC Nerd Font Complete.ttf" || :
-# ./ftbench -c 3 -I 40 -l 1 -p "/usr/share/fonts/Inconsolata Regular Nerd Font Complete Mono.ttf" || :
-# ./ftbench -c 3 -I 40 -l 1 -p "/usr/share/fonts/Inconsolata Regular Nerd Font Complete.ttf" || :
-# ./ftbench -c 3 -I 40 -l 1 -p "/usr/share/fonts/InconsolataGo Bold Nerd Font Complete Mono.ttf" || :
-# ./ftbench -c 3 -I 40 -l 1 -p "/usr/share/fonts/InconsolataGo Bold Nerd Font Complete.ttf" || :
-# ./ftbench -c 3 -I 40 -l 1 -p "/usr/share/fonts/InconsolataGo Nerd Font Complete Mono.ttf" || :
-# ./ftbench -c 3 -I 40 -l 1 -p "/usr/share/fonts/InconsolataGo Nerd Font Complete.ttf" || :
+./ftbench -c 3 -I 40 -l 1 -p "/usr/share/fonts/Inconsolata LGC Nerd Font Complete.ttf" || :
+./ftbench -c 3 -I 40 -l 1 -p "/usr/share/fonts/Inconsolata Bold Nerd Font Complete Mono.ttf" || :
+./ftbench -c 3 -I 40 -l 1 -p "/usr/share/fonts/Inconsolata Bold Nerd Font Complete.ttf" || :
+./ftbench -c 3 -I 40 -l 1 -p "/usr/share/fonts/Inconsolata LGC Bold Italic Nerd Font Complete Mono.ttf" || :
+./ftbench -c 3 -I 40 -l 1 -p "/usr/share/fonts/Inconsolata LGC Bold Italic Nerd Font Complete.ttf" || :
+./ftbench -c 3 -I 40 -l 1 -p "/usr/share/fonts/Inconsolata LGC Bold Nerd Font Complete Mono.ttf" || :
+./ftbench -c 3 -I 40 -l 1 -p "/usr/share/fonts/Inconsolata LGC Bold Nerd Font Complete.ttf" || :
+./ftbench -c 3 -I 40 -l 1 -p "/usr/share/fonts/Inconsolata LGC Italic Nerd Font Complete Mono.ttf" || :
+./ftbench -c 3 -I 40 -l 1 -p "/usr/share/fonts/Inconsolata LGC Italic Nerd Font Complete.ttf" || :
+./ftbench -c 3 -I 40 -l 1 -p "/usr/share/fonts/Inconsolata LGC Nerd Font Complete Mono.ttf" || :
+./ftbench -c 3 -I 40 -l 1 -p "/usr/share/fonts/Inconsolata LGC Nerd Font Complete.ttf" || :
+./ftbench -c 3 -I 40 -l 1 -p "/usr/share/fonts/Inconsolata Regular Nerd Font Complete Mono.ttf" || :
+./ftbench -c 3 -I 40 -l 1 -p "/usr/share/fonts/Inconsolata Regular Nerd Font Complete.ttf" || :
+./ftbench -c 3 -I 40 -l 1 -p "/usr/share/fonts/InconsolataGo Bold Nerd Font Complete Mono.ttf" || :
+./ftbench -c 3 -I 40 -l 1 -p "/usr/share/fonts/InconsolataGo Bold Nerd Font Complete.ttf" || :
+./ftbench -c 3 -I 40 -l 1 -p "/usr/share/fonts/InconsolataGo Nerd Font Complete Mono.ttf" || :
+./ftbench -c 3 -I 40 -l 1 -p "/usr/share/fonts/InconsolataGo Nerd Font Complete.ttf" || :
 #
-# ./ftlint 14 "/usr/share/fonts/Inconsolata LGC Nerd Font Complete.ttf" || :
-# ./ftlint 14 "/usr/share/fonts/Inconsolata Bold Nerd Font Complete Mono.ttf" || :
-# ./ftlint 14 "/usr/share/fonts/Inconsolata Bold Nerd Font Complete.ttf" || :
-# ./ftlint 14 "/usr/share/fonts/Inconsolata LGC Bold Italic Nerd Font Complete Mono.ttf" || :
-# ./ftlint 14 "/usr/share/fonts/Inconsolata LGC Bold Italic Nerd Font Complete.ttf" || :
-# ./ftlint 14 "/usr/share/fonts/Inconsolata LGC Bold Nerd Font Complete Mono.ttf" || :
-# ./ftlint 14 "/usr/share/fonts/Inconsolata LGC Bold Nerd Font Complete.ttf" || :
-# ./ftlint 14 "/usr/share/fonts/Inconsolata LGC Italic Nerd Font Complete Mono.ttf" || :
-# ./ftlint 14 "/usr/share/fonts/Inconsolata LGC Italic Nerd Font Complete.ttf" || :
-# ./ftlint 14 "/usr/share/fonts/Inconsolata LGC Nerd Font Complete Mono.ttf" || :
-# ./ftlint 14 "/usr/share/fonts/Inconsolata LGC Nerd Font Complete.ttf" || :
-# ./ftlint 14 "/usr/share/fonts/Inconsolata Regular Nerd Font Complete Mono.ttf" || :
-# ./ftlint 14 "/usr/share/fonts/Inconsolata Regular Nerd Font Complete.ttf" || :
-# ./ftlint 14 "/usr/share/fonts/InconsolataGo Bold Nerd Font Complete Mono.ttf" || :
-# ./ftlint 14 "/usr/share/fonts/InconsolataGo Bold Nerd Font Complete.ttf" || :
-# ./ftlint 14 "/usr/share/fonts/InconsolataGo Nerd Font Complete Mono.ttf" || :
-# ./ftlint 14 "/usr/share/fonts/InconsolataGo Nerd Font Complete.ttf" || :
+./ftlint 14 "/usr/share/fonts/Inconsolata LGC Nerd Font Complete.ttf" || :
+./ftlint 14 "/usr/share/fonts/Inconsolata Bold Nerd Font Complete Mono.ttf" || :
+./ftlint 14 "/usr/share/fonts/Inconsolata Bold Nerd Font Complete.ttf" || :
+./ftlint 14 "/usr/share/fonts/Inconsolata LGC Bold Italic Nerd Font Complete Mono.ttf" || :
+./ftlint 14 "/usr/share/fonts/Inconsolata LGC Bold Italic Nerd Font Complete.ttf" || :
+./ftlint 14 "/usr/share/fonts/Inconsolata LGC Bold Nerd Font Complete Mono.ttf" || :
+./ftlint 14 "/usr/share/fonts/Inconsolata LGC Bold Nerd Font Complete.ttf" || :
+./ftlint 14 "/usr/share/fonts/Inconsolata LGC Italic Nerd Font Complete Mono.ttf" || :
+./ftlint 14 "/usr/share/fonts/Inconsolata LGC Italic Nerd Font Complete.ttf" || :
+./ftlint 14 "/usr/share/fonts/Inconsolata LGC Nerd Font Complete Mono.ttf" || :
+./ftlint 14 "/usr/share/fonts/Inconsolata LGC Nerd Font Complete.ttf" || :
+./ftlint 14 "/usr/share/fonts/Inconsolata Regular Nerd Font Complete Mono.ttf" || :
+./ftlint 14 "/usr/share/fonts/Inconsolata Regular Nerd Font Complete.ttf" || :
+./ftlint 14 "/usr/share/fonts/InconsolataGo Bold Nerd Font Complete Mono.ttf" || :
+./ftlint 14 "/usr/share/fonts/InconsolataGo Bold Nerd Font Complete.ttf" || :
+./ftlint 14 "/usr/share/fonts/InconsolataGo Nerd Font Complete Mono.ttf" || :
+./ftlint 14 "/usr/share/fonts/InconsolataGo Nerd Font Complete.ttf" || :
 find . -type f,l -not -name '*.gcno' -not -name 'statuspgo*' -delete -print || :
 cd ../../
 find builddir/ -type f,l -not -name '*.gcno' -not -name 'statuspgo*' -delete -print || :
@@ -750,7 +750,7 @@ meson --libdir=lib64 --prefix=/usr --buildtype=release -Ddefault_library=both  -
 ## make_prepend end
 ## make_macro start
 ninja --verbose %{?_smp_mflags} -v -C builddir
-cd ../../
+cd /builddir/build/BUILD/freetype
 ## make_macro end
 pushd ../build32/
 export CFLAGS="-O2 -ffat-lto-objects -fuse-linker-plugin -pipe -fPIC -m32 -mstackrealign -march=native -mtune=native"
@@ -783,7 +783,24 @@ for i in *.pc ; do ln -s $i 32$i ; done
 popd
 fi
 popd
+## install_macro start
+pushd freetype-demos/
 DESTDIR=%{buildroot} ninja -C builddir install
+popd
+## install_macro end
+## Remove excluded files
+rm -f %{buildroot}/usr/bin/ftbench
+rm -f %{buildroot}/usr/bin/ftdiff
+rm -f %{buildroot}/usr/bin/ftdump
+rm -f %{buildroot}/usr/bin/ftgamma
+rm -f %{buildroot}/usr/bin/ftgrid
+rm -f %{buildroot}/usr/bin/ftinspect
+rm -f %{buildroot}/usr/bin/ftlint
+rm -f %{buildroot}/usr/bin/ftmulti
+rm -f %{buildroot}/usr/bin/ftsdf
+rm -f %{buildroot}/usr/bin/ftstring
+rm -f %{buildroot}/usr/bin/ftvalid
+rm -f %{buildroot}/usr/bin/ftview
 ## install_append content
 install -dm 0755 %{buildroot}/usr/lib64/haswell/ || :
 cp --archive %{buildroot}/usr/lib64/lib*.so* %{buildroot}/usr/lib64/haswell/ || :
