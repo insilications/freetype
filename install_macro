@@ -1,0 +1,3 @@
+pushd freetype-demos/
+DESTDIR=%{buildroot} ninja -C builddir install
+popd

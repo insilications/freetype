@@ -8,6 +8,7 @@ Version  : 2.10.4
 Release  : 503
 URL      : file:///aot/build/clearlinux/packages/freetype/freetype-v2-10-4.tar.gz
 Source0  : file:///aot/build/clearlinux/packages/freetype/freetype-v2-10-4.tar.gz
+Source1  : file:///aot/build/clearlinux/packages/freetype/freetype-demos-v2-10-4.tar.gz
 Summary  : No detailed summary available
 Group    : Development/Tools
 License  : FTL GPL-2.0+ MIT Zlib
@@ -502,7 +503,11 @@ FreeType is a freely available software library to render fonts.
 
 %prep
 %setup -q -n freetype
+cd %{_builddir}
+tar xf %{_sourcedir}/freetype-demos-v2-10-4.tar.gz
 cd %{_builddir}/freetype
+mkdir -p freetype-demos
+cp -r %{_builddir}/freetype-demos/* %{_builddir}/freetype/freetype-demos
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
@@ -516,18 +521,12 @@ cp -a freetype build32
 popd
 
 %build
-## build_prepend content
-#find . -type f -name 'configure' -exec sed -i 's/\-fPIC/\-fpic/g' {} \;
-#find . -type f -name 'configure.ac' -exec sed -i 's/\-fPIC/\-fpic/g' {} \;
-#
-#echo "AM_MAINTAINER_MODE([disable])" >> configure.ac
-## build_prepend end
 unset http_proxy
 unset https_proxy
 unset no_proxy
 export SSL_CERT_FILE=/var/cache/ca-certs/anchors/ca-certificates.crt
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1622258758
+export SOURCE_DATE_EPOCH=1622262581
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
@@ -579,13 +578,10 @@ export CXXFLAGS="${CXXFLAGS_GENERATE}"
 export FFLAGS="${FFLAGS_GENERATE}"
 export FCFLAGS="${FCFLAGS_GENERATE}"
 export LDFLAGS="${LDFLAGS_GENERATE}"
-meson --libdir=lib64 --prefix=/usr --buildtype=release -Ddefault_library=both  -Dzlib=enabled \
--Dbzip2=enabled \
--Dpng=enabled \
--Dharfbuzz=enabled \
--Dbrotli=enabled \
--Dmmap=enabled \
--Ddefault_library=both builddir
+ln -sf /builddir/build/BUILD/freetype/ /builddir/build/BUILD/freetype/freetype-demos/subprojects/freetype2
+pushd freetype-demos/
+meson --libdir=lib64 --prefix=/usr --buildtype=release -Ddefault_library=both  -Dzlib=enabled -Dbzip2=enabled -Dpng=enabled -Dharfbuzz=enabled -Dbrotli=enabled -Dmmap=enabled -Ddefault_library=both -Dstrip=false -Dfreetype2:default_library=both -Dfreetype2:zlib=enabled -Dfreetype2:bzip2=enabled -Dfreetype2:png=enabled -Dfreetype2:harfbuzz=enabled -Dfreetype2:brotli=enabled -Dfreetype2:mmap=enabled builddir
+popd
 ## make_prepend content
 #sd "\-lz" "/usr/lib64/libz.a" $(fd -uu --glob Makefile)
 #sd "\-lbz2" "/usr/lib64/libbz2.a" $(fd -uu --glob Makefile)
@@ -602,6 +598,7 @@ meson --libdir=lib64 --prefix=/usr --buildtype=release -Ddefault_library=both  -
 ## make_prepend end
 ninja --verbose %{?_smp_mflags} -v -C builddir
 
+pushd freetype-demos/builddir/
 export DISPLAY=:0
 export __GL_ALLOW_UNOFFICIAL_PROTOCOL=1
 export __GL_SYNC_TO_VBLANK=0
@@ -627,21 +624,119 @@ export FONTCONFIG_PATH=/usr/share/defaults/fonts
 export LD_LIBRARY_PATH="/usr/local/cuda/lib64:/usr/local/cuda/targets/x86_64-linux/lib:/usr/nvidia/lib64:/usr/nvidia/lib:/usr/nvidia/lib/vdpau:/usr/nvidia/lib64/xorg/modules/drivers:/usr/nvidia/lib64/xorg/modules/extensions:/usr/lib64/dri:/usr/lib64/haswell:/usr/lib64:/usr/lib:/usr/share"
 export PATH="/usr/nvidia/bin:/usr/bin/haswell:/usr/bin:/usr/sbin"
 export $(dbus-launch)
-meson test --verbose -C builddir ||:
-meson test --verbose -C builddir --benchmark ||:
+#
+./fttimer "/usr/share/fonts/Inconsolata LGC Nerd Font Complete.ttf" || :
+./fttimer "/usr/share/fonts/Inconsolata Bold Nerd Font Complete Mono.ttf" || :
+./fttimer "/usr/share/fonts/Inconsolata Bold Nerd Font Complete.ttf" || :
+./fttimer "/usr/share/fonts/Inconsolata LGC Bold Italic Nerd Font Complete Mono.ttf" || :
+./fttimer "/usr/share/fonts/Inconsolata LGC Bold Italic Nerd Font Complete.ttf" || :
+./fttimer "/usr/share/fonts/Inconsolata LGC Bold Nerd Font Complete Mono.ttf" || :
+./fttimer "/usr/share/fonts/Inconsolata LGC Bold Nerd Font Complete.ttf" || :
+./fttimer "/usr/share/fonts/Inconsolata LGC Italic Nerd Font Complete Mono.ttf" || :
+./fttimer "/usr/share/fonts/Inconsolata LGC Italic Nerd Font Complete.ttf" || :
+./fttimer "/usr/share/fonts/Inconsolata LGC Nerd Font Complete Mono.ttf" || :
+./fttimer "/usr/share/fonts/Inconsolata LGC Nerd Font Complete.ttf" || :
+./fttimer "/usr/share/fonts/Inconsolata Regular Nerd Font Complete Mono.ttf" || :
+./fttimer "/usr/share/fonts/Inconsolata Regular Nerd Font Complete.ttf" || :
+./fttimer "/usr/share/fonts/InconsolataGo Bold Nerd Font Complete Mono.ttf" || :
+./fttimer "/usr/share/fonts/InconsolataGo Bold Nerd Font Complete.ttf" || :
+./fttimer "/usr/share/fonts/InconsolataGo Nerd Font Complete Mono.ttf" || :
+./fttimer "/usr/share/fonts/InconsolataGo Nerd Font Complete.ttf" || :
+#
+./ftbench -c 3 -I 40 -l 1 -p "/usr/share/fonts/Inconsolata LGC Nerd Font Complete.ttf" || :
+./ftbench -c 3 -I 40 -l 1 -p "/usr/share/fonts/Inconsolata Bold Nerd Font Complete Mono.ttf" || :
+./ftbench -c 3 -I 40 -l 1 -p "/usr/share/fonts/Inconsolata Bold Nerd Font Complete.ttf" || :
+./ftbench -c 3 -I 40 -l 1 -p "/usr/share/fonts/Inconsolata LGC Bold Italic Nerd Font Complete Mono.ttf" || :
+./ftbench -c 3 -I 40 -l 1 -p "/usr/share/fonts/Inconsolata LGC Bold Italic Nerd Font Complete.ttf" || :
+./ftbench -c 3 -I 40 -l 1 -p "/usr/share/fonts/Inconsolata LGC Bold Nerd Font Complete Mono.ttf" || :
+./ftbench -c 3 -I 40 -l 1 -p "/usr/share/fonts/Inconsolata LGC Bold Nerd Font Complete.ttf" || :
+./ftbench -c 3 -I 40 -l 1 -p "/usr/share/fonts/Inconsolata LGC Italic Nerd Font Complete Mono.ttf" || :
+./ftbench -c 3 -I 40 -l 1 -p "/usr/share/fonts/Inconsolata LGC Italic Nerd Font Complete.ttf" || :
+./ftbench -c 3 -I 40 -l 1 -p "/usr/share/fonts/Inconsolata LGC Nerd Font Complete Mono.ttf" || :
+./ftbench -c 3 -I 40 -l 1 -p "/usr/share/fonts/Inconsolata LGC Nerd Font Complete.ttf" || :
+./ftbench -c 3 -I 40 -l 1 -p "/usr/share/fonts/Inconsolata Regular Nerd Font Complete Mono.ttf" || :
+./ftbench -c 3 -I 40 -l 1 -p "/usr/share/fonts/Inconsolata Regular Nerd Font Complete.ttf" || :
+./ftbench -c 3 -I 40 -l 1 -p "/usr/share/fonts/InconsolataGo Bold Nerd Font Complete Mono.ttf" || :
+./ftbench -c 3 -I 40 -l 1 -p "/usr/share/fonts/InconsolataGo Bold Nerd Font Complete.ttf" || :
+./ftbench -c 3 -I 40 -l 1 -p "/usr/share/fonts/InconsolataGo Nerd Font Complete Mono.ttf" || :
+./ftbench -c 3 -I 40 -l 1 -p "/usr/share/fonts/InconsolataGo Nerd Font Complete.ttf" || :
+#
+./ftlint 14 "/usr/share/fonts/Inconsolata LGC Nerd Font Complete.ttf" || :
+./ftlint 14 "/usr/share/fonts/Inconsolata Bold Nerd Font Complete Mono.ttf" || :
+./ftlint 14 "/usr/share/fonts/Inconsolata Bold Nerd Font Complete.ttf" || :
+./ftlint 14 "/usr/share/fonts/Inconsolata LGC Bold Italic Nerd Font Complete Mono.ttf" || :
+./ftlint 14 "/usr/share/fonts/Inconsolata LGC Bold Italic Nerd Font Complete.ttf" || :
+./ftlint 14 "/usr/share/fonts/Inconsolata LGC Bold Nerd Font Complete Mono.ttf" || :
+./ftlint 14 "/usr/share/fonts/Inconsolata LGC Bold Nerd Font Complete.ttf" || :
+./ftlint 14 "/usr/share/fonts/Inconsolata LGC Italic Nerd Font Complete Mono.ttf" || :
+./ftlint 14 "/usr/share/fonts/Inconsolata LGC Italic Nerd Font Complete.ttf" || :
+./ftlint 14 "/usr/share/fonts/Inconsolata LGC Nerd Font Complete Mono.ttf" || :
+./ftlint 14 "/usr/share/fonts/Inconsolata LGC Nerd Font Complete.ttf" || :
+./ftlint 14 "/usr/share/fonts/Inconsolata Regular Nerd Font Complete Mono.ttf" || :
+./ftlint 14 "/usr/share/fonts/Inconsolata Regular Nerd Font Complete.ttf" || :
+./ftlint 14 "/usr/share/fonts/InconsolataGo Bold Nerd Font Complete Mono.ttf" || :
+./ftlint 14 "/usr/share/fonts/InconsolataGo Bold Nerd Font Complete.ttf" || :
+./ftlint 14 "/usr/share/fonts/InconsolataGo Nerd Font Complete Mono.ttf" || :
+./ftlint 14 "/usr/share/fonts/InconsolataGo Nerd Font Complete.ttf" || :
+cd ..
 find builddir/ -type f,l -not -name '*.gcno' -not -name 'statuspgo*' -delete -print
+popd
+find builddir/ -type f,l -not -name '*.gcno' -not -name 'statuspgo*' -delete -print
+export GCC_IGNORE_WERROR=1
+export AR=gcc-ar
+export RANLIB=gcc-ranlib
+export NM=gcc-nm
+## altflags_pgo content
+## pgo generate
+export PGO_GEN="-fprofile-generate=/var/tmp/pgo -fprofile-dir=/var/tmp/pgo -fprofile-abs-path -fprofile-update=atomic -fprofile-arcs -ftest-coverage --coverage -fprofile-partial-training"
+export CFLAGS_GENERATE="-g -O3 --param=lto-max-streaming-parallelism=16 -march=native -mtune=native -falign-functions=32 -flimit-function-alignment -fno-semantic-interposition -fno-stack-protector -fuse-ld=bfd -fuse-linker-plugin -malign-data=cacheline -mtls-dialect=gnu2 -fno-math-errno -fno-trapping-math -pipe -ffat-lto-objects -flto=16 -fPIC -Wl,-z,max-page-size=0x1000 -fomit-frame-pointer -pthread -static-libstdc++ -static-libgcc -Wl,--build-id=sha1 -fdevirtualize-at-ltrans -Wl,-z,now -Wl,-z,relro -Wl,-sort-common -fasynchronous-unwind-tables $PGO_GEN"
+export FCFLAGS_GENERATE="-g -O3 --param=lto-max-streaming-parallelism=16 -march=native -mtune=native -falign-functions=32 -flimit-function-alignment -fno-semantic-interposition -fno-stack-protector -fuse-ld=bfd -fuse-linker-plugin -malign-data=cacheline -mtls-dialect=gnu2 -fno-math-errno -fno-trapping-math -pipe -ffat-lto-objects -flto=16 -fPIC -Wl,-z,max-page-size=0x1000 -fomit-frame-pointer -pthread -static-libstdc++ -static-libgcc -Wl,--build-id=sha1 -fdevirtualize-at-ltrans -Wl,-z,now -Wl,-z,relro -Wl,-sort-common -fasynchronous-unwind-tables $PGO_GEN"
+export FFLAGS_GENERATE="-g -O3 --param=lto-max-streaming-parallelism=16 -march=native -mtune=native -falign-functions=32 -flimit-function-alignment -fno-semantic-interposition -fno-stack-protector -fuse-ld=bfd -fuse-linker-plugin -malign-data=cacheline -mtls-dialect=gnu2 -fno-math-errno -fno-trapping-math -pipe -ffat-lto-objects -flto=16 -fPIC -Wl,-z,max-page-size=0x1000 -fomit-frame-pointer -pthread -static-libstdc++ -static-libgcc -Wl,--build-id=sha1 -fdevirtualize-at-ltrans -Wl,-z,now -Wl,-z,relro -Wl,-sort-common -fasynchronous-unwind-tables $PGO_GEN"
+export CXXFLAGS_GENERATE="-g -O3 --param=lto-max-streaming-parallelism=16 -march=native -mtune=native -falign-functions=32 -flimit-function-alignment -fno-semantic-interposition -fno-stack-protector -fuse-ld=bfd -fuse-linker-plugin -malign-data=cacheline -mtls-dialect=gnu2 -fno-math-errno -fno-trapping-math -fvisibility-inlines-hidden -pipe -ffat-lto-objects -flto=16 -fPIC -Wl,-z,max-page-size=0x1000 -fomit-frame-pointer -pthread -static-libstdc++ -static-libgcc -Wl,--build-id=sha1 -fdevirtualize-at-ltrans -Wl,-z,now -Wl,-z,relro -Wl,-sort-common -fasynchronous-unwind-tables $PGO_GEN"
+export LDFLAGS_GENERATE="-g -O3 --param=lto-max-streaming-parallelism=16 -march=native -mtune=native -falign-functions=32 -flimit-function-alignment -fno-semantic-interposition -fno-stack-protector -fuse-ld=bfd -fuse-linker-plugin -malign-data=cacheline -mtls-dialect=gnu2 -fno-math-errno -fno-trapping-math -pipe -ffat-lto-objects -flto=16 -fPIC -Wl,-z,max-page-size=0x1000 -fomit-frame-pointer -pthread -static-libstdc++ -static-libgcc -lpthread -Wl,--build-id=sha1 -fdevirtualize-at-ltrans -Wl,-z,now -Wl,-z,relro -Wl,-sort-common -fasynchronous-unwind-tables $PGO_GEN"
+## pgo use
+## -ffat-lto-objects -fno-PIE -fno-PIE -m64 -no-pie -fPIC -Wl,-z,max-page-size=0x1000 -fvisibility=hidden -flto-partition=none
+## gcc: -feliminate-unused-debug-types -fipa-pta -flto=16 -Wno-error -Wp,-D_REENTRANT -fno-common -funroll-loops
+export PGO_USE="-fprofile-use=/var/tmp/pgo -fprofile-dir=/var/tmp/pgo -fprofile-abs-path -fprofile-correction -fprofile-partial-training"
+export CFLAGS_USE="-g -O3 --param=lto-max-streaming-parallelism=16 -march=native -mtune=native -fgraphite-identity -Wall -Wl,--as-needed -Wl,--build-id=sha1 -Wl,--enable-new-dtags -Wl,--hash-style=gnu -Wl,-O2 -Wl,-z,now -Wl,-z,relro -falign-functions=32 -flimit-function-alignment -fasynchronous-unwind-tables -fdevirtualize-at-ltrans -floop-nest-optimize -floop-block -fno-math-errno -fno-semantic-interposition -fno-stack-protector -fno-trapping-math -ftree-loop-distribute-patterns -ftree-loop-vectorize -ftree-vectorize -fuse-ld=bfd -fuse-linker-plugin -malign-data=cacheline -feliminate-unused-debug-types -fipa-pta -flto=16 -fno-plt -mtls-dialect=gnu2 -Wl,-sort-common -Wno-error -Wp,-D_REENTRANT -pipe -ffat-lto-objects -fPIC -Wl,-z,max-page-size=0x1000 -fomit-frame-pointer -pthread -static-libstdc++ -static-libgcc $PGO_USE"
+export FCFLAGS_USE="-g -O3 --param=lto-max-streaming-parallelism=16 -march=native -mtune=native -fgraphite-identity -Wall -Wl,--as-needed -Wl,--build-id=sha1 -Wl,--enable-new-dtags -Wl,--hash-style=gnu -Wl,-O2 -Wl,-z,now -Wl,-z,relro -falign-functions=32 -flimit-function-alignment -fasynchronous-unwind-tables -fdevirtualize-at-ltrans -floop-nest-optimize -floop-block -fno-math-errno -fno-semantic-interposition -fno-stack-protector -fno-trapping-math -ftree-loop-distribute-patterns -ftree-loop-vectorize -ftree-vectorize -fuse-ld=bfd -fuse-linker-plugin -malign-data=cacheline -feliminate-unused-debug-types -fipa-pta -flto=16 -fno-plt -mtls-dialect=gnu2 -Wl,-sort-common -Wno-error -Wp,-D_REENTRANT -pipe -ffat-lto-objects -fPIC -Wl,-z,max-page-size=0x1000 -fomit-frame-pointer -pthread -static-libstdc++ -static-libgcc $PGO_USE"
+export FFLAGS_USE="-g -O3 --param=lto-max-streaming-parallelism=16 -march=native -mtune=native -fgraphite-identity -Wall -Wl,--as-needed -Wl,--build-id=sha1 -Wl,--enable-new-dtags -Wl,--hash-style=gnu -Wl,-O2 -Wl,-z,now -Wl,-z,relro -falign-functions=32 -flimit-function-alignment -fasynchronous-unwind-tables -fdevirtualize-at-ltrans -floop-nest-optimize -floop-block -fno-math-errno -fno-semantic-interposition -fno-stack-protector -fno-trapping-math -ftree-loop-distribute-patterns -ftree-loop-vectorize -ftree-vectorize -fuse-ld=bfd -fuse-linker-plugin -malign-data=cacheline -feliminate-unused-debug-types -fipa-pta -flto=16 -fno-plt -mtls-dialect=gnu2 -Wl,-sort-common -Wno-error -Wp,-D_REENTRANT -pipe -ffat-lto-objects -fPIC -Wl,-z,max-page-size=0x1000 -fomit-frame-pointer -pthread -static-libstdc++ -static-libgcc $PGO_USE"
+export CXXFLAGS_USE="-g -O3 --param=lto-max-streaming-parallelism=16 -march=native -mtune=native -fgraphite-identity -Wall -Wl,--as-needed -Wl,--build-id=sha1 -Wl,--enable-new-dtags -Wl,--hash-style=gnu -Wl,-O2 -Wl,-z,now -Wl,-z,relro -falign-functions=32 -flimit-function-alignment -fasynchronous-unwind-tables -fdevirtualize-at-ltrans -floop-nest-optimize -floop-block -fno-math-errno -fno-semantic-interposition -fno-stack-protector -fno-trapping-math -ftree-loop-distribute-patterns -ftree-loop-vectorize -ftree-vectorize -fuse-ld=bfd -fuse-linker-plugin -malign-data=cacheline -feliminate-unused-debug-types -fipa-pta -flto=16 -fno-plt -mtls-dialect=gnu2 -Wl,-sort-common -Wno-error -Wp,-D_REENTRANT -fvisibility-inlines-hidden -pipe -ffat-lto-objects -fPIC -Wl,-z,max-page-size=0x1000 -fomit-frame-pointer -pthread -static-libstdc++ -static-libgcc $PGO_USE"
+export LDFLAGS_USE="-g -O3 --param=lto-max-streaming-parallelism=16 -march=native -mtune=native -fgraphite-identity -Wall -Wl,--as-needed -Wl,--build-id=sha1 -Wl,--enable-new-dtags -Wl,--hash-style=gnu -Wl,-O2 -Wl,-z,now -Wl,-z,relro -falign-functions=32 -flimit-function-alignment -fasynchronous-unwind-tables -fdevirtualize-at-ltrans -floop-nest-optimize -floop-block -fno-math-errno -fno-semantic-interposition -fno-stack-protector -fno-trapping-math -ftree-loop-distribute-patterns -ftree-loop-vectorize -ftree-vectorize -fuse-ld=bfd -fuse-linker-plugin -malign-data=cacheline -feliminate-unused-debug-types -fipa-pta -flto=16 -fno-plt -mtls-dialect=gnu2 -Wl,-sort-common -Wno-error -Wp,-D_REENTRANT -pipe -ffat-lto-objects -fPIC -Wl,-z,max-page-size=0x1000 -fomit-frame-pointer -pthread -static-libstdc++ -static-libgcc -lpthread $PGO_USE"
+#
+export AR=/usr/bin/gcc-ar
+export RANLIB=/usr/bin/gcc-ranlib
+export NM=/usr/bin/gcc-nm
+#
+export MAKEFLAGS=%{?_smp_mflags}
+#
+%global _lto_cflags 1
+#global _lto_cflags %{nil}
+%global _disable_maintainer_mode 1
+#%global _disable_maintainer_mode %{nil}
+#
+export CCACHE_DISABLE=true
+export PATH="/usr/lib64/ccache/bin:$PATH"
+export CCACHE_NOHASHDIR=true
+export CCACHE_CPP2=true
+export CCACHE_SLOPPINESS=pch_defines,time_macros,locale,file_stat_matches,file_stat_matches_ctime,include_file_ctime,include_file_mtime,modules,system_headers,clang_index_store,file_macro
+#export CCACHE_SLOPPINESS=modules,include_file_mtime,include_file_ctime,time_macros,pch_defines,file_stat_matches,clang_index_store,system_headers,locale
+#export CCACHE_SLOPPINESS=pch_defines,time_macros,locale,clang_index_store,file_macro
+export CCACHE_DIR=/var/tmp/ccache
+export CCACHE_BASEDIR=/builddir/build/BUILD
+#export CCACHE_LOGFILE=/var/tmp/ccache/cache.debug
+#export CCACHE_DEBUG=true
+#export CCACHE_NODIRECT=true
+## altflags_pgo end
 export CFLAGS="${CFLAGS_USE}"
 export CXXFLAGS="${CXXFLAGS_USE}"
 export FFLAGS="${FFLAGS_USE}"
 export FCFLAGS="${FCFLAGS_USE}"
 export LDFLAGS="${LDFLAGS_USE}"
-meson --libdir=lib64 --prefix=/usr --buildtype=release -Ddefault_library=both -Dzlib=enabled \
--Dbzip2=enabled \
--Dpng=enabled \
--Dharfbuzz=enabled \
--Dbrotli=enabled \
--Dmmap=enabled \
--Ddefault_library=both  builddir
+ln -sf /builddir/build/BUILD/freetype/ /builddir/build/BUILD/freetype/freetype-demos/subprojects/freetype2
+pushd freetype-demos/
+meson --libdir=lib64 --prefix=/usr --buildtype=release -Ddefault_library=both  -Dzlib=enabled -Dbzip2=enabled -Dpng=enabled -Dharfbuzz=enabled -Dbrotli=enabled -Dmmap=enabled -Ddefault_library=both -Dstrip=false -Dfreetype2:default_library=both -Dfreetype2:zlib=enabled -Dfreetype2:bzip2=enabled -Dfreetype2:png=enabled -Dfreetype2:harfbuzz=enabled -Dfreetype2:brotli=enabled -Dfreetype2:mmap=enabled builddir
+popd
 ## make_prepend content
 #sd "\-lz" "/usr/lib64/libz.a" $(fd -uu --glob Makefile)
 #sd "\-lbz2" "/usr/lib64/libbz2.a" $(fd -uu --glob Makefile)

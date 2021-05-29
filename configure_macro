@@ -1,0 +1,4 @@
+ln -sf /builddir/build/BUILD/freetype/ /builddir/build/BUILD/freetype/freetype-demos/subprojects/freetype2
+pushd freetype-demos/
+meson --libdir=lib64 --prefix=/usr --buildtype=release -Ddefault_library=both  -Dzlib=enabled -Dbzip2=enabled -Dpng=enabled -Dharfbuzz=enabled -Dbrotli=enabled -Dmmap=enabled -Ddefault_library=both -Dstrip=false -Dfreetype2:default_library=both -Dfreetype2:zlib=enabled -Dfreetype2:bzip2=enabled -Dfreetype2:png=enabled -Dfreetype2:harfbuzz=enabled -Dfreetype2:brotli=enabled -Dfreetype2:mmap=enabled builddir
+popd
