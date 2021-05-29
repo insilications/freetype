@@ -12,6 +12,8 @@ Source1  : file:///aot/build/clearlinux/packages/freetype/freetype-demos-v2-10-4
 Summary  : No detailed summary available
 Group    : Development/Tools
 License  : FTL GPL-2.0+ MIT Zlib
+Requires: freetype-lib = %{version}-%{release}
+Requires: freetype-man = %{version}-%{release}
 BuildRequires : GoogleBenchmark-dev
 BuildRequires : ImageMagick-dev
 BuildRequires : LuaJIT-dev
@@ -500,6 +502,69 @@ FreeType 2.10.4
 Homepage: https://www.freetype.org
 FreeType is a freely available software library to render fonts.
 
+%package dev
+Summary: dev components for the freetype package.
+Group: Development
+Requires: freetype-lib = %{version}-%{release}
+Provides: freetype-devel = %{version}-%{release}
+Requires: freetype = %{version}-%{release}
+
+%description dev
+dev components for the freetype package.
+
+
+%package dev32
+Summary: dev32 components for the freetype package.
+Group: Default
+Requires: freetype-lib32 = %{version}-%{release}
+Requires: freetype-dev = %{version}-%{release}
+
+%description dev32
+dev32 components for the freetype package.
+
+
+%package lib
+Summary: lib components for the freetype package.
+Group: Libraries
+
+%description lib
+lib components for the freetype package.
+
+
+%package lib32
+Summary: lib32 components for the freetype package.
+Group: Default
+
+%description lib32
+lib32 components for the freetype package.
+
+
+%package man
+Summary: man components for the freetype package.
+Group: Default
+
+%description man
+man components for the freetype package.
+
+
+%package staticdev
+Summary: staticdev components for the freetype package.
+Group: Default
+Requires: freetype-dev = %{version}-%{release}
+
+%description staticdev
+staticdev components for the freetype package.
+
+
+%package staticdev32
+Summary: staticdev32 components for the freetype package.
+Group: Default
+Requires: freetype-dev32 = %{version}-%{release}
+
+%description staticdev32
+staticdev32 components for the freetype package.
+
+
 %prep
 %setup -q -n freetype
 cd %{_builddir}
@@ -524,7 +589,7 @@ unset https_proxy
 unset no_proxy
 export SSL_CERT_FILE=/var/cache/ca-certs/anchors/ca-certificates.crt
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1622264860
+export SOURCE_DATE_EPOCH=1622265672
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
@@ -808,3 +873,102 @@ cp --archive %{buildroot}/usr/lib64/lib*.so* %{buildroot}/usr/lib64/haswell/ || 
 
 %files
 %defattr(-,root,root,-)
+
+%files dev
+%defattr(-,root,root,-)
+/usr/include/freetype2/freetype/config/ftconfig.h
+/usr/include/freetype2/freetype/config/ftheader.h
+/usr/include/freetype2/freetype/config/ftmodule.h
+/usr/include/freetype2/freetype/config/ftoption.h
+/usr/include/freetype2/freetype/config/ftstdlib.h
+/usr/include/freetype2/freetype/config/integer-types.h
+/usr/include/freetype2/freetype/config/mac-support.h
+/usr/include/freetype2/freetype/config/public-macros.h
+/usr/include/freetype2/freetype/freetype.h
+/usr/include/freetype2/freetype/ftadvanc.h
+/usr/include/freetype2/freetype/ftbbox.h
+/usr/include/freetype2/freetype/ftbdf.h
+/usr/include/freetype2/freetype/ftbitmap.h
+/usr/include/freetype2/freetype/ftbzip2.h
+/usr/include/freetype2/freetype/ftcache.h
+/usr/include/freetype2/freetype/ftchapters.h
+/usr/include/freetype2/freetype/ftcid.h
+/usr/include/freetype2/freetype/ftcolor.h
+/usr/include/freetype2/freetype/ftdriver.h
+/usr/include/freetype2/freetype/fterrdef.h
+/usr/include/freetype2/freetype/fterrors.h
+/usr/include/freetype2/freetype/ftfntfmt.h
+/usr/include/freetype2/freetype/ftgasp.h
+/usr/include/freetype2/freetype/ftglyph.h
+/usr/include/freetype2/freetype/ftgxval.h
+/usr/include/freetype2/freetype/ftgzip.h
+/usr/include/freetype2/freetype/ftimage.h
+/usr/include/freetype2/freetype/ftincrem.h
+/usr/include/freetype2/freetype/ftlcdfil.h
+/usr/include/freetype2/freetype/ftlist.h
+/usr/include/freetype2/freetype/ftlzw.h
+/usr/include/freetype2/freetype/ftmac.h
+/usr/include/freetype2/freetype/ftmm.h
+/usr/include/freetype2/freetype/ftmodapi.h
+/usr/include/freetype2/freetype/ftmoderr.h
+/usr/include/freetype2/freetype/ftotval.h
+/usr/include/freetype2/freetype/ftoutln.h
+/usr/include/freetype2/freetype/ftparams.h
+/usr/include/freetype2/freetype/ftpfr.h
+/usr/include/freetype2/freetype/ftrender.h
+/usr/include/freetype2/freetype/ftsizes.h
+/usr/include/freetype2/freetype/ftsnames.h
+/usr/include/freetype2/freetype/ftstroke.h
+/usr/include/freetype2/freetype/ftsynth.h
+/usr/include/freetype2/freetype/ftsystem.h
+/usr/include/freetype2/freetype/fttrigon.h
+/usr/include/freetype2/freetype/fttypes.h
+/usr/include/freetype2/freetype/ftwinfnt.h
+/usr/include/freetype2/freetype/t1tables.h
+/usr/include/freetype2/freetype/ttnameid.h
+/usr/include/freetype2/freetype/tttables.h
+/usr/include/freetype2/freetype/tttags.h
+/usr/include/freetype2/ft2build.h
+/usr/lib64/haswell/libfreetype.so
+/usr/lib64/libfreetype.so
+/usr/lib64/pkgconfig/freetype2.pc
+
+%files dev32
+%defattr(-,root,root,-)
+/usr/lib32/libfreetype.so
+/usr/lib32/pkgconfig/32freetype2.pc
+/usr/lib32/pkgconfig/freetype2.pc
+
+%files lib
+%defattr(-,root,root,-)
+/usr/lib64/haswell/libfreetype.so.6
+/usr/lib64/haswell/libfreetype.so.6.17.4
+/usr/lib64/libfreetype.so.6
+/usr/lib64/libfreetype.so.6.17.4
+
+%files lib32
+%defattr(-,root,root,-)
+/usr/lib32/libfreetype.so.6
+/usr/lib32/libfreetype.so.6.17.4
+
+%files man
+%defattr(0644,root,root,0755)
+/usr/share/man/man1/ftbench.1
+/usr/share/man/man1/ftdiff.1
+/usr/share/man/man1/ftdump.1
+/usr/share/man/man1/ftgamma.1
+/usr/share/man/man1/ftgrid.1
+/usr/share/man/man1/ftlint.1
+/usr/share/man/man1/ftmulti.1
+/usr/share/man/man1/ftstring.1
+/usr/share/man/man1/ftvalid.1
+/usr/share/man/man1/ftview.1
+/usr/share/man/man1/ttdebug.1
+
+%files staticdev
+%defattr(-,root,root,-)
+/usr/lib64/libfreetype.a
+
+%files staticdev32
+%defattr(-,root,root,-)
+/usr/lib32/libfreetype.a
