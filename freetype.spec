@@ -488,12 +488,11 @@ BuildRequires : zstd-staticdev
 %define debug_package %{nil}
 Patch1: freetype-2.3.0-enable-spr.patch
 Patch2: freetype-2.2.1-enable-valid.patch
-Patch3: freetype-2.5.2-more-demos.patch
-Patch4: freetype-2.6.5-libtool.patch
-Patch5: freetype-2.8-multilib.patch
-Patch6: freetype-2.10.0-internal-outline.patch
-Patch7: freetype-2.10.1-debughook.patch
-Patch8: 0004-Enable-long-PCF-family-names.patch
+Patch3: freetype-2.6.5-libtool.patch
+Patch4: freetype-2.8-multilib.patch
+Patch5: freetype-2.10.0-internal-outline.patch
+Patch6: freetype-2.10.1-debughook.patch
+Patch7: 0004-Enable-long-PCF-family-names.patch
 
 %description
 FreeType 2.10.4
@@ -515,7 +514,6 @@ cp -r %{_builddir}/freetype-demos/* %{_builddir}/freetype/freetype-demos
 %patch5 -p1
 %patch6 -p1
 %patch7 -p1
-%patch8 -p1
 pushd ..
 cp -a freetype build32
 popd
@@ -526,7 +524,7 @@ unset https_proxy
 unset no_proxy
 export SSL_CERT_FILE=/var/cache/ca-certs/anchors/ca-certificates.crt
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1622262581
+export SOURCE_DATE_EPOCH=1622264082
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
@@ -579,9 +577,8 @@ export FFLAGS="${FFLAGS_GENERATE}"
 export FCFLAGS="${FCFLAGS_GENERATE}"
 export LDFLAGS="${LDFLAGS_GENERATE}"
 ln -sf /builddir/build/BUILD/freetype/ /builddir/build/BUILD/freetype/freetype-demos/subprojects/freetype2
-pushd freetype-demos/
+cd freetype-demos/
 meson --libdir=lib64 --prefix=/usr --buildtype=release -Ddefault_library=both  -Dzlib=enabled -Dbzip2=enabled -Dpng=enabled -Dharfbuzz=enabled -Dbrotli=enabled -Dmmap=enabled -Ddefault_library=both -Dstrip=false -Dfreetype2:default_library=both -Dfreetype2:zlib=enabled -Dfreetype2:bzip2=enabled -Dfreetype2:png=enabled -Dfreetype2:harfbuzz=enabled -Dfreetype2:brotli=enabled -Dfreetype2:mmap=enabled builddir
-popd
 ## make_prepend content
 #sd "\-lz" "/usr/lib64/libz.a" $(fd -uu --glob Makefile)
 #sd "\-lbz2" "/usr/lib64/libbz2.a" $(fd -uu --glob Makefile)
@@ -596,9 +593,11 @@ popd
 #sd "\-lharfbuzz-icu" "/usr/lib64/libbrotlienc-static.a" $(fd -uu --glob Makefile)
 #sd "\-lharfbuzz-gobject" "/usr/lib64/libbrotlienc-static.a" $(fd -uu --glob Makefile)
 ## make_prepend end
+## make_macro start
 ninja --verbose %{?_smp_mflags} -v -C builddir
-
-pushd freetype-demos/builddir/
+cd ../../
+## make_macro end
+cd /builddir/build/BUILD/freetype/freetype-demos/builddir
 export DISPLAY=:0
 export __GL_ALLOW_UNOFFICIAL_PROTOCOL=1
 export __GL_SYNC_TO_VBLANK=0
@@ -643,45 +642,44 @@ export $(dbus-launch)
 ./fttimer "/usr/share/fonts/InconsolataGo Nerd Font Complete Mono.ttf" || :
 ./fttimer "/usr/share/fonts/InconsolataGo Nerd Font Complete.ttf" || :
 #
-./ftbench -c 3 -I 40 -l 1 -p "/usr/share/fonts/Inconsolata LGC Nerd Font Complete.ttf" || :
-./ftbench -c 3 -I 40 -l 1 -p "/usr/share/fonts/Inconsolata Bold Nerd Font Complete Mono.ttf" || :
-./ftbench -c 3 -I 40 -l 1 -p "/usr/share/fonts/Inconsolata Bold Nerd Font Complete.ttf" || :
-./ftbench -c 3 -I 40 -l 1 -p "/usr/share/fonts/Inconsolata LGC Bold Italic Nerd Font Complete Mono.ttf" || :
-./ftbench -c 3 -I 40 -l 1 -p "/usr/share/fonts/Inconsolata LGC Bold Italic Nerd Font Complete.ttf" || :
-./ftbench -c 3 -I 40 -l 1 -p "/usr/share/fonts/Inconsolata LGC Bold Nerd Font Complete Mono.ttf" || :
-./ftbench -c 3 -I 40 -l 1 -p "/usr/share/fonts/Inconsolata LGC Bold Nerd Font Complete.ttf" || :
-./ftbench -c 3 -I 40 -l 1 -p "/usr/share/fonts/Inconsolata LGC Italic Nerd Font Complete Mono.ttf" || :
-./ftbench -c 3 -I 40 -l 1 -p "/usr/share/fonts/Inconsolata LGC Italic Nerd Font Complete.ttf" || :
-./ftbench -c 3 -I 40 -l 1 -p "/usr/share/fonts/Inconsolata LGC Nerd Font Complete Mono.ttf" || :
-./ftbench -c 3 -I 40 -l 1 -p "/usr/share/fonts/Inconsolata LGC Nerd Font Complete.ttf" || :
-./ftbench -c 3 -I 40 -l 1 -p "/usr/share/fonts/Inconsolata Regular Nerd Font Complete Mono.ttf" || :
-./ftbench -c 3 -I 40 -l 1 -p "/usr/share/fonts/Inconsolata Regular Nerd Font Complete.ttf" || :
-./ftbench -c 3 -I 40 -l 1 -p "/usr/share/fonts/InconsolataGo Bold Nerd Font Complete Mono.ttf" || :
-./ftbench -c 3 -I 40 -l 1 -p "/usr/share/fonts/InconsolataGo Bold Nerd Font Complete.ttf" || :
-./ftbench -c 3 -I 40 -l 1 -p "/usr/share/fonts/InconsolataGo Nerd Font Complete Mono.ttf" || :
-./ftbench -c 3 -I 40 -l 1 -p "/usr/share/fonts/InconsolataGo Nerd Font Complete.ttf" || :
+# ./ftbench -c 3 -I 40 -l 1 -p "/usr/share/fonts/Inconsolata LGC Nerd Font Complete.ttf" || :
+# ./ftbench -c 3 -I 40 -l 1 -p "/usr/share/fonts/Inconsolata Bold Nerd Font Complete Mono.ttf" || :
+# ./ftbench -c 3 -I 40 -l 1 -p "/usr/share/fonts/Inconsolata Bold Nerd Font Complete.ttf" || :
+# ./ftbench -c 3 -I 40 -l 1 -p "/usr/share/fonts/Inconsolata LGC Bold Italic Nerd Font Complete Mono.ttf" || :
+# ./ftbench -c 3 -I 40 -l 1 -p "/usr/share/fonts/Inconsolata LGC Bold Italic Nerd Font Complete.ttf" || :
+# ./ftbench -c 3 -I 40 -l 1 -p "/usr/share/fonts/Inconsolata LGC Bold Nerd Font Complete Mono.ttf" || :
+# ./ftbench -c 3 -I 40 -l 1 -p "/usr/share/fonts/Inconsolata LGC Bold Nerd Font Complete.ttf" || :
+# ./ftbench -c 3 -I 40 -l 1 -p "/usr/share/fonts/Inconsolata LGC Italic Nerd Font Complete Mono.ttf" || :
+# ./ftbench -c 3 -I 40 -l 1 -p "/usr/share/fonts/Inconsolata LGC Italic Nerd Font Complete.ttf" || :
+# ./ftbench -c 3 -I 40 -l 1 -p "/usr/share/fonts/Inconsolata LGC Nerd Font Complete Mono.ttf" || :
+# ./ftbench -c 3 -I 40 -l 1 -p "/usr/share/fonts/Inconsolata LGC Nerd Font Complete.ttf" || :
+# ./ftbench -c 3 -I 40 -l 1 -p "/usr/share/fonts/Inconsolata Regular Nerd Font Complete Mono.ttf" || :
+# ./ftbench -c 3 -I 40 -l 1 -p "/usr/share/fonts/Inconsolata Regular Nerd Font Complete.ttf" || :
+# ./ftbench -c 3 -I 40 -l 1 -p "/usr/share/fonts/InconsolataGo Bold Nerd Font Complete Mono.ttf" || :
+# ./ftbench -c 3 -I 40 -l 1 -p "/usr/share/fonts/InconsolataGo Bold Nerd Font Complete.ttf" || :
+# ./ftbench -c 3 -I 40 -l 1 -p "/usr/share/fonts/InconsolataGo Nerd Font Complete Mono.ttf" || :
+# ./ftbench -c 3 -I 40 -l 1 -p "/usr/share/fonts/InconsolataGo Nerd Font Complete.ttf" || :
 #
-./ftlint 14 "/usr/share/fonts/Inconsolata LGC Nerd Font Complete.ttf" || :
-./ftlint 14 "/usr/share/fonts/Inconsolata Bold Nerd Font Complete Mono.ttf" || :
-./ftlint 14 "/usr/share/fonts/Inconsolata Bold Nerd Font Complete.ttf" || :
-./ftlint 14 "/usr/share/fonts/Inconsolata LGC Bold Italic Nerd Font Complete Mono.ttf" || :
-./ftlint 14 "/usr/share/fonts/Inconsolata LGC Bold Italic Nerd Font Complete.ttf" || :
-./ftlint 14 "/usr/share/fonts/Inconsolata LGC Bold Nerd Font Complete Mono.ttf" || :
-./ftlint 14 "/usr/share/fonts/Inconsolata LGC Bold Nerd Font Complete.ttf" || :
-./ftlint 14 "/usr/share/fonts/Inconsolata LGC Italic Nerd Font Complete Mono.ttf" || :
-./ftlint 14 "/usr/share/fonts/Inconsolata LGC Italic Nerd Font Complete.ttf" || :
-./ftlint 14 "/usr/share/fonts/Inconsolata LGC Nerd Font Complete Mono.ttf" || :
-./ftlint 14 "/usr/share/fonts/Inconsolata LGC Nerd Font Complete.ttf" || :
-./ftlint 14 "/usr/share/fonts/Inconsolata Regular Nerd Font Complete Mono.ttf" || :
-./ftlint 14 "/usr/share/fonts/Inconsolata Regular Nerd Font Complete.ttf" || :
-./ftlint 14 "/usr/share/fonts/InconsolataGo Bold Nerd Font Complete Mono.ttf" || :
-./ftlint 14 "/usr/share/fonts/InconsolataGo Bold Nerd Font Complete.ttf" || :
-./ftlint 14 "/usr/share/fonts/InconsolataGo Nerd Font Complete Mono.ttf" || :
-./ftlint 14 "/usr/share/fonts/InconsolataGo Nerd Font Complete.ttf" || :
-cd ..
-find builddir/ -type f,l -not -name '*.gcno' -not -name 'statuspgo*' -delete -print
-popd
-find builddir/ -type f,l -not -name '*.gcno' -not -name 'statuspgo*' -delete -print
+# ./ftlint 14 "/usr/share/fonts/Inconsolata LGC Nerd Font Complete.ttf" || :
+# ./ftlint 14 "/usr/share/fonts/Inconsolata Bold Nerd Font Complete Mono.ttf" || :
+# ./ftlint 14 "/usr/share/fonts/Inconsolata Bold Nerd Font Complete.ttf" || :
+# ./ftlint 14 "/usr/share/fonts/Inconsolata LGC Bold Italic Nerd Font Complete Mono.ttf" || :
+# ./ftlint 14 "/usr/share/fonts/Inconsolata LGC Bold Italic Nerd Font Complete.ttf" || :
+# ./ftlint 14 "/usr/share/fonts/Inconsolata LGC Bold Nerd Font Complete Mono.ttf" || :
+# ./ftlint 14 "/usr/share/fonts/Inconsolata LGC Bold Nerd Font Complete.ttf" || :
+# ./ftlint 14 "/usr/share/fonts/Inconsolata LGC Italic Nerd Font Complete Mono.ttf" || :
+# ./ftlint 14 "/usr/share/fonts/Inconsolata LGC Italic Nerd Font Complete.ttf" || :
+# ./ftlint 14 "/usr/share/fonts/Inconsolata LGC Nerd Font Complete Mono.ttf" || :
+# ./ftlint 14 "/usr/share/fonts/Inconsolata LGC Nerd Font Complete.ttf" || :
+# ./ftlint 14 "/usr/share/fonts/Inconsolata Regular Nerd Font Complete Mono.ttf" || :
+# ./ftlint 14 "/usr/share/fonts/Inconsolata Regular Nerd Font Complete.ttf" || :
+# ./ftlint 14 "/usr/share/fonts/InconsolataGo Bold Nerd Font Complete Mono.ttf" || :
+# ./ftlint 14 "/usr/share/fonts/InconsolataGo Bold Nerd Font Complete.ttf" || :
+# ./ftlint 14 "/usr/share/fonts/InconsolataGo Nerd Font Complete Mono.ttf" || :
+# ./ftlint 14 "/usr/share/fonts/InconsolataGo Nerd Font Complete.ttf" || :
+find . -type f,l -not -name '*.gcno' -not -name 'statuspgo*' -delete -print || :
+cd ../../
+find builddir/ -type f,l -not -name '*.gcno' -not -name 'statuspgo*' -delete -print || :
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
@@ -734,9 +732,8 @@ export FFLAGS="${FFLAGS_USE}"
 export FCFLAGS="${FCFLAGS_USE}"
 export LDFLAGS="${LDFLAGS_USE}"
 ln -sf /builddir/build/BUILD/freetype/ /builddir/build/BUILD/freetype/freetype-demos/subprojects/freetype2
-pushd freetype-demos/
+cd freetype-demos/
 meson --libdir=lib64 --prefix=/usr --buildtype=release -Ddefault_library=both  -Dzlib=enabled -Dbzip2=enabled -Dpng=enabled -Dharfbuzz=enabled -Dbrotli=enabled -Dmmap=enabled -Ddefault_library=both -Dstrip=false -Dfreetype2:default_library=both -Dfreetype2:zlib=enabled -Dfreetype2:bzip2=enabled -Dfreetype2:png=enabled -Dfreetype2:harfbuzz=enabled -Dfreetype2:brotli=enabled -Dfreetype2:mmap=enabled builddir
-popd
 ## make_prepend content
 #sd "\-lz" "/usr/lib64/libz.a" $(fd -uu --glob Makefile)
 #sd "\-lbz2" "/usr/lib64/libbz2.a" $(fd -uu --glob Makefile)
@@ -751,7 +748,10 @@ popd
 #sd "\-lharfbuzz-icu" "/usr/lib64/libbrotlienc-static.a" $(fd -uu --glob Makefile)
 #sd "\-lharfbuzz-gobject" "/usr/lib64/libbrotlienc-static.a" $(fd -uu --glob Makefile)
 ## make_prepend end
+## make_macro start
 ninja --verbose %{?_smp_mflags} -v -C builddir
+cd ../../
+## make_macro end
 pushd ../build32/
 export CFLAGS="-O2 -ffat-lto-objects -fuse-linker-plugin -pipe -fPIC -m32 -mstackrealign -march=native -mtune=native"
 export CXXFLAGS="-O2 -ffat-lto-objects -fuse-linker-plugin -fvisibility-inlines-hidden -pipe -fPIC -m32 -mstackrealign -march=native -mtune=native"
