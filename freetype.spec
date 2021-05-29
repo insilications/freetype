@@ -5,26 +5,88 @@
 %define keepstatic 1
 Name     : freetype
 Version  : 2.10.4
-Release  : 501
-URL      : https://download-mirror.savannah.gnu.org/releases/freetype/freetype-2.10.4.tar.gz
-Source0  : https://download-mirror.savannah.gnu.org/releases/freetype/freetype-2.10.4.tar.gz
+Release  : 503
+URL      : file:///aot/build/clearlinux/packages/freetype/freetype-v2-10-4.tar.gz
+Source0  : file:///aot/build/clearlinux/packages/freetype/freetype-v2-10-4.tar.gz
 Summary  : No detailed summary available
 Group    : Development/Tools
 License  : FTL GPL-2.0+ MIT Zlib
-Requires: freetype-bin = %{version}-%{release}
-Requires: freetype-lib = %{version}-%{release}
-Requires: freetype-man = %{version}-%{release}
+BuildRequires : GoogleBenchmark-dev
+BuildRequires : ImageMagick-dev
+BuildRequires : LuaJIT-dev
+BuildRequires : LuaJIT-staticdev
+BuildRequires : SDL2
+BuildRequires : SDL2-dev
+BuildRequires : SDL2-staticdev
+BuildRequires : Sphinx
+BuildRequires : Vulkan-Headers-dev
+BuildRequires : Vulkan-Loader-dev
+BuildRequires : acl
+BuildRequires : acl-dev
+BuildRequires : acl-staticdev
+BuildRequires : alsa-lib-dev
+BuildRequires : alsa-lib-lib
+BuildRequires : alsa-tools
+BuildRequires : asciidoctor-dev
+BuildRequires : binutils
+BuildRequires : binutils-dev
+BuildRequires : binutils-staticdev
+BuildRequires : brotli
 BuildRequires : brotli-dev
 BuildRequires : brotli-dev32
 BuildRequires : brotli-staticdev
 BuildRequires : brotli-staticdev32
 BuildRequires : buildreq-cmake
-BuildRequires : buildreq-configure
 BuildRequires : buildreq-meson
+BuildRequires : buildreq-qmake
+BuildRequires : bzip2
 BuildRequires : bzip2-dev
 BuildRequires : bzip2-dev32
 BuildRequires : bzip2-staticdev
+BuildRequires : ca-certs
+BuildRequires : ca-certs-static
+BuildRequires : cairo
+BuildRequires : cairo-dev
+BuildRequires : cairo-lib
+BuildRequires : ccache
+BuildRequires : clazy
+BuildRequires : cmake
+BuildRequires : cmake-dev
+BuildRequires : cppcheck
+BuildRequires : curl-dev
+BuildRequires : curl-staticdev
+BuildRequires : dav1d-dev
+BuildRequires : dav1d-staticdev
+BuildRequires : dbus
+BuildRequires : dbus-broker
+BuildRequires : dbus-dev
+BuildRequires : dbus-glib
+BuildRequires : dbus-glib-dev
+BuildRequires : dbus-python
+BuildRequires : doxygen
+BuildRequires : e2fsprogs-dev
+BuildRequires : elfutils-dev
+BuildRequires : elfutils-staticdev
+BuildRequires : evtest
+BuildRequires : expat-dev
+BuildRequires : expat-dev32
+BuildRequires : expat-staticdev
+BuildRequires : fakechroot-dev
+BuildRequires : fakechroot-staticdev
+BuildRequires : fftw-dev
+BuildRequires : fftw-staticdev
 BuildRequires : findutils
+BuildRequires : flac-dev
+BuildRequires : flac-staticdev
+BuildRequires : fontconfig-data
+BuildRequires : fontconfig-dev
+BuildRequires : fontconfig-lib
+BuildRequires : fontconfig-staticdev
+BuildRequires : freetype-dev
+BuildRequires : freetype-lib
+BuildRequires : freetype-staticdev
+BuildRequires : fribidi-dev
+BuildRequires : fribidi-staticdev
 BuildRequires : gcc
 BuildRequires : gcc-abi
 BuildRequires : gcc-dev
@@ -35,33 +97,401 @@ BuildRequires : gcc-libs-math
 BuildRequires : gcc-libstdc++32
 BuildRequires : gcc-libubsan
 BuildRequires : gcc-locale
+BuildRequires : gdb
+BuildRequires : gdb-dev
+BuildRequires : gettext
+BuildRequires : glib
+BuildRequires : glib-bin
+BuildRequires : glib-data
+BuildRequires : glib-dev
+BuildRequires : glib-lib
+BuildRequires : glib-staticdev
+BuildRequires : glibc
+BuildRequires : glibc-dev
+BuildRequires : glibc-dev32
+BuildRequires : glibc-lib-avx2
+BuildRequires : glibc-libc32
+BuildRequires : glibc-staticdev
+BuildRequires : gmp
+BuildRequires : gmp-dev
+BuildRequires : gmp-staticdev
+BuildRequires : gnutls
+BuildRequires : gnutls-dev
+BuildRequires : googletest
+BuildRequires : googletest-dev
+BuildRequires : graphite
+BuildRequires : graphite-dev
+BuildRequires : graphite-staticdev
+BuildRequires : gsm-dev
+BuildRequires : gsm-staticdev
+BuildRequires : gtk+-data
+BuildRequires : gtk+-lib
+BuildRequires : gtk3-lib
 BuildRequires : harfbuzz-dev
+BuildRequires : harfbuzz-dev32
+BuildRequires : harfbuzz-lib
 BuildRequires : harfbuzz-staticdev
+BuildRequires : harfbuzz-staticdev32
+BuildRequires : icu4c-lib
+BuildRequires : insync-dev
+BuildRequires : json-c-dev
+BuildRequires : json-c-staticdev
+BuildRequires : jsoncpp
+BuildRequires : jsoncpp-dev
+BuildRequires : jsoncpp-lib
+BuildRequires : jsoncpp-staticdev
+BuildRequires : kakadu-dev
+BuildRequires : keyutils
+BuildRequires : keyutils-dev
+BuildRequires : krb5
+BuildRequires : krb5-dev
+BuildRequires : l-smash-dev
+BuildRequires : l-smash-staticdev
+BuildRequires : ladspa_sdk-dev
+BuildRequires : ladspa_sdk-staticdev
+BuildRequires : lcms2-dev
+BuildRequires : lcms2-staticdev
+BuildRequires : libX11-data
+BuildRequires : libX11-dev
+BuildRequires : libX11-lib
+BuildRequires : libXScrnSaver
+BuildRequires : libXScrnSaver-dev
+BuildRequires : libXScrnSaver-lib
+BuildRequires : libXau-dev
+BuildRequires : libXau-lib
+BuildRequires : libXcursor-dev
+BuildRequires : libXcursor-lib
+BuildRequires : libXdamage-dev
+BuildRequires : libXdamage-lib
+BuildRequires : libXdmcp-dev
+BuildRequires : libXdmcp-lib
+BuildRequires : libXext-dev
+BuildRequires : libXext-lib
+BuildRequires : libXfont2-dev
+BuildRequires : libXft-dev
+BuildRequires : libXft-lib
+BuildRequires : libXi-dev
+BuildRequires : libXi-lib
+BuildRequires : libXrender-dev
+BuildRequires : libXrender-lib
+BuildRequires : libXtst-dev
+BuildRequires : libXtst-lib
+BuildRequires : libXxf86vm-dev
+BuildRequires : libXxf86vm-lib
+BuildRequires : libaom-dev
+BuildRequires : libaom-staticdev
+BuildRequires : libarchive
+BuildRequires : libarchive-dev
+BuildRequires : libarchive-staticdev
+BuildRequires : libcap
+BuildRequires : libcap-dev
+BuildRequires : libcap-ng-dev
+BuildRequires : libconfig-dev
+BuildRequires : libconfig-staticdev
+BuildRequires : libdrm
+BuildRequires : libdrm-dev
+BuildRequires : libdrm-lib
+BuildRequires : libdrm-staticdev
+BuildRequires : libedit
+BuildRequires : libedit-dev
+BuildRequires : libffi
+BuildRequires : libffi-dev
+BuildRequires : libffi-staticdev
 BuildRequires : libgcc1
+BuildRequires : libgcrypt
+BuildRequires : libgcrypt-dev
+BuildRequires : libgpg-error
+BuildRequires : libgpg-error-dev
+BuildRequires : libidn2
+BuildRequires : libidn2-dev
+BuildRequires : libidn2-staticdev
+BuildRequires : libinput-data
+BuildRequires : libinput-dev
+BuildRequires : libinput-lib
+BuildRequires : libinput-libexec
+BuildRequires : libjpeg-turbo-dev
+BuildRequires : libjpeg-turbo-staticdev
+BuildRequires : libpciaccess-dev
 BuildRequires : libpng-dev
 BuildRequires : libpng-dev32
+BuildRequires : libpng-lib
 BuildRequires : libpng-staticdev
+BuildRequires : libsamplerate-dev
+BuildRequires : libsamplerate-staticdev
+BuildRequires : libsndfile-dev
+BuildRequires : libsndfile-staticdev
+BuildRequires : libsrt-dev
+BuildRequires : libsrt-staticdev
 BuildRequires : libstdc++
+BuildRequires : libstdc++-dev
+BuildRequires : libtasn1-dev
+BuildRequires : libtasn1-staticdev
+BuildRequires : libtheora-dev
+BuildRequires : libtheora-staticdev
+BuildRequires : libudfread-dev
+BuildRequires : libudfread-staticdev
+BuildRequires : libunistring-dev
+BuildRequires : libunistring-staticdev
+BuildRequires : libusb
+BuildRequires : libusb-dev
+BuildRequires : libva
+BuildRequires : libva-dev
+BuildRequires : libva-lib
+BuildRequires : libvdpau
+BuildRequires : libvdpau-dev
+BuildRequires : libxcb-dev
+BuildRequires : libxcb-lib
+BuildRequires : libxml2-dev
+BuildRequires : libxml2-staticdev
+BuildRequires : libxslt-bin
+BuildRequires : libxslt-dev
+BuildRequires : libxslt-staticdev
+BuildRequires : libxvid-dev
+BuildRequires : libxvid-staticdev
+BuildRequires : libzimg-dev
+BuildRequires : libzimg-staticdev
+BuildRequires : lrzip-dev
+BuildRequires : lrzip-staticdev
+BuildRequires : lz4
+BuildRequires : lz4-dev
+BuildRequires : lz4-staticdev
+BuildRequires : lzo
+BuildRequires : lzo-dev
+BuildRequires : lzo-staticdev
+BuildRequires : md4c
+BuildRequires : md4c-dev
+BuildRequires : md4c-staticdev
+BuildRequires : mediasdk-dev
+BuildRequires : mesa
+BuildRequires : mesa-dev
+BuildRequires : mesa-lib
+BuildRequires : mm-common-dev
+BuildRequires : nasm
+BuildRequires : nasm-bin
+BuildRequires : ncurses-dev
+BuildRequires : ninja
+BuildRequires : numlockx
+BuildRequires : nv-codec-headers-dev
+BuildRequires : opencl-headers
+BuildRequires : opencl-headers-dev
+BuildRequires : openjpeg-dev
+BuildRequires : openjpeg-staticdev
+BuildRequires : openssl
+BuildRequires : openssl-dev
+BuildRequires : openssl-lib
+BuildRequires : openssl-staticdev
+BuildRequires : opus-dev
+BuildRequires : opus-staticdev
+BuildRequires : orc-dev
+BuildRequires : orc-staticdev
+BuildRequires : p11-kit
+BuildRequires : p11-kit-dev
+BuildRequires : pacrunner
+BuildRequires : pacrunner-dev
+BuildRequires : pango-lib
+BuildRequires : pax-utils
+BuildRequires : pcre-dev
+BuildRequires : pcre-staticdev
+BuildRequires : pcre2-dev
+BuildRequires : pcre2-staticdev
+BuildRequires : perl
+BuildRequires : perl(XML::Parser)
+BuildRequires : perl-Config-General
+BuildRequires : perl-Config-Tiny
+BuildRequires : perl-Crypt-SSLeay
+BuildRequires : perl-DBI
+BuildRequires : perl-DateTime-TimeZone
+BuildRequires : perl-Encode-Locale
+BuildRequires : perl-Error
+BuildRequires : perl-File-Listing
+BuildRequires : perl-HTML-Parser
+BuildRequires : perl-HTML-Tagset
+BuildRequires : perl-HTTP-Cookies
+BuildRequires : perl-HTTP-Date
+BuildRequires : perl-HTTP-Message
+BuildRequires : perl-HTTP-Negotiate
+BuildRequires : perl-IO-HTML
+BuildRequires : perl-LWP-MediaTypes
+BuildRequires : perl-LWP-Protocol-https
+BuildRequires : perl-Params-Validate
+BuildRequires : perl-Test-Simple
+BuildRequires : perl-Try-Tiny
+BuildRequires : perl-URI
+BuildRequires : perl-XML-NamespaceSupport
+BuildRequires : perl-XML-Parser
+BuildRequires : perl-libwww-perl
+BuildRequires : perl-man
+BuildRequires : pixman
+BuildRequires : pixman-dev
+BuildRequires : pixman-lib
+BuildRequires : pixman-staticdev
 BuildRequires : pkg-config
+BuildRequires : pkg-config-dev
 BuildRequires : pkgconfig(harfbuzz)
 BuildRequires : pkgconfig(libbrotlicommon)
 BuildRequires : pkgconfig(libbrotlidec)
 BuildRequires : pkgconfig(libbrotlienc)
 BuildRequires : pkgconfig(libpng)
 BuildRequires : pkgconfig(zlib)
+BuildRequires : pulseaudio
+BuildRequires : pulseaudio-dev
+BuildRequires : pyelftools
+BuildRequires : python3-core
+BuildRequires : python3-dev
+BuildRequires : python3-staticdev
+BuildRequires : qca-qt5
+BuildRequires : qca-qt5-dev
+BuildRequires : qt3d
+BuildRequires : qt3d-dev
+BuildRequires : qt5ct
+BuildRequires : qtbase
+BuildRequires : qtbase-dev
+BuildRequires : qtbase-extras
+BuildRequires : qtcanvas3d
+BuildRequires : qtcharts
+BuildRequires : qtcharts-dev
+BuildRequires : qtconnectivity
+BuildRequires : qtconnectivity-dev
+BuildRequires : qtdatavis3d
+BuildRequires : qtdatavis3d-dev
+BuildRequires : qtdeclarative
+BuildRequires : qtdeclarative-dev
+BuildRequires : qtgamepad
+BuildRequires : qtgamepad-dev
+BuildRequires : qtgraphicaleffects
+BuildRequires : qtimageformats
+BuildRequires : qtlocation
+BuildRequires : qtlocation-dev
+BuildRequires : qtmqtt
+BuildRequires : qtmqtt-dev
+BuildRequires : qtmultimedia
+BuildRequires : qtmultimedia-dev
+BuildRequires : qtnetworkauth
+BuildRequires : qtnetworkauth-dev
+BuildRequires : qtquickcontrols
+BuildRequires : qtquickcontrols2
+BuildRequires : qtquickcontrols2-dev
+BuildRequires : qtremoteobjects-dev
+BuildRequires : qtscript
+BuildRequires : qtscript-dev
+BuildRequires : qtscript-extras
+BuildRequires : qtscxml
+BuildRequires : qtscxml-dev
+BuildRequires : qtsensors
+BuildRequires : qtsensors-dev
+BuildRequires : qtserialbus
+BuildRequires : qtserialbus-dev
+BuildRequires : qtserialport
+BuildRequires : qtserialport-dev
+BuildRequires : qtspeech
+BuildRequires : qtspeech-dev
+BuildRequires : qtsvg
+BuildRequires : qtsvg-dev
+BuildRequires : qttools
+BuildRequires : qttools-dev
+BuildRequires : qttranslations
+BuildRequires : qtvirtualkeyboard
+BuildRequires : qtvirtualkeyboard-dev
+BuildRequires : qtwayland
+BuildRequires : qtwayland-dev
+BuildRequires : qtwebchannel
+BuildRequires : qtwebchannel-dev
+BuildRequires : qtwebengine
+BuildRequires : qtwebengine-dev
+BuildRequires : qtwebsockets
+BuildRequires : qtwebsockets-dev
+BuildRequires : qtx11extras
+BuildRequires : qtx11extras-dev
+BuildRequires : qtxmlpatterns
+BuildRequires : qtxmlpatterns-dev
+BuildRequires : setxkbmap
+BuildRequires : shaderc-dev
+BuildRequires : shaderc-staticdev
+BuildRequires : shared-mime-info
+BuildRequires : systemd
+BuildRequires : systemd-dev
+BuildRequires : texinfo
+BuildRequires : tiff-dev
+BuildRequires : tiff-staticdev
+BuildRequires : uchardet-dev
+BuildRequires : uchardet-staticdev
+BuildRequires : util-linux
+BuildRequires : util-linux-dev
+BuildRequires : util-linux-staticdev
+BuildRequires : valgrind
+BuildRequires : valgrind-dev
+BuildRequires : vamp-sdk-dev
+BuildRequires : vamp-sdk-staticdev
+BuildRequires : wayland
+BuildRequires : weston
+BuildRequires : wmctrl
+BuildRequires : xauth
+BuildRequires : xclip
+BuildRequires : xdg-dbus-proxy
+BuildRequires : xdg-desktop-portal
+BuildRequires : xdg-desktop-portal-dev
+BuildRequires : xdg-desktop-portal-gtk
+BuildRequires : xdg-desktop-portal-kde
+BuildRequires : xdg-user-dirs
+BuildRequires : xdg-user-dirs-gtk
+BuildRequires : xdg-utils
+BuildRequires : xdotool
+BuildRequires : xdpyinfo
+BuildRequires : xf86-input-libinput
+BuildRequires : xf86-video-amdgpu
+BuildRequires : xf86-video-ati
+BuildRequires : xf86-video-fbdev
+BuildRequires : xf86-video-nouveau
+BuildRequires : xf86-video-qxl
+BuildRequires : xf86-video-vboxvideo
+BuildRequires : xf86-video-vesa
+BuildRequires : xf86-video-vmware
+BuildRequires : xfontsel
+BuildRequires : xhost
+BuildRequires : xinit
+BuildRequires : xinput
+BuildRequires : xkbcomp
+BuildRequires : xkeyboard-config
+BuildRequires : xkill
+BuildRequires : xmodmap
+BuildRequires : xorg-server
+BuildRequires : xorg-server-dev
+BuildRequires : xorgproto
+BuildRequires : xorgproto-dev
+BuildRequires : xprop
+BuildRequires : xrandr
+BuildRequires : xrdb
+BuildRequires : xrdp
+BuildRequires : xrestop
+BuildRequires : xscreensaver
+BuildRequires : xsel
+BuildRequires : xset
+BuildRequires : xsetroot
+BuildRequires : xvfb-run
+BuildRequires : xwd
+BuildRequires : xwininfo
+BuildRequires : xz
+BuildRequires : xz-dev
+BuildRequires : xz-staticdev
+BuildRequires : yaml-cpp
+BuildRequires : yaml-cpp-dev
+BuildRequires : yaml-cpp-staticdev
+BuildRequires : zlib
 BuildRequires : zlib-dev
 BuildRequires : zlib-dev32
 BuildRequires : zlib-staticdev
+BuildRequires : zstd-dev
+BuildRequires : zstd-staticdev
 # Suppress stripping binaries
 %define __strip /bin/true
 %define debug_package %{nil}
 Patch1: freetype-2.3.0-enable-spr.patch
 Patch2: freetype-2.2.1-enable-valid.patch
-Patch3: freetype-2.6.5-libtool.patch
-Patch4: freetype-2.8-multilib.patch
-Patch5: freetype-2.10.0-internal-outline.patch
-Patch6: freetype-2.10.1-debughook.patch
-Patch7: freetype-2.10.4-png-memory-leak.patch
+Patch3: freetype-2.5.2-more-demos.patch
+Patch4: freetype-2.6.5-libtool.patch
+Patch5: freetype-2.8-multilib.patch
+Patch6: freetype-2.10.0-internal-outline.patch
+Patch7: freetype-2.10.1-debughook.patch
 Patch8: 0004-Enable-long-PCF-family-names.patch
 
 %description
@@ -70,82 +500,9 @@ FreeType 2.10.4
 Homepage: https://www.freetype.org
 FreeType is a freely available software library to render fonts.
 
-%package bin
-Summary: bin components for the freetype package.
-Group: Binaries
-
-%description bin
-bin components for the freetype package.
-
-
-%package dev
-Summary: dev components for the freetype package.
-Group: Development
-Requires: freetype-lib = %{version}-%{release}
-Requires: freetype-bin = %{version}-%{release}
-Provides: freetype-devel = %{version}-%{release}
-Requires: freetype = %{version}-%{release}
-
-%description dev
-dev components for the freetype package.
-
-
-%package dev32
-Summary: dev32 components for the freetype package.
-Group: Default
-Requires: freetype-lib32 = %{version}-%{release}
-Requires: freetype-bin = %{version}-%{release}
-Requires: freetype-dev = %{version}-%{release}
-
-%description dev32
-dev32 components for the freetype package.
-
-
-%package lib
-Summary: lib components for the freetype package.
-Group: Libraries
-
-%description lib
-lib components for the freetype package.
-
-
-%package lib32
-Summary: lib32 components for the freetype package.
-Group: Default
-
-%description lib32
-lib32 components for the freetype package.
-
-
-%package man
-Summary: man components for the freetype package.
-Group: Default
-
-%description man
-man components for the freetype package.
-
-
-%package staticdev
-Summary: staticdev components for the freetype package.
-Group: Default
-Requires: freetype-dev = %{version}-%{release}
-
-%description staticdev
-staticdev components for the freetype package.
-
-
-%package staticdev32
-Summary: staticdev32 components for the freetype package.
-Group: Default
-Requires: freetype-dev32 = %{version}-%{release}
-
-%description staticdev32
-staticdev32 components for the freetype package.
-
-
 %prep
-%setup -q -n freetype-2.10.4
-cd %{_builddir}/freetype-2.10.4
+%setup -q -n freetype
+cd %{_builddir}/freetype
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
@@ -155,7 +512,7 @@ cd %{_builddir}/freetype-2.10.4
 %patch7 -p1
 %patch8 -p1
 pushd ..
-cp -a freetype-2.10.4 build32
+cp -a freetype build32
 popd
 
 %build
@@ -170,7 +527,7 @@ unset https_proxy
 unset no_proxy
 export SSL_CERT_FILE=/var/cache/ca-certs/anchors/ca-certificates.crt
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1620573138
+export SOURCE_DATE_EPOCH=1622258758
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
@@ -185,13 +542,13 @@ export CXXFLAGS_GENERATE="-g -O3 --param=lto-max-streaming-parallelism=16 -march
 export LDFLAGS_GENERATE="-g -O3 --param=lto-max-streaming-parallelism=16 -march=native -mtune=native -falign-functions=32 -flimit-function-alignment -fno-semantic-interposition -fno-stack-protector -fuse-ld=bfd -fuse-linker-plugin -malign-data=cacheline -mtls-dialect=gnu2 -fno-math-errno -fno-trapping-math -pipe -ffat-lto-objects -flto=16 -fPIC -Wl,-z,max-page-size=0x1000 -fomit-frame-pointer -pthread -static-libstdc++ -static-libgcc -lpthread -Wl,--build-id=sha1 -fdevirtualize-at-ltrans -Wl,-z,now -Wl,-z,relro -Wl,-sort-common -fasynchronous-unwind-tables $PGO_GEN"
 ## pgo use
 ## -ffat-lto-objects -fno-PIE -fno-PIE -m64 -no-pie -fPIC -Wl,-z,max-page-size=0x1000 -fvisibility=hidden -flto-partition=none
-## gcc: -feliminate-unused-debug-types -fipa-pta -flto=16 -Wno-error -Wp,-D_REENTRANT -fno-common
+## gcc: -feliminate-unused-debug-types -fipa-pta -flto=16 -Wno-error -Wp,-D_REENTRANT -fno-common -funroll-loops
 export PGO_USE="-fprofile-use=/var/tmp/pgo -fprofile-dir=/var/tmp/pgo -fprofile-abs-path -fprofile-correction -fprofile-partial-training"
-export CFLAGS_USE="-g -O3 --param=lto-max-streaming-parallelism=16 -march=native -mtune=native -fgraphite-identity -Wall -Wl,--as-needed -Wl,--build-id=sha1 -Wl,--enable-new-dtags -Wl,--hash-style=gnu -Wl,-O2 -Wl,-z,now -Wl,-z,relro -falign-functions=32 -flimit-function-alignment -fasynchronous-unwind-tables -fdevirtualize-at-ltrans -floop-nest-optimize -floop-block -fno-math-errno -fno-semantic-interposition -fno-stack-protector -fno-trapping-math -ftree-loop-distribute-patterns -ftree-loop-vectorize -ftree-vectorize -funroll-loops -fuse-ld=bfd -fuse-linker-plugin -malign-data=cacheline -feliminate-unused-debug-types -fipa-pta -flto=16 -fno-plt -mtls-dialect=gnu2 -Wl,-sort-common -Wno-error -Wp,-D_REENTRANT -pipe -ffat-lto-objects -fPIC -Wl,-z,max-page-size=0x1000 -fomit-frame-pointer -pthread -static-libstdc++ -static-libgcc $PGO_USE"
-export FCFLAGS_USE="-g -O3 --param=lto-max-streaming-parallelism=16 -march=native -mtune=native -fgraphite-identity -Wall -Wl,--as-needed -Wl,--build-id=sha1 -Wl,--enable-new-dtags -Wl,--hash-style=gnu -Wl,-O2 -Wl,-z,now -Wl,-z,relro -falign-functions=32 -flimit-function-alignment -fasynchronous-unwind-tables -fdevirtualize-at-ltrans -floop-nest-optimize -floop-block -fno-math-errno -fno-semantic-interposition -fno-stack-protector -fno-trapping-math -ftree-loop-distribute-patterns -ftree-loop-vectorize -ftree-vectorize -funroll-loops -fuse-ld=bfd -fuse-linker-plugin -malign-data=cacheline -feliminate-unused-debug-types -fipa-pta -flto=16 -fno-plt -mtls-dialect=gnu2 -Wl,-sort-common -Wno-error -Wp,-D_REENTRANT -pipe -ffat-lto-objects -fPIC -Wl,-z,max-page-size=0x1000 -fomit-frame-pointer -pthread -static-libstdc++ -static-libgcc $PGO_USE"
-export FFLAGS_USE="-g -O3 --param=lto-max-streaming-parallelism=16 -march=native -mtune=native -fgraphite-identity -Wall -Wl,--as-needed -Wl,--build-id=sha1 -Wl,--enable-new-dtags -Wl,--hash-style=gnu -Wl,-O2 -Wl,-z,now -Wl,-z,relro -falign-functions=32 -flimit-function-alignment -fasynchronous-unwind-tables -fdevirtualize-at-ltrans -floop-nest-optimize -floop-block -fno-math-errno -fno-semantic-interposition -fno-stack-protector -fno-trapping-math -ftree-loop-distribute-patterns -ftree-loop-vectorize -ftree-vectorize -funroll-loops -fuse-ld=bfd -fuse-linker-plugin -malign-data=cacheline -feliminate-unused-debug-types -fipa-pta -flto=16 -fno-plt -mtls-dialect=gnu2 -Wl,-sort-common -Wno-error -Wp,-D_REENTRANT -pipe -ffat-lto-objects -fPIC -Wl,-z,max-page-size=0x1000 -fomit-frame-pointer -pthread -static-libstdc++ -static-libgcc $PGO_USE"
-export CXXFLAGS_USE="-g -O3 --param=lto-max-streaming-parallelism=16 -march=native -mtune=native -fgraphite-identity -Wall -Wl,--as-needed -Wl,--build-id=sha1 -Wl,--enable-new-dtags -Wl,--hash-style=gnu -Wl,-O2 -Wl,-z,now -Wl,-z,relro -falign-functions=32 -flimit-function-alignment -fasynchronous-unwind-tables -fdevirtualize-at-ltrans -floop-nest-optimize -floop-block -fno-math-errno -fno-semantic-interposition -fno-stack-protector -fno-trapping-math -ftree-loop-distribute-patterns -ftree-loop-vectorize -ftree-vectorize -funroll-loops -fuse-ld=bfd -fuse-linker-plugin -malign-data=cacheline -feliminate-unused-debug-types -fipa-pta -flto=16 -fno-plt -mtls-dialect=gnu2 -Wl,-sort-common -Wno-error -Wp,-D_REENTRANT -fvisibility-inlines-hidden -pipe -ffat-lto-objects -fPIC -Wl,-z,max-page-size=0x1000 -fomit-frame-pointer -pthread -static-libstdc++ -static-libgcc $PGO_USE"
-export LDFLAGS_USE="-g -O3 --param=lto-max-streaming-parallelism=16 -march=native -mtune=native -fgraphite-identity -Wall -Wl,--as-needed -Wl,--build-id=sha1 -Wl,--enable-new-dtags -Wl,--hash-style=gnu -Wl,-O2 -Wl,-z,now -Wl,-z,relro -falign-functions=32 -flimit-function-alignment -fasynchronous-unwind-tables -fdevirtualize-at-ltrans -floop-nest-optimize -floop-block -fno-math-errno -fno-semantic-interposition -fno-stack-protector -fno-trapping-math -ftree-loop-distribute-patterns -ftree-loop-vectorize -ftree-vectorize -funroll-loops -fuse-ld=bfd -fuse-linker-plugin -malign-data=cacheline -feliminate-unused-debug-types -fipa-pta -flto=16 -fno-plt -mtls-dialect=gnu2 -Wl,-sort-common -Wno-error -Wp,-D_REENTRANT -pipe -ffat-lto-objects -fPIC -Wl,-z,max-page-size=0x1000 -fomit-frame-pointer -pthread -static-libstdc++ -static-libgcc -lpthread $PGO_USE"
+export CFLAGS_USE="-g -O3 --param=lto-max-streaming-parallelism=16 -march=native -mtune=native -fgraphite-identity -Wall -Wl,--as-needed -Wl,--build-id=sha1 -Wl,--enable-new-dtags -Wl,--hash-style=gnu -Wl,-O2 -Wl,-z,now -Wl,-z,relro -falign-functions=32 -flimit-function-alignment -fasynchronous-unwind-tables -fdevirtualize-at-ltrans -floop-nest-optimize -floop-block -fno-math-errno -fno-semantic-interposition -fno-stack-protector -fno-trapping-math -ftree-loop-distribute-patterns -ftree-loop-vectorize -ftree-vectorize -fuse-ld=bfd -fuse-linker-plugin -malign-data=cacheline -feliminate-unused-debug-types -fipa-pta -flto=16 -fno-plt -mtls-dialect=gnu2 -Wl,-sort-common -Wno-error -Wp,-D_REENTRANT -pipe -ffat-lto-objects -fPIC -Wl,-z,max-page-size=0x1000 -fomit-frame-pointer -pthread -static-libstdc++ -static-libgcc $PGO_USE"
+export FCFLAGS_USE="-g -O3 --param=lto-max-streaming-parallelism=16 -march=native -mtune=native -fgraphite-identity -Wall -Wl,--as-needed -Wl,--build-id=sha1 -Wl,--enable-new-dtags -Wl,--hash-style=gnu -Wl,-O2 -Wl,-z,now -Wl,-z,relro -falign-functions=32 -flimit-function-alignment -fasynchronous-unwind-tables -fdevirtualize-at-ltrans -floop-nest-optimize -floop-block -fno-math-errno -fno-semantic-interposition -fno-stack-protector -fno-trapping-math -ftree-loop-distribute-patterns -ftree-loop-vectorize -ftree-vectorize -fuse-ld=bfd -fuse-linker-plugin -malign-data=cacheline -feliminate-unused-debug-types -fipa-pta -flto=16 -fno-plt -mtls-dialect=gnu2 -Wl,-sort-common -Wno-error -Wp,-D_REENTRANT -pipe -ffat-lto-objects -fPIC -Wl,-z,max-page-size=0x1000 -fomit-frame-pointer -pthread -static-libstdc++ -static-libgcc $PGO_USE"
+export FFLAGS_USE="-g -O3 --param=lto-max-streaming-parallelism=16 -march=native -mtune=native -fgraphite-identity -Wall -Wl,--as-needed -Wl,--build-id=sha1 -Wl,--enable-new-dtags -Wl,--hash-style=gnu -Wl,-O2 -Wl,-z,now -Wl,-z,relro -falign-functions=32 -flimit-function-alignment -fasynchronous-unwind-tables -fdevirtualize-at-ltrans -floop-nest-optimize -floop-block -fno-math-errno -fno-semantic-interposition -fno-stack-protector -fno-trapping-math -ftree-loop-distribute-patterns -ftree-loop-vectorize -ftree-vectorize -fuse-ld=bfd -fuse-linker-plugin -malign-data=cacheline -feliminate-unused-debug-types -fipa-pta -flto=16 -fno-plt -mtls-dialect=gnu2 -Wl,-sort-common -Wno-error -Wp,-D_REENTRANT -pipe -ffat-lto-objects -fPIC -Wl,-z,max-page-size=0x1000 -fomit-frame-pointer -pthread -static-libstdc++ -static-libgcc $PGO_USE"
+export CXXFLAGS_USE="-g -O3 --param=lto-max-streaming-parallelism=16 -march=native -mtune=native -fgraphite-identity -Wall -Wl,--as-needed -Wl,--build-id=sha1 -Wl,--enable-new-dtags -Wl,--hash-style=gnu -Wl,-O2 -Wl,-z,now -Wl,-z,relro -falign-functions=32 -flimit-function-alignment -fasynchronous-unwind-tables -fdevirtualize-at-ltrans -floop-nest-optimize -floop-block -fno-math-errno -fno-semantic-interposition -fno-stack-protector -fno-trapping-math -ftree-loop-distribute-patterns -ftree-loop-vectorize -ftree-vectorize -fuse-ld=bfd -fuse-linker-plugin -malign-data=cacheline -feliminate-unused-debug-types -fipa-pta -flto=16 -fno-plt -mtls-dialect=gnu2 -Wl,-sort-common -Wno-error -Wp,-D_REENTRANT -fvisibility-inlines-hidden -pipe -ffat-lto-objects -fPIC -Wl,-z,max-page-size=0x1000 -fomit-frame-pointer -pthread -static-libstdc++ -static-libgcc $PGO_USE"
+export LDFLAGS_USE="-g -O3 --param=lto-max-streaming-parallelism=16 -march=native -mtune=native -fgraphite-identity -Wall -Wl,--as-needed -Wl,--build-id=sha1 -Wl,--enable-new-dtags -Wl,--hash-style=gnu -Wl,-O2 -Wl,-z,now -Wl,-z,relro -falign-functions=32 -flimit-function-alignment -fasynchronous-unwind-tables -fdevirtualize-at-ltrans -floop-nest-optimize -floop-block -fno-math-errno -fno-semantic-interposition -fno-stack-protector -fno-trapping-math -ftree-loop-distribute-patterns -ftree-loop-vectorize -ftree-vectorize -fuse-ld=bfd -fuse-linker-plugin -malign-data=cacheline -feliminate-unused-debug-types -fipa-pta -flto=16 -fno-plt -mtls-dialect=gnu2 -Wl,-sort-common -Wno-error -Wp,-D_REENTRANT -pipe -ffat-lto-objects -fPIC -Wl,-z,max-page-size=0x1000 -fomit-frame-pointer -pthread -static-libstdc++ -static-libgcc -lpthread $PGO_USE"
 #
 export AR=/usr/bin/gcc-ar
 export RANLIB=/usr/bin/gcc-ranlib
@@ -222,36 +579,85 @@ export CXXFLAGS="${CXXFLAGS_GENERATE}"
 export FFLAGS="${FFLAGS_GENERATE}"
 export FCFLAGS="${FCFLAGS_GENERATE}"
 export LDFLAGS="${LDFLAGS_GENERATE}"
- %configure  --enable-shared --enable-static --with-harfbuzz=yes --with-png=yes --with-bzip2=yes --enable-freetype-config --with-brotli=yes --with-zlib=yes
+meson --libdir=lib64 --prefix=/usr --buildtype=release -Ddefault_library=both  -Dzlib=enabled \
+-Dbzip2=enabled \
+-Dpng=enabled \
+-Dharfbuzz=enabled \
+-Dbrotli=enabled \
+-Dmmap=enabled \
+-Ddefault_library=both builddir
 ## make_prepend content
-#find . -type f -name 'Makefile' -exec sed -i 's/\-fPIC/\-fpic/g' {} \;
+#sd "\-lz" "/usr/lib64/libz.a" $(fd -uu --glob Makefile)
+#sd "\-lbz2" "/usr/lib64/libbz2.a" $(fd -uu --glob Makefile)
+#sd "\-lpng" "/usr/lib64/libpng.a" $(fd -uu --glob Makefile)
+#sd "\-lpng16" "/usr/lib64/libpng16.a" $(fd -uu --glob Makefile)
+#sd "\-lbrotlicommon" "/usr/lib64/libbrotlicommon-static.a" $(fd -uu --glob Makefile)
+#sd "\-lbrotlidec" "/usr/lib64/libbrotlidec-static.a" $(fd -uu --glob Makefile)
+#sd "\-lbrotlienc" "/usr/lib64/libbrotlienc-static.a" $(fd -uu --glob Makefile)
 #
-#find . -type f -name 'libtool' -exec sed -i 's/\-fPIC/\-fpic/g' {} \;
+#sd "\-lharfbuzz" "/usr/lib64/libbrotlienc-static.a" $(fd -uu --glob Makefile)
+#sd "\-lharfbuzz-subset" "/usr/lib64/libbrotlienc-static.a" $(fd -uu --glob Makefile)
+#sd "\-lharfbuzz-icu" "/usr/lib64/libbrotlienc-static.a" $(fd -uu --glob Makefile)
+#sd "\-lharfbuzz-gobject" "/usr/lib64/libbrotlienc-static.a" $(fd -uu --glob Makefile)
 ## make_prepend end
-make  %{?_smp_mflags}  V=1 VERBOSE=1
+ninja --verbose %{?_smp_mflags} -v -C builddir
 
-make -j16 check VERBOSE=1 V=1 ||:
-make clean
+export DISPLAY=:0
+export __GL_ALLOW_UNOFFICIAL_PROTOCOL=1
+export __GL_SYNC_TO_VBLANK=0
+export LANG=en_US.UTF-8
+export XDG_CONFIG_DIRS=/usr/share/xdg:/etc/xdg
+export XDG_SEAT=seat0
+export XDG_SESSION_TYPE=tty
+export XDG_CURRENT_DESKTOP=KDE
+export XDG_SESSION_CLASS=user
+export XDG_VTNR=1
+export XDG_SESSION_ID=1
+export XDG_RUNTIME_DIR=/run/user/1000
+export XDG_DATA_DIRS=/usr/local/share:/usr/share
+export KDE_SESSION_VERSION=5
+export KDE_SESSION_UID=1000
+export KDE_FULL_SESSION=true
+export KDE_APPLICATIONS_AS_SCOPE=1
+export VDPAU_DRIVER=nvidia
+export LIBVA_DRIVER_NAME=vdpau
+export LIBVA_DRIVERS_PATH=/usr/lib64/dri
+export GTK_RC_FILES=/etc/gtk/gtkrc
+export FONTCONFIG_PATH=/usr/share/defaults/fonts
+export LD_LIBRARY_PATH="/usr/local/cuda/lib64:/usr/local/cuda/targets/x86_64-linux/lib:/usr/nvidia/lib64:/usr/nvidia/lib:/usr/nvidia/lib/vdpau:/usr/nvidia/lib64/xorg/modules/drivers:/usr/nvidia/lib64/xorg/modules/extensions:/usr/lib64/dri:/usr/lib64/haswell:/usr/lib64:/usr/lib:/usr/share"
+export PATH="/usr/nvidia/bin:/usr/bin/haswell:/usr/bin:/usr/sbin"
+export $(dbus-launch)
+meson test --verbose -C builddir ||:
+meson test --verbose -C builddir --benchmark ||:
+find builddir/ -type f,l -not -name '*.gcno' -not -name 'statuspgo*' -delete -print
 export CFLAGS="${CFLAGS_USE}"
 export CXXFLAGS="${CXXFLAGS_USE}"
 export FFLAGS="${FFLAGS_USE}"
 export FCFLAGS="${FCFLAGS_USE}"
 export LDFLAGS="${LDFLAGS_USE}"
-%configure  --enable-shared --enable-static --with-harfbuzz=yes --with-png=yes --with-bzip2=yes --enable-freetype-config --with-brotli=yes --with-zlib=yes
+meson --libdir=lib64 --prefix=/usr --buildtype=release -Ddefault_library=both -Dzlib=enabled \
+-Dbzip2=enabled \
+-Dpng=enabled \
+-Dharfbuzz=enabled \
+-Dbrotli=enabled \
+-Dmmap=enabled \
+-Ddefault_library=both  builddir
 ## make_prepend content
-#find . -type f -name 'Makefile' -exec sed -i 's/\-fPIC/\-fpic/g' {} \;
+#sd "\-lz" "/usr/lib64/libz.a" $(fd -uu --glob Makefile)
+#sd "\-lbz2" "/usr/lib64/libbz2.a" $(fd -uu --glob Makefile)
+#sd "\-lpng" "/usr/lib64/libpng.a" $(fd -uu --glob Makefile)
+#sd "\-lpng16" "/usr/lib64/libpng16.a" $(fd -uu --glob Makefile)
+#sd "\-lbrotlicommon" "/usr/lib64/libbrotlicommon-static.a" $(fd -uu --glob Makefile)
+#sd "\-lbrotlidec" "/usr/lib64/libbrotlidec-static.a" $(fd -uu --glob Makefile)
+#sd "\-lbrotlienc" "/usr/lib64/libbrotlienc-static.a" $(fd -uu --glob Makefile)
 #
-#find . -type f -name 'libtool' -exec sed -i 's/\-fPIC/\-fpic/g' {} \;
+#sd "\-lharfbuzz" "/usr/lib64/libbrotlienc-static.a" $(fd -uu --glob Makefile)
+#sd "\-lharfbuzz-subset" "/usr/lib64/libbrotlienc-static.a" $(fd -uu --glob Makefile)
+#sd "\-lharfbuzz-icu" "/usr/lib64/libbrotlienc-static.a" $(fd -uu --glob Makefile)
+#sd "\-lharfbuzz-gobject" "/usr/lib64/libbrotlienc-static.a" $(fd -uu --glob Makefile)
 ## make_prepend end
-make  %{?_smp_mflags}  V=1 VERBOSE=1
-
+ninja --verbose %{?_smp_mflags} -v -C builddir
 pushd ../build32/
-## build_prepend content
-#find . -type f -name 'configure' -exec sed -i 's/\-fPIC/\-fpic/g' {} \;
-#find . -type f -name 'configure.ac' -exec sed -i 's/\-fPIC/\-fpic/g' {} \;
-#
-#echo "AM_MAINTAINER_MODE([disable])" >> configure.ac
-## build_prepend end
 export CFLAGS="-O2 -ffat-lto-objects -fuse-linker-plugin -pipe -fPIC -m32 -mstackrealign -march=native -mtune=native"
 export CXXFLAGS="-O2 -ffat-lto-objects -fuse-linker-plugin -fvisibility-inlines-hidden -pipe -fPIC -m32 -mstackrealign -march=native -mtune=native"
 export LDFLAGS="-O2 -ffat-lto-objects -fuse-linker-plugin -pipe -fPIC -m32 -mstackrealign -march=native -mtune=native"
@@ -264,114 +670,29 @@ export ASFLAGS="${ASFLAGS}${ASFLAGS:+ }--32"
 export CFLAGS="${CFLAGS}${CFLAGS:+ }-m32 -mstackrealign"
 export CXXFLAGS="${CXXFLAGS}${CXXFLAGS:+ }-m32 -mstackrealign"
 export LDFLAGS="${LDFLAGS}${LDFLAGS:+ }-m32 -mstackrealign"
-%configure  --enable-freetype-config --enable-shared --enable-static --with-harfbuzz=no --with-png=yes --with-bzip2=yes --with-brotli=no --with-zlib=yes --libdir=/usr/lib32 --build=i686-generic-linux-gnu --host=i686-generic-linux-gnu --target=i686-clr-linux-gnu
-make  %{?_smp_mflags}  V=1 VERBOSE=1
+meson --libdir=lib32 --prefix=/usr --buildtype=release -Ddefault_library=both  -Dzlib=enabled \
+-Dbzip2=enabled \
+-Dpng=enabled \
+-Dharfbuzz=disabled \
+-Dbrotli=disabled builddir
+ninja --verbose %{?_smp_mflags} -v -C builddir
 popd
 
 %install
-export SOURCE_DATE_EPOCH=1620573138
-rm -rf %{buildroot}
 pushd ../build32/
-%make_install32 V=1 VERBOSE=1 RC=
+DESTDIR=%{buildroot} ninja -C builddir install
 if [ -d  %{buildroot}/usr/lib32/pkgconfig ]
 then
-    pushd %{buildroot}/usr/lib32/pkgconfig
-    for i in *.pc ; do ln -s $i 32$i ; done
-    popd
+pushd %{buildroot}/usr/lib32/pkgconfig
+for i in *.pc ; do ln -s $i 32$i ; done
+popd
 fi
 popd
-%make_install V=1 VERBOSE=1 RC=
+DESTDIR=%{buildroot} ninja -C builddir install
+## install_append content
+install -dm 0755 %{buildroot}/usr/lib64/haswell/ || :
+cp --archive %{buildroot}/usr/lib64/lib*.so* %{buildroot}/usr/lib64/haswell/ || :
+## install_append end
 
 %files
 %defattr(-,root,root,-)
-
-%files bin
-%defattr(-,root,root,-)
-/usr/bin/freetype-config
-
-%files dev
-%defattr(-,root,root,-)
-/usr/include/freetype2/freetype/config/ftconfig.h
-/usr/include/freetype2/freetype/config/ftheader.h
-/usr/include/freetype2/freetype/config/ftmodule.h
-/usr/include/freetype2/freetype/config/ftoption.h
-/usr/include/freetype2/freetype/config/ftstdlib.h
-/usr/include/freetype2/freetype/config/integer-types.h
-/usr/include/freetype2/freetype/config/mac-support.h
-/usr/include/freetype2/freetype/config/public-macros.h
-/usr/include/freetype2/freetype/freetype.h
-/usr/include/freetype2/freetype/ftadvanc.h
-/usr/include/freetype2/freetype/ftbbox.h
-/usr/include/freetype2/freetype/ftbdf.h
-/usr/include/freetype2/freetype/ftbitmap.h
-/usr/include/freetype2/freetype/ftbzip2.h
-/usr/include/freetype2/freetype/ftcache.h
-/usr/include/freetype2/freetype/ftchapters.h
-/usr/include/freetype2/freetype/ftcid.h
-/usr/include/freetype2/freetype/ftcolor.h
-/usr/include/freetype2/freetype/ftdriver.h
-/usr/include/freetype2/freetype/fterrdef.h
-/usr/include/freetype2/freetype/fterrors.h
-/usr/include/freetype2/freetype/ftfntfmt.h
-/usr/include/freetype2/freetype/ftgasp.h
-/usr/include/freetype2/freetype/ftglyph.h
-/usr/include/freetype2/freetype/ftgxval.h
-/usr/include/freetype2/freetype/ftgzip.h
-/usr/include/freetype2/freetype/ftimage.h
-/usr/include/freetype2/freetype/ftincrem.h
-/usr/include/freetype2/freetype/ftlcdfil.h
-/usr/include/freetype2/freetype/ftlist.h
-/usr/include/freetype2/freetype/ftlzw.h
-/usr/include/freetype2/freetype/ftmac.h
-/usr/include/freetype2/freetype/ftmm.h
-/usr/include/freetype2/freetype/ftmodapi.h
-/usr/include/freetype2/freetype/ftmoderr.h
-/usr/include/freetype2/freetype/ftotval.h
-/usr/include/freetype2/freetype/ftoutln.h
-/usr/include/freetype2/freetype/ftparams.h
-/usr/include/freetype2/freetype/ftpfr.h
-/usr/include/freetype2/freetype/ftrender.h
-/usr/include/freetype2/freetype/ftsizes.h
-/usr/include/freetype2/freetype/ftsnames.h
-/usr/include/freetype2/freetype/ftstroke.h
-/usr/include/freetype2/freetype/ftsynth.h
-/usr/include/freetype2/freetype/ftsystem.h
-/usr/include/freetype2/freetype/fttrigon.h
-/usr/include/freetype2/freetype/fttypes.h
-/usr/include/freetype2/freetype/ftwinfnt.h
-/usr/include/freetype2/freetype/t1tables.h
-/usr/include/freetype2/freetype/ttnameid.h
-/usr/include/freetype2/freetype/tttables.h
-/usr/include/freetype2/freetype/tttags.h
-/usr/include/freetype2/ft2build.h
-/usr/lib64/libfreetype.so
-/usr/lib64/pkgconfig/freetype2.pc
-/usr/share/aclocal/*.m4
-
-%files dev32
-%defattr(-,root,root,-)
-/usr/lib32/libfreetype.so
-/usr/lib32/pkgconfig/32freetype2.pc
-/usr/lib32/pkgconfig/freetype2.pc
-
-%files lib
-%defattr(-,root,root,-)
-/usr/lib64/libfreetype.so.6
-/usr/lib64/libfreetype.so.6.17.4
-
-%files lib32
-%defattr(-,root,root,-)
-/usr/lib32/libfreetype.so.6
-/usr/lib32/libfreetype.so.6.17.4
-
-%files man
-%defattr(0644,root,root,0755)
-/usr/share/man/man1/freetype-config.1
-
-%files staticdev
-%defattr(-,root,root,-)
-/usr/lib64/libfreetype.a
-
-%files staticdev32
-%defattr(-,root,root,-)
-/usr/lib32/libfreetype.a

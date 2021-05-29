@@ -1,1 +1,5 @@
---enable-freetype-config --enable-shared --enable-static --with-harfbuzz=no --with-png=yes --with-bzip2=yes --with-brotli=no --with-zlib=yes
+-Dzlib=enabled
+-Dbzip2=enabled
+-Dpng=enabled
+-Dharfbuzz=disabled
+-Dbrotli=disabled

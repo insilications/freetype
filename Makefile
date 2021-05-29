@@ -1,5 +1,6 @@
 PKG_NAME := freetype
-URL = https://download-mirror.savannah.gnu.org/releases/freetype/freetype-2.10.4.tar.gz
+URL = https://gitlab.freedesktop.org/freetype/freetype.git
 ARCHIVES = 
+ARCHIVES_GIT = 
 
 include ../common/Makefile.common

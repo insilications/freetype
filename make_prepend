@@ -1,3 +1,12 @@
-#find . -type f -name 'Makefile' -exec sed -i 's/\-fPIC/\-fpic/g' {} \;
+#sd "\-lz" "/usr/lib64/libz.a" $(fd -uu --glob Makefile)
+#sd "\-lbz2" "/usr/lib64/libbz2.a" $(fd -uu --glob Makefile)
+#sd "\-lpng" "/usr/lib64/libpng.a" $(fd -uu --glob Makefile)
+#sd "\-lpng16" "/usr/lib64/libpng16.a" $(fd -uu --glob Makefile)
+#sd "\-lbrotlicommon" "/usr/lib64/libbrotlicommon-static.a" $(fd -uu --glob Makefile)
+#sd "\-lbrotlidec" "/usr/lib64/libbrotlidec-static.a" $(fd -uu --glob Makefile)
+#sd "\-lbrotlienc" "/usr/lib64/libbrotlienc-static.a" $(fd -uu --glob Makefile)
 #
-#find . -type f -name 'libtool' -exec sed -i 's/\-fPIC/\-fpic/g' {} \;
+#sd "\-lharfbuzz" "/usr/lib64/libbrotlienc-static.a" $(fd -uu --glob Makefile)
+#sd "\-lharfbuzz-subset" "/usr/lib64/libbrotlienc-static.a" $(fd -uu --glob Makefile)
+#sd "\-lharfbuzz-icu" "/usr/lib64/libbrotlienc-static.a" $(fd -uu --glob Makefile)
+#sd "\-lharfbuzz-gobject" "/usr/lib64/libbrotlienc-static.a" $(fd -uu --glob Makefile)
